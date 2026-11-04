@@ -1,0 +1,254 @@
+.login-page {
+  display: grid;
+  grid-template-columns: 44% 56%;
+  min-height: calc(100vh - 80px);
+  margin: 40px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 16px 40px rgba(32, 57, 47, 0.08);
+}
+
+.login-intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 48px 56px;
+  color: white;
+  background: #233d34;
+}
+
+.login-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.brand-icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  color: #233d34;
+  background: white;
+}
+
+.intro-content {
+  margin: 80px 0;
+}
+
+.intro-label,
+.welcome-label {
+  margin: 0 0 12px;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+}
+
+.intro-label {
+  color: #b8cec3;
+}
+
+.intro-content h1 {
+  margin: 0;
+  font-size: 36px;
+  font-weight: normal;
+  line-height: 1.15;
+  letter-spacing: -1.2px;
+}
+
+.intro-description {
+  margin: 20px 0 0;
+  color: #bfd0c7;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.intro-footer {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.student-avatars {
+  display: flex;
+  padding-left: 4px;
+}
+
+.student-avatars span {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  margin-left: -4px;
+  border: 2px solid #233d34;
+  border-radius: 50%;
+  color: #233d34;
+  background: #dce6e0;
+  font-size: 9px;
+  font-weight: bold;
+}
+
+.intro-footer p {
+  margin: 0;
+  color: #bfd0c7;
+  font-size: 10px;
+}
+
+.login-form-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 40px;
+}
+
+.login-form-content {
+  width: 100%;
+  max-width: 380px;
+}
+
+.welcome-label {
+  color: #426556;
+}
+
+.login-form-content h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: normal;
+  letter-spacing: -0.5px;
+}
+
+.login-description {
+  margin: 12px 0 28px;
+  color: #7b847f;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.login-page .form-field {
+  margin-bottom: 18px;
+}
+
+.login-page .form-field label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.login-page .form-field input {
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid #dce1dd;
+  border-radius: 6px;
+  color: #283731;
+  background: white;
+  font-size: 11px;
+}
+
+.login-page .form-field input::placeholder {
+  color: #a0a7a2;
+}
+
+.login-page input:focus-visible,
+.login-page button:focus-visible {
+  outline: 2px solid #638b77;
+  outline-offset: 3px;
+}
+
+.login-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #7b847f;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.remember-me input {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  accent-color: #233d34;
+}
+
+.login-page .text-button {
+  padding: 0;
+  border: 0;
+  color: #315747;
+  background: none;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.login-page .text-button:hover {
+  text-decoration: underline;
+}
+
+.sign-in-button {
+  width: 100%;
+  height: 40px;
+  border: 0;
+  border-radius: 5px;
+  color: white;
+  background: #233d34;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.sign-in-button:hover {
+  background: #305244;
+}
+
+.signup-prompt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 58px;
+  padding-top: 24px;
+  border-top: 1px solid #edf0ed;
+  color: #7b847f;
+  font-size: 10px;
+}
+
+@media (max-width: 768px) {
+  .login-page {
+    grid-template-columns: 1fr;
+    min-height: calc(100vh - 32px);
+    margin: 16px;
+  }
+
+  .login-intro {
+    padding: 28px;
+  }
+
+  .intro-content {
+    margin: 40px 0;
+  }
+
+  .intro-content h1 {
+    font-size: 32px;
+  }
+
+  .login-form-panel {
+    padding: 48px 28px;
+  }
+
+  .login-page .form-field input {
+    font-size: 16px;
+  }
+}
