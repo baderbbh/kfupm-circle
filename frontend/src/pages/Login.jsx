@@ -45,8 +45,10 @@ export default function Login() {
                 type="email"
                 placeholder="name@kfupm.edu.sa"
                 autoComplete="username"
+                pattern=".+@kfupm[.]edu[.]sa"
+                title="Use your KFUPM email address, such as name@kfupm.edu.sa."
                 required
-              />
+                />
             </div>
 
             <div className="form-field">
