@@ -9,7 +9,7 @@ This phase focuses on implementing an interactive React front end based on our F
 
 ## Figma Prototype
 
-View our Figma prototype: **(https://swe363-sec1-team7.figma.site)**
+[View our Figma prototype](https://swe363-sec1-team7.figma.site)
 
 ## Main Features
 
