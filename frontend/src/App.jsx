@@ -6,13 +6,67 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import ProfileSetup from "./pages/ProfileSetup";
 import Home from "./pages/Home";
+import ClubManagerHome from "./pages/ClubManagerHome";
+import AdminHome from "./pages/AdminHome";
 
 export default function App() {
   const [page, setPage] = useState("login");
   const [registration, setRegistration] = useState(null);
   const [resetEmail, setResetEmail] = useState("");
-  const [demoPassword, setDemoPassword] = useState("Circle123!");
   const [profile, setProfile] = useState(null);
+
+  const [accounts, setAccounts] = useState([
+    {
+      email: "ahmed@kfupm.edu.sa",
+      password: "Circle123!",
+      role: "student",
+      fullName: "Ahmed Al-Dossary",
+      major: "Software Engineering",
+    },
+    {
+      email: "clubmanager@kfupm.edu.sa",
+      password: "Circle123!",
+      role: "club-manager",
+      fullName: "Sara Mansour",
+    },
+    {
+      email: "admin@kfupm.edu.sa",
+      password: "Circle123!",
+      role: "administrator",
+      fullName: "Noor Al-Salem",
+    },
+  ]);
+
+  function handleLogin(email, password) {
+    const account = accounts.find(
+      (account) =>
+        account.email === email && account.password === password
+    );
+
+    if (!account) {
+      return false;
+    }
+
+    if (account.role === "student") {
+      setProfile({
+        fullName: account.fullName,
+        major: account.major,
+      });
+      setPage("home");
+    } else {
+      setProfile(null);
+      setPage(account.role);
+    }
+
+    return true;
+  }
+
+  function handleSignOut() {
+    setProfile(null);
+    setRegistration(null);
+    setResetEmail("");
+    setPage("login");
+  }
 
   function handleCreateAccount(details) {
     setRegistration(details);
@@ -20,23 +74,34 @@ export default function App() {
   }
 
   function handleOpenReset(email) {
-    setResetEmail(email);
+    setResetEmail(email.trim().toLowerCase());
     setPage("reset-password");
   }
 
   function handleResetPassword(password) {
-    if (resetEmail !== "student@kfupm.edu.sa") {
+    const accountExists = accounts.some(
+      (account) => account.email === resetEmail
+    );
+
+    if (!accountExists) {
       return false;
     }
 
-    setDemoPassword(password);
+    setAccounts((currentAccounts) =>
+      currentAccounts.map((account) =>
+        account.email === resetEmail
+          ? { ...account, password }
+          : account
+      )
+    );
+
     return true;
   }
 
-    function handleSaveProfile(details) {
-      setProfile(details);
-      setPage("home");
-    }
+  function handleSaveProfile(details) {
+    setProfile(details);
+    setPage("home");
+  }
 
   if (page === "verify") {
     return (
@@ -48,28 +113,37 @@ export default function App() {
   }
 
   if (page === "profile-setup") {
-      return (
-        <ProfileSetup
-          fullName={registration.fullName}
-          onComplete={handleSaveProfile}
-        />
-      );
-    }
+    return (
+      <ProfileSetup
+        fullName={registration.fullName}
+        onComplete={handleSaveProfile}
+      />
+    );
+  }
 
-    if (page === "home") {
-      return (
-        <Home
-          profile={profile}
-          onAccountAccess={() => setPage("login")}
-        />
-      );
-    }
+  if (page === "home") {
+    return (
+      <Home
+        profile={profile}
+        onAccountAccess={handleSignOut}
+      />
+    );
+  }
+
+  if (page === "club-manager") {
+    return <ClubManagerHome onSignOut={handleSignOut} />;
+  }
+
+  if (page === "administrator") {
+    return <AdminHome onSignOut={handleSignOut} />;
+  }
 
   if (page === "signup") {
     return (
       <Signup
         onBackToLogin={() => setPage("login")}
         onCreateAccount={handleCreateAccount}
+        existingEmails={accounts.map((account) => account.email)}
       />
     );
   }
@@ -94,7 +168,7 @@ export default function App() {
 
   return (
     <Login
-      demoPassword={demoPassword}
+      onLogin={handleLogin}
       onCreateAccount={() => setPage("signup")}
       onForgotPassword={() => setPage("forgot-password")}
     />

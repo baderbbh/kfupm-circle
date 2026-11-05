@@ -1,0 +1,94 @@
+.manager-workspace {
+  display: grid;
+  gap: 8px;
+  margin-top: 28px;
+  padding: 14px;
+  border: 1px solid #e4e9e5;
+  border-radius: 7px;
+  background: #eef3ef;
+}
+
+.manager-workspace span {
+  color: #69776f;
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 0.7px;
+}
+
+.manager-workspace strong {
+  font-size: 12px;
+}
+
+.manager-page .manager-navigation {
+  margin-top: 14px;
+}
+
+.manager-student-access {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid #e4e9e5;
+}
+
+.manager-student-access p {
+  margin: 0 0 12px;
+  color: #69776f;
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+.manager-student-access button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  color: #526159;
+  background: none;
+  font-size: 11px;
+}
+
+.manager-student-access svg {
+  width: 16px;
+  height: 16px;
+}
+
+.manager-shortcuts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 26px 0 18px;
+}
+
+.manager-shortcut-icon {
+  display: flex;
+  color: #527d68;
+}
+
+.manager-page .profile-user {
+  margin-top: auto;
+}
+
+.manager-page .profile-field textarea {
+  min-height: 92px;
+}
+
+@media (max-width: 1200px) {
+  .manager-shortcuts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .manager-workspace {
+    margin-top: 20px;
+  }
+
+  .manager-shortcuts {
+    grid-template-columns: 1fr;
+  }
+
+  .manager-page .profile-user {
+    margin-top: 24px;
+  }
+}

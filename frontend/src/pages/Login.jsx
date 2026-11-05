@@ -2,12 +2,11 @@ import { useState } from "react";
 import "./Login.css";
 
 export default function Login({
+  onLogin,
   onCreateAccount,
   onForgotPassword,
-  demoPassword,
 }) {
   const [error, setError] = useState("");
-  const [signedIn, setSignedIn] = useState(false);
 
   function handleLogin(event) {
     event.preventDefault();
@@ -17,14 +16,10 @@ export default function Login({
     const password = form.get("password");
 
     setError("");
-    setSignedIn(false);
 
-if (email !== "student@kfupm.edu.sa" || password !== demoPassword) {
+    if (!onLogin(email, password)) {
       setError("Incorrect email or password. Please try again.");
-      return;
     }
-
-    setSignedIn(true);
   }
 
   return (
@@ -102,20 +97,14 @@ if (email !== "student@kfupm.edu.sa" || password !== demoPassword) {
                 type="button"
                 className="text-button"
                 onClick={onForgotPassword}
-                >
+              >
                 Forgot password?
-                </button>
+              </button>
             </div>
 
             {error && (
               <p className="login-error" role="alert">
                 {error}
-              </p>
-            )}
-
-            {signedIn && (
-              <p className="login-success" role="status">
-                Demo sign-in successful.
               </p>
             )}
 
@@ -127,11 +116,11 @@ if (email !== "student@kfupm.edu.sa" || password !== demoPassword) {
           <div className="signup-prompt">
             <span>New to KFUPM Circle?</span>
             <button
-            type="button"
-            className="text-button"
-            onClick={onCreateAccount}
+              type="button"
+              className="text-button"
+              onClick={onCreateAccount}
             >
-            Create an account
+              Create an account
             </button>
           </div>
         </div>
