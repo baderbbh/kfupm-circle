@@ -2,7 +2,11 @@ import { useState } from "react";
 import "./Login.css";
 import "./Signup.css";
 
-export default function Signup({ onBackToLogin, onCreateAccount }) {
+export default function Signup({
+  onBackToLogin,
+  onCreateAccount,
+  existingEmails,
+}) {
   const [errors, setErrors] = useState({});
 
   function handleSignup(event) {
@@ -23,7 +27,7 @@ export default function Signup({ onBackToLogin, onCreateAccount }) {
       newErrors.email = "Enter your university email.";
     } else if (!/^[^\s@]+@kfupm\.edu\.sa$/.test(email)) {
       newErrors.email = "Use your @kfupm.edu.sa email address.";
-    } else if (email === "student@kfupm.edu.sa") {
+    } else if (existingEmails.includes(email)) {
       newErrors.email = "An account with this email already exists.";
     }
 
