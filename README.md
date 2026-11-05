@@ -75,7 +75,27 @@ Run these commands from the `frontend` folder:
 | `npm run preview` | Preview the production build after running `npm run build`. |
 | `npm run lint` | Check the code for issues using ESLint. |
 
+
+## Demo Accounts
+
+Use these accounts to try each workspace:
+
+| Role | Email | Password |
+|------|-------|----------|
+| Student | ahmed@kfupm.edu.sa | Circle123! |
+| Club manager | clubmanager@kfupm.edu.sa | Circle123! |
+| Administrator | admin@kfupm.edu.sa | Circle123! |
+
+Use the sign-out icon at the bottom of the sidebar to return to login.
+
+## Testing
+
+Manual test cases and results are recorded in [manual-tests.md](docs/manual-tests.md).
+
+The tests cover registration, login, verification, password recovery, profile setup, role homepages, form validation, search, filtering, responsive layouts, and keyboard navigation.
+
+Lint and the production build were also checked.
+
 ## AI Usage
 
-AI assistance used during this phase will be documented in the **Phase 4 – Front-End** section of `AI_USAGE.md`, including the tools used and files affected.
-
+AI assistance used during this phase is recorded in the Phase 4 section of `AI_USAGE.md`, including the tools used and files affected.
