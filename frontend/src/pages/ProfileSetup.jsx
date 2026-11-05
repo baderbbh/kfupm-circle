@@ -115,7 +115,7 @@ function TagField({ id, label, values, options, onChange, placeholder }) {
   );
 }
 
-export default function ProfileSetup({ fullName = "" }) {
+export default function ProfileSetup({ fullName = "", onComplete }) {
   const [name, setName] = useState(fullName);
   const [major, setMajor] = useState("");
   const [biography, setBiography] = useState("");
@@ -145,6 +145,16 @@ export default function ProfileSetup({ fullName = "" }) {
     }
 
     setSaved(true);
+    
+    onComplete({
+        fullName: name.trim(),
+        major,
+        biography: biography.trim(),
+        courses,
+        interests,
+        hobbies: hobbies.trim(),
+        activities: activities.trim(),
+        });
   }
 
   return (

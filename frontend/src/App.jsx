@@ -5,12 +5,14 @@ import VerifyEmail from "./pages/VerifyEmail";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import ProfileSetup from "./pages/ProfileSetup";
+import Home from "./pages/Home";
 
 export default function App() {
   const [page, setPage] = useState("login");
   const [registration, setRegistration] = useState(null);
   const [resetEmail, setResetEmail] = useState("");
   const [demoPassword, setDemoPassword] = useState("Circle123!");
+  const [profile, setProfile] = useState(null);
 
   function handleCreateAccount(details) {
     setRegistration(details);
@@ -31,6 +33,11 @@ export default function App() {
     return true;
   }
 
+    function handleSaveProfile(details) {
+      setProfile(details);
+      setPage("home");
+    }
+
   if (page === "verify") {
     return (
       <VerifyEmail
@@ -41,8 +48,22 @@ export default function App() {
   }
 
   if (page === "profile-setup") {
-    return <ProfileSetup fullName={registration.fullName} />;
-  }
+      return (
+        <ProfileSetup
+          fullName={registration.fullName}
+          onComplete={handleSaveProfile}
+        />
+      );
+    }
+
+    if (page === "home") {
+      return (
+        <Home
+          profile={profile}
+          onAccountAccess={() => setPage("login")}
+        />
+      );
+    }
 
   if (page === "signup") {
     return (
