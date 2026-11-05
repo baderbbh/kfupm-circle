@@ -2,9 +2,8 @@ import { useState } from "react";
 import "./Login.css";
 import "./Signup.css";
 
-export default function Signup({ onBackToLogin }) {
+export default function Signup({ onBackToLogin, onCreateAccount }) {
   const [errors, setErrors] = useState({});
-  const [valid, setValid] = useState(false);
 
   function handleSignup(event) {
     event.preventDefault();
@@ -46,7 +45,6 @@ export default function Signup({ onBackToLogin }) {
     }
 
     setErrors(newErrors);
-    setValid(false);
 
     const firstError = Object.keys(newErrors)[0];
 
@@ -55,7 +53,7 @@ export default function Signup({ onBackToLogin }) {
       return;
     }
 
-    setValid(true);
+    onCreateAccount({ fullName, email });
   }
 
   return (
@@ -185,11 +183,6 @@ export default function Signup({ onBackToLogin }) {
               At least 8 characters, including a letter and number.
             </p>
 
-            {valid && (
-              <p className="login-success" role="status">
-                Your details are valid.
-              </p>
-            )}
 
             <button type="submit" className="sign-in-button">
               Create account
