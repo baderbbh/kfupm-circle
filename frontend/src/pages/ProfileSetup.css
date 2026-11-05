@@ -418,3 +418,44 @@
     margin: 16px;
   }
 }
+
+@media (min-width: 1101px) {
+  .profile-page:not(.home-page) {
+    margin: 24px;
+    min-height: calc(100vh - 48px);
+  }
+
+  .profile-page:not(.home-page) .profile-header {
+    padding: 18px 28px;
+  }
+
+  .profile-content {
+    padding: 24px 28px;
+  }
+
+  .profile-step {
+    margin-bottom: 8px;
+  }
+
+  .profile-description {
+    margin: 8px 0 20px;
+  }
+
+  .profile-section {
+    grid-template-columns: 190px minmax(0, 1fr);
+    gap: 20px;
+    padding: 18px 24px;
+  }
+
+  .profile-fields {
+    gap: 14px;
+  }
+
+  .profile-field textarea {
+    min-height: 70px;
+  }
+
+  .profile-form-footer {
+    padding: 14px 24px;
+  }
+}
