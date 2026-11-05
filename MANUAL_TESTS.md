@@ -100,3 +100,23 @@ All seven tests were run manually and passed. The actual results matched the exp
 | REG-05 | Passed | A password strength error appeared for the password without a number. |
 | REG-06 | Passed | A password strength error appeared for the password without a letter. |
 | REG-07 | Passed | “Your details are valid.” appeared, and all previous errors disappeared. |
+
+
+## Email Verification
+
+Register with ahmed@kfupm.edu.sa and matching valid passwords.
+Run these tests in order.
+
+| Test | Action or input | Expected result |
+|---------|--------|---------------|
+| Open verification | Submit valid signup details | Verification page opens and shows ahmed@kfupm.edu.sa. |
+| Empty code | Leave the code empty and select Verify email | Six-digit code error appears. |
+| Incomplete code | Enter 123 and select Verify email | Six-digit code error appears. |
+| Incorrect code | Enter 123456 and select Verify email | Incorrect-code error appears. The entered code stays in the field. |
+| Expired code | Enter 111111 and select Verify email | Expired-code error appears. The entered code stays in the field. |
+| Resend code | Select Resend code | A confirmation appears, the previous error clears, and the demo code changes to 654321. |
+| Previous code | Enter 246810 after resending | Incorrect-code error appears. |
+| Valid code | Enter 654321 and select Verify email | Email verified successfully appears and the error clears. |
+
+Verification is simulated. No email is sent.
+Navigation to profile setup is not connected yet.
