@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./Login.css";
 
-export default function Login({ onCreateAccount }) {
+export default function Login({ onCreateAccount, onForgotPassword }) {
   const [error, setError] = useState("");
   const [signedIn, setSignedIn] = useState(false);
 
@@ -94,9 +94,13 @@ export default function Login({ onCreateAccount }) {
                 <input type="checkbox" name="remember" />
                 Remember me
               </label>
-              <button type="button" className="text-button">
+              <button
+                type="button"
+                className="text-button"
+                onClick={onForgotPassword}
+                >
                 Forgot password?
-              </button>
+                </button>
             </div>
 
             {error && (

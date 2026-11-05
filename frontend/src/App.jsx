@@ -2,6 +2,7 @@ import { useState } from "react";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import VerifyEmail from "./pages/VerifyEmail";
+import ForgotPassword from "./pages/ForgotPassword";
 
 export default function App() {
   const [page, setPage] = useState("login");
@@ -25,5 +26,14 @@ export default function App() {
     );
   }
 
-  return <Login onCreateAccount={() => setPage("signup")} />;
+  if (page === "forgot-password") {
+    return <ForgotPassword onBackToLogin={() => setPage("login")} />;
+  }
+
+  return (
+    <Login
+      onCreateAccount={() => setPage("signup")}
+      onForgotPassword={() => setPage("forgot-password")}
+    />
+  );
 }

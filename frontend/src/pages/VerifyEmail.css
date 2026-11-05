@@ -185,3 +185,7 @@
     padding: 28px 20px;
   }
 }
+.verification-card input[type="email"] {
+  text-align: left;
+  letter-spacing: normal;
+}
