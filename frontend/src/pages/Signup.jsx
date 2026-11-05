@@ -1,7 +1,63 @@
+import { useState } from "react";
 import "./Login.css";
 import "./Signup.css";
 
 export default function Signup({ onBackToLogin }) {
+  const [errors, setErrors] = useState({});
+  const [valid, setValid] = useState(false);
+
+  function handleSignup(event) {
+    event.preventDefault();
+
+    const form = new FormData(event.currentTarget);
+    const fullName = form.get("fullName").trim();
+    const email = form.get("email").trim().toLowerCase();
+    const password = form.get("password");
+    const confirmPassword = form.get("confirmPassword");
+    const newErrors = {};
+
+    if (!fullName) {
+      newErrors.fullName = "Enter your full name.";
+    }
+
+    if (!email) {
+      newErrors.email = "Enter your university email.";
+    } else if (!/^[^\s@]+@kfupm\.edu\.sa$/.test(email)) {
+      newErrors.email = "Use your @kfupm.edu.sa email address.";
+    } else if (email === "student@kfupm.edu.sa") {
+      newErrors.email = "An account with this email already exists.";
+    }
+
+    if (!password) {
+      newErrors.password = "Enter a password.";
+    } else if (
+      password.length < 8 ||
+      !/[a-zA-Z]/.test(password) ||
+      !/[0-9]/.test(password)
+    ) {
+      newErrors.password =
+        "Use at least 8 characters, including a letter and number.";
+    }
+
+    if (!confirmPassword) {
+      newErrors.confirmPassword = "Confirm your password.";
+    } else if (password !== confirmPassword) {
+      newErrors.confirmPassword = "Passwords must match.";
+    }
+
+    setErrors(newErrors);
+    setValid(false);
+
+    const firstError = Object.keys(newErrors)[0];
+
+    if (firstError) {
+      event.currentTarget.elements.namedItem(firstError).focus();
+      return;
+    }
+
+    setValid(true);
+  }
+
   return (
     <main className="login-page signup-page">
       <section className="login-intro">
@@ -42,7 +98,7 @@ export default function Signup({ onBackToLogin }) {
             Use your university email to get started.
           </p>
 
-          <form onSubmit={(event) => event.preventDefault()}>
+          <form onSubmit={handleSignup} noValidate>
             <div className="form-field">
               <label htmlFor="fullName">Full name</label>
               <input
@@ -51,8 +107,15 @@ export default function Signup({ onBackToLogin }) {
                 type="text"
                 placeholder="Enter your full name"
                 autoComplete="name"
+                aria-invalid={Boolean(errors.fullName)}
+                aria-describedby={errors.fullName ? "name-error" : undefined}
                 required
               />
+              {errors.fullName && (
+                <p id="name-error" className="field-error">
+                  {errors.fullName}
+                </p>
+              )}
             </div>
 
             <div className="form-field">
@@ -63,8 +126,15 @@ export default function Signup({ onBackToLogin }) {
                 type="email"
                 placeholder="name@kfupm.edu.sa"
                 autoComplete="email"
+                aria-invalid={Boolean(errors.email)}
+                aria-describedby={errors.email ? "email-error" : undefined}
                 required
               />
+              {errors.email && (
+                <p id="email-error" className="field-error">
+                  {errors.email}
+                </p>
+              )}
             </div>
 
             <div className="form-field">
@@ -75,9 +145,19 @@ export default function Signup({ onBackToLogin }) {
                 type="password"
                 placeholder="Create a password"
                 autoComplete="new-password"
-                aria-describedby="password-hint"
+                aria-invalid={Boolean(errors.password)}
+                aria-describedby={
+                  errors.password
+                    ? "password-hint password-error"
+                    : "password-hint"
+                }
                 required
               />
+              {errors.password && (
+                <p id="password-error" className="field-error">
+                  {errors.password}
+                </p>
+              )}
             </div>
 
             <div className="form-field">
@@ -88,13 +168,28 @@ export default function Signup({ onBackToLogin }) {
                 type="password"
                 placeholder="Enter your password again"
                 autoComplete="new-password"
+                aria-invalid={Boolean(errors.confirmPassword)}
+                aria-describedby={
+                  errors.confirmPassword ? "confirm-error" : undefined
+                }
                 required
               />
+              {errors.confirmPassword && (
+                <p id="confirm-error" className="field-error">
+                  {errors.confirmPassword}
+                </p>
+              )}
             </div>
 
             <p id="password-hint" className="password-hint">
               At least 8 characters, including a letter and number.
             </p>
+
+            {valid && (
+              <p className="login-success" role="status">
+                Your details are valid.
+              </p>
+            )}
 
             <button type="submit" className="sign-in-button">
               Create account
