@@ -1,4 +1,28 @@
+import { useState } from "react";
+import "./Login.css";
+
 export default function Login() {
+  const [error, setError] = useState("");
+  const [signedIn, setSignedIn] = useState(false);
+
+  function handleLogin(event) {
+    event.preventDefault();
+
+    const form = new FormData(event.currentTarget);
+    const email = form.get("email").trim().toLowerCase();
+    const password = form.get("password");
+
+    setError("");
+    setSignedIn(false);
+
+    if (email !== "student@kfupm.edu.sa" || password !== "Circle123!") {
+      setError("Incorrect email or password. Please try again.");
+      return;
+    }
+
+    setSignedIn(true);
+  }
+
   return (
     <main className="login-page">
       <section className="login-intro">
@@ -34,9 +58,11 @@ export default function Login() {
         <div className="login-form-content">
           <p className="welcome-label">WELCOME BACK</p>
           <h2>Sign in to KFUPM Circle</h2>
-          <p className="login-description">Enter your university account details.</p>
+          <p className="login-description">
+            Enter your university account details.
+          </p>
 
-          <form onSubmit={(event) => event.preventDefault()}>
+          <form onSubmit={handleLogin}>
             <div className="form-field">
               <label htmlFor="email">University email</label>
               <input
@@ -48,7 +74,7 @@ export default function Login() {
                 pattern=".+@kfupm[.]edu[.]sa"
                 title="Use your KFUPM email address, such as name@kfupm.edu.sa."
                 required
-                />
+              />
             </div>
 
             <div className="form-field">
@@ -72,6 +98,18 @@ export default function Login() {
                 Forgot password?
               </button>
             </div>
+
+            {error && (
+              <p className="login-error" role="alert">
+                {error}
+              </p>
+            )}
+
+            {signedIn && (
+              <p className="login-success" role="status">
+                Demo sign-in successful.
+              </p>
+            )}
 
             <button type="submit" className="sign-in-button">
               Sign in
