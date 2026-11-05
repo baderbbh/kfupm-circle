@@ -85,7 +85,7 @@ After a test that displays validation errors, replace the entries with the follo
 | Password | Circle123! |
 | Confirm password | Circle123! |
 
-**Expected result:** “Your details are valid.” appears, and all previous validation errors disappear.
+**Expected result:** Your details are valid, and all previous validation errors disappear and the email verification page opens.
 
 ## Test Results
 
