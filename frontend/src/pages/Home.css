@@ -407,3 +407,54 @@
     flex-basis: 180px;
   }
 }
+
+@media (min-width: 1101px) {
+  .home-wrapper {
+    margin: 24px;
+  }
+
+  .home-page {
+    min-height: calc(100vh - 48px);
+  }
+
+  .home-page .profile-header {
+    padding: 18px 28px;
+  }
+
+  .home-content {
+    padding: 24px 28px;
+  }
+
+  .home-shortcuts {
+    margin: 20px 0 24px;
+  }
+
+  .home-shortcut {
+    padding: 12px;
+  }
+
+  .home-section + .home-section {
+    margin-top: 24px;
+  }
+
+  .student-card {
+    padding: 14px;
+  }
+
+  .student-card-avatar {
+    width: 48px;
+    height: 48px;
+  }
+
+  .student-card h3 {
+    margin-top: 12px;
+  }
+
+  .student-reason {
+    margin: 12px 0 16px;
+  }
+
+  .home-activity {
+    padding: 16px;
+  }
+}
