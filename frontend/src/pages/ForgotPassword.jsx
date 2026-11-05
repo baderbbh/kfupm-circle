@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "./VerifyEmail.css";
-
-export default function ForgotPassword({ onBackToLogin }) {
+export default function ForgotPassword({ onBackToLogin, onOpenReset }) {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [sent, setSent] = useState(false);
@@ -43,6 +42,13 @@ export default function ForgotPassword({ onBackToLogin }) {
             <p className="demo-code">
               This is a demo. No email has been sent.
             </p>
+            <button
+                type="button"
+                className="verify-button"
+                onClick={() => onOpenReset(email)}
+            >
+                Open demo reset link
+            </button>
           </>
         ) : (
           <>

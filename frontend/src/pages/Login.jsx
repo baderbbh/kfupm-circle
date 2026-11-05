@@ -1,7 +1,11 @@
 import { useState } from "react";
 import "./Login.css";
 
-export default function Login({ onCreateAccount, onForgotPassword }) {
+export default function Login({
+  onCreateAccount,
+  onForgotPassword,
+  demoPassword,
+}) {
   const [error, setError] = useState("");
   const [signedIn, setSignedIn] = useState(false);
 
@@ -15,7 +19,7 @@ export default function Login({ onCreateAccount, onForgotPassword }) {
     setError("");
     setSignedIn(false);
 
-    if (email !== "student@kfupm.edu.sa" || password !== "Circle123!") {
+if (email !== "student@kfupm.edu.sa" || password !== demoPassword) {
       setError("Incorrect email or password. Please try again.");
       return;
     }

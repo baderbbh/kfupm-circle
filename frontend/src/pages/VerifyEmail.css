@@ -189,3 +189,12 @@
   text-align: left;
   letter-spacing: normal;
 }
+
+.verification-card input[type="password"] {
+  text-align: left;
+  letter-spacing: normal;
+}
+
+.reset-field {
+  margin-bottom: 18px;
+}
