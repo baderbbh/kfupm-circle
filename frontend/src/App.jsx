@@ -4,6 +4,7 @@ import Signup from "./pages/Signup";
 import VerifyEmail from "./pages/VerifyEmail";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import ProfileSetup from "./pages/ProfileSetup";
 
 export default function App() {
   const [page, setPage] = useState("login");
@@ -31,7 +32,16 @@ export default function App() {
   }
 
   if (page === "verify") {
-    return <VerifyEmail email={registration.email} />;
+    return (
+      <VerifyEmail
+        email={registration.email}
+        onVerified={() => setPage("profile-setup")}
+      />
+    );
+  }
+
+  if (page === "profile-setup") {
+    return <ProfileSetup fullName={registration.fullName} />;
   }
 
   if (page === "signup") {

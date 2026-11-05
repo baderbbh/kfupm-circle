@@ -1,11 +1,10 @@
 import { useState } from "react";
 import "./VerifyEmail.css";
 
-export default function VerifyEmail({ email }) {
+export default function VerifyEmail({ email, onVerified }) {
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
-  const [verified, setVerified] = useState(false);
   const [verification, setVerification] = useState(() => ({
     code: "246810",
     expiresAt: Date.now() + 10 * 60 * 1000,
@@ -15,7 +14,6 @@ export default function VerifyEmail({ email }) {
     event.preventDefault();
     setError("");
     setNotice("");
-    setVerified(false);
 
     if (!/^[0-9]{6}$/.test(code)) {
       setError("Enter the six-digit verification code.");
@@ -32,7 +30,7 @@ export default function VerifyEmail({ email }) {
       return;
     }
 
-    setVerified(true);
+    onVerified();
   }
 
   function handleResend() {
@@ -44,7 +42,6 @@ export default function VerifyEmail({ email }) {
     });
 
     setError("");
-    setVerified(false);
     setNotice("A new demo code is ready. Use the code shown below.");
   }
 
@@ -89,7 +86,6 @@ export default function VerifyEmail({ email }) {
             onChange={(event) => {
               setCode(event.target.value);
               setError("");
-              setVerified(false);
             }}
             aria-invalid={Boolean(error)}
             aria-describedby={error ? "verification-error" : undefined}
@@ -106,12 +102,6 @@ export default function VerifyEmail({ email }) {
             Verify email
           </button>
         </form>
-
-        {verified && (
-          <p className="verification-notice" role="status">
-            Email verified successfully.
-          </p>
-        )}
 
         <p className="resend-prompt">
           Didn’t receive it?{" "}
