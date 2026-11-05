@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./Login.css";
 
-export default function Login() {
+export default function Login({ onCreateAccount }) {
   const [error, setError] = useState("");
   const [signedIn, setSignedIn] = useState(false);
 
@@ -118,8 +118,12 @@ export default function Login() {
 
           <div className="signup-prompt">
             <span>New to KFUPM Circle?</span>
-            <button type="button" className="text-button">
-              Create an account
+            <button
+            type="button"
+            className="text-button"
+            onClick={onCreateAccount}
+            >
+            Create an account
             </button>
           </div>
         </div>
