@@ -68,6 +68,8 @@
   grid-template-columns: 50px minmax(0, 1fr);
   column-gap: 14px;
   align-items: start;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #dce1dd;
 }
 
 .announcement-new-badge {
