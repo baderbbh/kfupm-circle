@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ClubAnnouncements from "./ClubAnnouncements";
 import "./ProfileSetup.css";
 import "./Home.css";
 import "./ClubManagerHome.css";
@@ -70,6 +71,7 @@ function Icon({ name }) {
 }
 
 export default function ClubManagerHome({ onSignOut }) {
+  const [activeView, setActiveView] = useState("announcements");
   const [clubName, setClubName] = useState("Game Development Club");
   const [interests, setInterests] = useState([
     "Game development",
@@ -150,18 +152,28 @@ export default function ClubManagerHome({ onSignOut }) {
             className="profile-navigation manager-navigation"
             aria-label="Club navigation"
           >
-            {navigation.map((item, index) => (
-              <button
-                key={item.label}
-                type="button"
-                className={index === 0 ? "home-nav-active" : ""}
-                aria-current={index === 0 ? "page" : undefined}
-                disabled={index !== 0}
-              >
-                <Icon name={item.icon} />
-                {item.label}
-              </button>
-            ))}
+            {navigation.map((item) => {
+              const isActive = activeView === "overview" ? item.label === "Club Overview" : item.label === activeView[0].toUpperCase() + activeView.slice(1);
+              const viewKey = item.label === "Club Overview" ? "overview" : item.label.toLowerCase();
+
+              return (
+                <button
+                  key={item.label}
+                  type="button"
+                  className={isActive ? "home-nav-active" : ""}
+                  aria-current={isActive ? "page" : undefined}
+                  onClick={() => {
+                    if (viewKey === "overview" || viewKey === "announcements") {
+                      setActiveView(viewKey);
+                    }
+                  }}
+                  disabled={viewKey !== "overview" && viewKey !== "announcements"}
+                >
+                  <Icon name={item.icon} />
+                  {item.label}
+                </button>
+              );
+            })}
           </nav>
 
           <div className="manager-student-access">
