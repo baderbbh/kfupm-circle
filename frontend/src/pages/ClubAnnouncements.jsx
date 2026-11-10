@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import "./ClubAnnouncements.css";
 
 export default function ClubAnnouncements() {
   const [announcements, setAnnouncements] = useState([
@@ -11,6 +12,26 @@ export default function ClubAnnouncements() {
   ]);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const [isPublishing, setIsPublishing] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+
+  useEffect(() => {
+    if (!isPublishing) {
+      return undefined;
+    }
+
+    const timer = setTimeout(() => setIsPublishing(false), 1000);
+    return () => clearTimeout(timer);
+  }, [isPublishing]);
+
+  useEffect(() => {
+    if (!showToast) {
+      return undefined;
+    }
+
+    const timer = setTimeout(() => setShowToast(false), 2000);
+    return () => clearTimeout(timer);
+  }, [showToast]);
 
   function handlePublish(event) {
     event.preventDefault();
@@ -27,15 +48,15 @@ export default function ClubAnnouncements() {
         id: Date.now(),
         title: announcementTitle,
         body: announcementBody,
-        date: new Date().toLocaleDateString("en-GB", {
-          day: "numeric",
-          month: "short",
-        }),
+        date: "today",
+        isNew: true,
       },
       ...currentAnnouncements,
     ]);
     setTitle("");
     setBody("");
+    setIsPublishing(true);
+    setShowToast(true);
   }
 
   return (
@@ -54,7 +75,13 @@ export default function ClubAnnouncements() {
             Published announcements
           </h2>
           {announcements.map((announcement) => (
-            <article key={announcement.id}>
+            <article
+              className={announcement.isNew ? "announcement-item-new" : ""}
+              key={announcement.id}
+            >
+              {announcement.isNew && (
+                <span className="announcement-new-badge">New</span>
+              )}
               <h3>{announcement.title}</h3>
               <p>{announcement.body}</p>
               <time>Published {announcement.date}</time>
@@ -66,30 +93,48 @@ export default function ClubAnnouncements() {
           <h2 id="create-announcement-heading">Create announcement</h2>
           <p>Both fields are required.</p>
           <form onSubmit={handlePublish}>
-            <label htmlFor="announcement-title">Title *</label>
-            <input
-              id="announcement-title"
-              value={title}
-              onChange={(event) => setTitle(event.target.value)}
-              maxLength={120}
-              required
-            />
-            <span>{title.length} / 120</span>
+            <div className="announcement-field">
+              <label htmlFor="announcement-title">Title *</label>
+              <input
+                id="announcement-title"
+                value={title}
+                onChange={(event) => setTitle(event.target.value)}
+                maxLength={120}
+                required
+              />
+              <span>{title.length} / 120</span>
+            </div>
 
-            <label htmlFor="announcement-body">Body *</label>
-            <textarea
-              id="announcement-body"
-              value={body}
-              onChange={(event) => setBody(event.target.value)}
-              maxLength={2000}
-              required
-            />
-            <span>{body.length} / 2,000</span>
+            <div className="announcement-field">
+              <label htmlFor="announcement-body">Body *</label>
+              <textarea
+                id="announcement-body"
+                value={body}
+                onChange={(event) => setBody(event.target.value)}
+                maxLength={2000}
+                required
+              />
+              <span>{body.length} / 2,000</span>
+            </div>
 
-            <button type="submit">Publish announcement</button>
+            <button type="submit" disabled={isPublishing}>
+              {isPublishing ? "Published" : "Publish announcement"}
+            </button>
           </form>
         </section>
       </div>
+
+      {showToast && (
+        <div className="announcement-toast" role="status" aria-live="polite">
+          <span className="announcement-toast-icon" aria-hidden="true">
+            ✓
+          </span>
+          <span>
+            <strong>Announcement published</strong>
+            <small>Students can now see it on the club page.</small>
+          </span>
+        </div>
+      )}
     </section>
   );
 }
