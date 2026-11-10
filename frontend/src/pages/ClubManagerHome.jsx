@@ -206,7 +206,11 @@ export default function ClubManagerHome({ onSignOut }) {
             <div>
               <span>Game Dev Club</span>
               {" / "}
-              <strong>Manage Club Information</strong>
+              <strong>
+                {activeView === "announcements"
+                  ? "Announcements"
+                  : "Manage Club Information"}
+              </strong>
             </div>
 
             <div className="home-account-status">
@@ -223,6 +227,10 @@ export default function ClubManagerHome({ onSignOut }) {
           </header>
 
           <div className="home-content">
+            {activeView === "announcements" ? (
+              <ClubAnnouncements />
+            ) : (
+              <>
             <div className="home-welcome">
               <div>
                 <p className="home-date">ASSIGNED CLUB ONLY</p>
@@ -360,6 +368,8 @@ export default function ClubManagerHome({ onSignOut }) {
                 <button type="submit">Save changes</button>
               </div>
             </form>
+              </>
+            )}
           </div>
         </div>
       </main>
