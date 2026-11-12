@@ -1,12 +1,105 @@
-.club-members h1 {
+.club-members-heading {
+  margin-bottom: 24px;
+}
+
+.club-members-heading h1 {
   margin: 0;
   font-size: 24px;
   font-weight: normal;
   letter-spacing: -0.6px;
 }
 
+.club-members-heading p {
+  margin: 8px 0 0;
+  color: #7b847f;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.membership-requests {
+  overflow: hidden;
+  border: 1px solid #e4e9e5;
+  border-radius: 9px;
+  background: white;
+}
+
+.membership-requests-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  border-bottom: 1px solid #e4e9e5;
+}
+
+.membership-requests-heading h2 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.membership-requests-heading p {
+  margin: 6px 0 0;
+  color: #7b847f;
+  font-size: 10px;
+}
+
+.membership-pending-count {
+  flex-shrink: 0;
+  padding: 5px 9px;
+  border: 1px solid #f0dfbd;
+  border-radius: 20px;
+  color: #96713a;
+  background: #fbf5e9;
+  font-size: 9px;
+  font-weight: bold;
+}
+
+.membership-empty-state {
+  display: flex;
+  min-height: 156px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+}
+
+.membership-search-icon {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  margin-bottom: 12px;
+  border-radius: 50%;
+  color: #527d68;
+  background: #eaf2ed;
+}
+
+.membership-search-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.membership-empty-state h3 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.membership-empty-state p {
+  margin: 7px 0 0;
+  color: #7b847f;
+  font-size: 10px;
+}
+
 @media (max-width: 768px) {
-  .club-members h1 {
+  .club-members-heading h1 {
     font-size: 22px;
+  }
+
+  .membership-requests-heading {
+    padding-right: 14px;
+    padding-left: 14px;
   }
 }
