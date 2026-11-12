@@ -1,0 +1,293 @@
+.club-invitations-heading {
+  margin-bottom: 24px;
+}
+
+.club-invitations-heading h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: normal;
+  letter-spacing: -0.6px;
+}
+
+.club-invitations-heading p {
+  margin: 8px 0 0;
+  color: #7b847f;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.club-invitations-layout {
+  display: grid;
+  width: min(100%, 760px);
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.club-invitations-fields,
+.club-invitations-recent {
+  padding: 16px;
+  border: 1px solid #e4e9e5;
+  border-radius: 9px;
+  background: white;
+}
+
+.club-invitations-fields {
+  display: grid;
+  gap: 16px;
+}
+
+.club-invitations-recent {
+  min-height: 124px;
+}
+
+.club-invitations-recent h2 {
+  margin: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e4e9e5;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.club-invitations-recent-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.club-invitations-recent-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+}
+
+.club-invitations-recent-item + .club-invitations-recent-item {
+  border-top: 1px solid #e4e9e5;
+}
+
+.club-invitations-avatar {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 50%;
+  color: #426556;
+  background: #dce6e0;
+  font-size: 9px;
+  font-weight: bold;
+}
+
+.club-invitations-recent-details {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.club-invitations-recent-details strong {
+  font-size: 10px;
+  font-weight: normal;
+}
+
+.club-invitations-recent-details small {
+  color: #7b847f;
+  font-size: 9px;
+}
+
+.club-invitations-status {
+  flex-shrink: 0;
+  margin-left: auto;
+  padding: 5px 8px;
+  border: 1px solid #d5e5dc;
+  border-radius: 20px;
+  color: #426556;
+  background: #eaf2ed;
+  font-size: 9px;
+  font-weight: bold;
+}
+
+.club-invitations-status.pending {
+  border-color: #f0dfbd;
+  color: #96713a;
+  background: #fbf5e9;
+}
+
+.club-invitations-field {
+  display: grid;
+  gap: 7px;
+}
+
+.club-invitations-field label {
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.club-invitations-field select {
+  width: 100%;
+  min-height: 36px;
+  padding: 0 10px;
+  border: 1px solid #dce2dd;
+  border-radius: 6px;
+  color: #283731;
+  background: white;
+  font-size: 10px;
+}
+
+.club-invitations-eligibility {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 4px -16px 0;
+  padding: 12px 14px;
+  border: 1px solid #e4e9e5;
+  border-radius: 6px;
+  background: #f7f9f7;
+}
+
+.club-invitations-eligibility-check {
+  flex-shrink: 0;
+  color: #527d68;
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.club-invitations-eligibility strong {
+  font-size: 10px;
+}
+
+.club-invitations-eligibility p {
+  margin: 4px 0 0;
+  color: #69776f;
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.club-invitations-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 -16px -16px;
+  padding: 12px 14px 14px;
+  border-top: 1px solid #e4e9e5;
+}
+
+.club-invitations-footer p {
+  margin: 0;
+  color: #69776f;
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.club-invitations-footer button {
+  flex-shrink: 0;
+  min-height: 34px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 6px;
+  color: white;
+  background: #164734;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.club-invitations-footer button:hover {
+  background: #103a2b;
+}
+
+.club-invitations-footer button:disabled {
+  cursor: not-allowed;
+  background: #8a9d94;
+}
+
+.club-invitations-footer button:focus-visible {
+  outline: 2px solid #527d68;
+  outline-offset: 2px;
+}
+
+.club-invitations-toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 10;
+  display: flex;
+  width: min(420px, calc(100vw - 32px));
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 10px;
+  color: white;
+  background: #202923;
+  box-shadow: 0 8px 28px rgb(0 0 0 / 20%);
+}
+
+.club-invitations-toast-check {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 50%;
+  color: #164734;
+  background: #dcece3;
+  font-weight: bold;
+}
+
+.club-invitations-toast > span:nth-child(2) {
+  display: grid;
+  gap: 5px;
+}
+
+.club-invitations-toast strong {
+  font-size: 12px;
+}
+
+.club-invitations-toast small {
+  color: #d5dad6;
+  font-size: 10px;
+}
+
+.club-invitations-toast button {
+  margin-left: auto;
+  padding: 0 2px;
+  border: 0;
+  color: #d5dad6;
+  background: none;
+  font-size: 22px;
+  line-height: 1;
+}
+
+@media (max-width: 768px) {
+  .club-invitations-heading h1 {
+    font-size: 22px;
+  }
+
+  .club-invitations-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .club-invitations-fields,
+  .club-invitations-recent {
+    padding: 14px;
+  }
+
+  .club-invitations-eligibility {
+    margin-right: -14px;
+    margin-left: -14px;
+  }
+
+  .club-invitations-footer {
+    align-items: flex-end;
+    margin-right: -14px;
+    margin-left: -14px;
+    margin-bottom: -14px;
+    padding: 12px;
+  }
+
+  .club-invitations-toast {
+    right: 16px;
+    bottom: 16px;
+  }
+}

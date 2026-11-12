@@ -1,4 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import ClubAnnouncements from "./ClubAnnouncements";
+import ClubManagerActivities from "./ClubManagerActivities";
+import ClubMembers from "./ClubMembers";
+import ClubInvitations from "./ClubInvitations";
 import "./ProfileSetup.css";
 import "./Home.css";
 import "./ClubManagerHome.css";
@@ -70,6 +74,7 @@ function Icon({ name }) {
 }
 
 export default function ClubManagerHome({ onSignOut }) {
+  const [activeView, setActiveView] = useState("announcements");
   const [clubName, setClubName] = useState("Game Development Club");
   const [interests, setInterests] = useState([
     "Game development",
@@ -79,6 +84,15 @@ export default function ClubManagerHome({ onSignOut }) {
   const [newInterest, setNewInterest] = useState("");
   const [error, setError] = useState("");
   const [saved, setSaved] = useState(false);
+
+  useEffect(() => {
+    if (!saved) {
+      return undefined;
+    }
+
+    const timeoutId = window.setTimeout(() => setSaved(false), 1000);
+    return () => window.clearTimeout(timeoutId);
+  }, [saved]);
 
   function addInterest() {
     const value = newInterest.trim();
@@ -150,18 +164,40 @@ export default function ClubManagerHome({ onSignOut }) {
             className="profile-navigation manager-navigation"
             aria-label="Club navigation"
           >
-            {navigation.map((item, index) => (
-              <button
-                key={item.label}
-                type="button"
-                className={index === 0 ? "home-nav-active" : ""}
-                aria-current={index === 0 ? "page" : undefined}
-                disabled={index !== 0}
-              >
-                <Icon name={item.icon} />
-                {item.label}
-              </button>
-            ))}
+            {navigation.map((item) => {
+              const isActive = activeView === "overview" ? item.label === "Club Overview" : item.label === activeView[0].toUpperCase() + activeView.slice(1);
+              const viewKey = item.label === "Club Overview" ? "overview" : item.label.toLowerCase();
+
+              return (
+                <button
+                  key={item.label}
+                  type="button"
+                  className={isActive ? "home-nav-active" : ""}
+                  aria-current={isActive ? "page" : undefined}
+                  onClick={() => {
+                    if (
+                      viewKey === "overview" ||
+                      viewKey === "announcements" ||
+                      viewKey === "activities" ||
+                      viewKey === "members" ||
+                      viewKey === "invitations"
+                    ) {
+                      setActiveView(viewKey);
+                    }
+                  }}
+                  disabled={
+                    viewKey !== "overview" &&
+                    viewKey !== "announcements" &&
+                    viewKey !== "activities" &&
+                    viewKey !== "members" &&
+                    viewKey !== "invitations"
+                  }
+                >
+                  <Icon name={item.icon} />
+                  {item.label}
+                </button>
+              );
+            })}
           </nav>
 
           <div className="manager-student-access">
@@ -194,7 +230,15 @@ export default function ClubManagerHome({ onSignOut }) {
             <div>
               <span>Game Dev Club</span>
               {" / "}
-              <strong>Manage Club Information</strong>
+              <strong>
+                {activeView === "members"
+                  ? "Membership Requests and Members"
+                  : activeView === "invitations"
+                    ? "Invite Students"
+                  : activeView === "announcements"
+                    ? "Announcements"
+                    : "Manage Club Information"}
+              </strong>
             </div>
 
             <div className="home-account-status">
@@ -211,6 +255,16 @@ export default function ClubManagerHome({ onSignOut }) {
           </header>
 
           <div className="home-content">
+            {activeView === "members" ? (
+              <ClubMembers />
+            ) : activeView === "invitations" ? (
+              <ClubInvitations />
+            ) : activeView === "activities" ? (
+              <ClubManagerActivities />
+            ) : activeView === "announcements" ? (
+              <ClubAnnouncements />
+            ) : (
+              <>
             <div className="home-welcome">
               <div>
                 <p className="home-date">ASSIGNED CLUB ONLY</p>
@@ -227,7 +281,7 @@ export default function ClubManagerHome({ onSignOut }) {
                   key={item.label}
                   type="button"
                   className="home-shortcut"
-                  disabled
+                  onClick={() => setActiveView(item.label.toLowerCase())}
                 >
                   <span className="manager-shortcut-icon">
                     <Icon name={item.icon} />
@@ -337,19 +391,34 @@ export default function ClubManagerHome({ onSignOut }) {
                 </p>
               )}
 
-              {saved && (
-                <p className="profile-success" role="status">
-                  Club information updated for this session.
-                </p>
-              )}
-
               <div className="profile-form-footer">
                 <p>You can modify only your assigned club.</p>
                 <button type="submit">Save changes</button>
               </div>
             </form>
+              </>
+            )}
           </div>
         </div>
+
+        {saved && (
+          <div className="manager-save-toast" role="status">
+            <span className="manager-save-toast-icon" aria-hidden="true">
+              ✓
+            </span>
+            <span className="manager-save-toast-message">
+              <strong>Club information saved</strong>
+              <small>Students can now see the updated details.</small>
+            </span>
+            <button
+              type="button"
+              aria-label="Dismiss save confirmation"
+              onClick={() => setSaved(false)}
+            >
+              ×
+            </button>
+          </div>
+        )}
       </main>
     </div>
   );
