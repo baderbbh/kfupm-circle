@@ -1,0 +1,23 @@
+.club-invitations-heading {
+  margin-bottom: 24px;
+}
+
+.club-invitations-heading h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: normal;
+  letter-spacing: -0.6px;
+}
+
+.club-invitations-heading p {
+  margin: 8px 0 0;
+  color: #7b847f;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .club-invitations-heading h1 {
+    font-size: 22px;
+  }
+}

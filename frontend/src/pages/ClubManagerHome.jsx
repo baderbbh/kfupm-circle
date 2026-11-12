@@ -2,6 +2,7 @@ import { useState } from "react";
 import ClubAnnouncements from "./ClubAnnouncements";
 import ClubManagerActivities from "./ClubManagerActivities";
 import ClubMembers from "./ClubMembers";
+import ClubInvitations from "./ClubInvitations";
 import "./ProfileSetup.css";
 import "./Home.css";
 import "./ClubManagerHome.css";
@@ -169,7 +170,8 @@ export default function ClubManagerHome({ onSignOut }) {
                       viewKey === "overview" ||
                       viewKey === "announcements" ||
                       viewKey === "activities" ||
-                      viewKey === "members"
+                      viewKey === "members" ||
+                      viewKey === "invitations"
                     ) {
                       setActiveView(viewKey);
                     }
@@ -178,7 +180,8 @@ export default function ClubManagerHome({ onSignOut }) {
                     viewKey !== "overview" &&
                     viewKey !== "announcements" &&
                     viewKey !== "activities" &&
-                    viewKey !== "members"
+                    viewKey !== "members" &&
+                    viewKey !== "invitations"
                   }
                 >
                   <Icon name={item.icon} />
@@ -221,6 +224,8 @@ export default function ClubManagerHome({ onSignOut }) {
               <strong>
                 {activeView === "members"
                   ? "Membership Requests and Members"
+                  : activeView === "invitations"
+                    ? "Invite Students"
                   : activeView === "announcements"
                     ? "Announcements"
                     : "Manage Club Information"}
@@ -243,6 +248,8 @@ export default function ClubManagerHome({ onSignOut }) {
           <div className="home-content">
             {activeView === "members" ? (
               <ClubMembers />
+            ) : activeView === "invitations" ? (
+              <ClubInvitations />
             ) : activeView === "activities" ? (
               <ClubManagerActivities />
             ) : activeView === "announcements" ? (
@@ -268,9 +275,14 @@ export default function ClubManagerHome({ onSignOut }) {
                   onClick={() => {
                     if (item.label === "Announcements") {
                       setActiveView("announcements");
+                    } else if (item.label === "Invitations") {
+                      setActiveView("invitations");
                     }
                   }}
-                  disabled={item.label !== "Announcements"}
+                  disabled={
+                    item.label !== "Announcements" &&
+                    item.label !== "Invitations"
+                  }
                 >
                   <span className="manager-shortcut-icon">
                     <Icon name={item.icon} />
