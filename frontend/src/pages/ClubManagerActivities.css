@@ -142,6 +142,12 @@
   gap: 18px;
 }
 
+.activities__field-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
 .activities__field {
   display: grid;
   gap: 8px;
@@ -257,5 +263,9 @@
   .activities__editor-header {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .activities__field-row {
+    grid-template-columns: 1fr;
   }
 }

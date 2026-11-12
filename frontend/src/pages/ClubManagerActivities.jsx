@@ -107,6 +107,28 @@ export default function ClubManagerActivities() {
                 required
               />
             </div>
+
+            <div className="activities__field-row">
+              <div className="activities__field">
+                <label htmlFor="activity-date-time">Future date &amp; time *</label>
+                <input
+                  id="activity-date-time"
+                  name="dateTime"
+                  type="datetime-local"
+                  required
+                />
+              </div>
+
+              <div className="activities__field">
+                <label htmlFor="activity-location">Location *</label>
+                <input
+                  id="activity-location"
+                  name="location"
+                  defaultValue="Building 22, Innovation Lab"
+                  required
+                />
+              </div>
+            </div>
           </form>
         </section>
       </div>
