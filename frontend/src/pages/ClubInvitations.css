@@ -49,6 +49,60 @@
   font-weight: normal;
 }
 
+.club-invitations-recent-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.club-invitations-recent-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+}
+
+.club-invitations-avatar {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 50%;
+  color: #426556;
+  background: #dce6e0;
+  font-size: 9px;
+  font-weight: bold;
+}
+
+.club-invitations-recent-details {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.club-invitations-recent-details strong {
+  font-size: 10px;
+  font-weight: normal;
+}
+
+.club-invitations-recent-details small {
+  color: #7b847f;
+  font-size: 9px;
+}
+
+.club-invitations-status {
+  flex-shrink: 0;
+  margin-left: auto;
+  padding: 5px 8px;
+  border: 1px solid #d5e5dc;
+  border-radius: 20px;
+  color: #426556;
+  background: #eaf2ed;
+  font-size: 9px;
+  font-weight: bold;
+}
+
 .club-invitations-field {
   display: grid;
   gap: 7px;

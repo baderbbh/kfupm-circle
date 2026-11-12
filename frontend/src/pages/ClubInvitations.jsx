@@ -17,6 +17,15 @@ const invitationTypes = [
   "Game Development Workshop · 24 May",
 ];
 
+const recentInvitations = [
+  {
+    initials: "FA",
+    name: "Fahad Al-Shehri",
+    invitation: "Unity Project Showcase",
+    status: "Accepted",
+  },
+];
+
 export default function ClubInvitations() {
   const [selectedStudent, setSelectedStudent] = useState(students[0].name);
   const selectedFirstName = selectedStudent.split(" ")[0];
@@ -96,6 +105,28 @@ export default function ClubInvitations() {
           aria-labelledby="club-invitations-recent-title"
         >
           <h2 id="club-invitations-recent-title">Recent invitations</h2>
+          <ul className="club-invitations-recent-list">
+            {recentInvitations.map((invitation) => (
+              <li
+                className="club-invitations-recent-item"
+                key={`${invitation.name}-${invitation.invitation}`}
+              >
+                <span
+                  className="club-invitations-avatar"
+                  aria-hidden="true"
+                >
+                  {invitation.initials}
+                </span>
+                <span className="club-invitations-recent-details">
+                  <strong>{invitation.name}</strong>
+                  <small>{invitation.invitation}</small>
+                </span>
+                <span className="club-invitations-status">
+                  {invitation.status}
+                </span>
+              </li>
+            ))}
+          </ul>
         </section>
       </div>
     </section>
