@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./ClubManagerActivities.css";
 
 const initialActivities = [
@@ -30,6 +30,15 @@ const initialActivities = [
 export default function ClubManagerActivities() {
   const [activities, setActivities] = useState(initialActivities);
   const [saved, setSaved] = useState(false);
+
+  useEffect(() => {
+    if (!saved) {
+      return undefined;
+    }
+
+    const timer = setTimeout(() => setSaved(false), 5000);
+    return () => clearTimeout(timer);
+  }, [saved]);
 
   function handleSave(event) {
     event.preventDefault();
@@ -193,14 +202,29 @@ export default function ClubManagerActivities() {
                 Save changes
               </button>
             </footer>
-            {saved && (
-              <p className="activities__saved-message" role="status">
-                Activity changes saved for this session.
-              </p>
-            )}
           </form>
         </section>
       </div>
+
+      {saved && (
+        <div className="activities__toast" role="status" aria-live="polite">
+          <span className="activities__toast-icon" aria-hidden="true">
+            ✓
+          </span>
+          <div className="activities__toast-message">
+            <strong>Activity updated</strong>
+            <span>The change is now visible in student activity views.</span>
+          </div>
+          <button
+            type="button"
+            className="activities__toast-close"
+            aria-label="Dismiss confirmation"
+            onClick={() => setSaved(false)}
+          >
+            ×
+          </button>
+        </div>
+      )}
     </section>
   );
 }
