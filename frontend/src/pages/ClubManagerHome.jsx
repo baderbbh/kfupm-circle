@@ -281,17 +281,7 @@ export default function ClubManagerHome({ onSignOut }) {
                   key={item.label}
                   type="button"
                   className="home-shortcut"
-                  onClick={() => {
-                    if (item.label === "Announcements") {
-                      setActiveView("announcements");
-                    } else if (item.label === "Invitations") {
-                      setActiveView("invitations");
-                    }
-                  }}
-                  disabled={
-                    item.label !== "Announcements" &&
-                    item.label !== "Invitations"
-                  }
+                  onClick={() => setActiveView(item.label.toLowerCase())}
                 >
                   <span className="manager-shortcut-icon">
                     <Icon name={item.icon} />
