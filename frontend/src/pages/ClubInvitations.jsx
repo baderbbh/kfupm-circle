@@ -30,61 +30,73 @@ export default function ClubInvitations() {
         </p>
       </header>
 
-      <div className="club-invitations-fields">
-        <div className="club-invitations-field">
-          <label htmlFor="invitation-student">Verified student *</label>
-          <select
-            id="invitation-student"
-            name="student"
-            value={selectedStudent}
-            onChange={(event) => setSelectedStudent(event.target.value)}
-            required
-          >
-            {students.map((student) => (
-              <option key={student.name} value={student.name}>
-                {student.option}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="club-invitations-field">
-          <label htmlFor="invitation-type">Invitation type *</label>
-          <select
-            id="invitation-type"
-            name="invitationType"
-            defaultValue={invitationTypes[0]}
-            required
-          >
-            {invitationTypes.map((invitationType) => (
-              <option key={invitationType} value={invitationType}>
-                {invitationType}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div
-          className="club-invitations-eligibility"
-          aria-live="polite"
-          aria-label="Eligibility checked"
-        >
-          <span className="club-invitations-eligibility-check" aria-hidden="true">
-            ✓
-          </span>
-          <div>
-            <strong>Eligibility checked</strong>
-            <p>
-              {selectedFirstName} is verified and is not currently a club
-              member. Cancelled and past activities are excluded.
-            </p>
+      <div className="club-invitations-layout">
+        <div className="club-invitations-fields">
+          <div className="club-invitations-field">
+            <label htmlFor="invitation-student">Verified student *</label>
+            <select
+              id="invitation-student"
+              name="student"
+              value={selectedStudent}
+              onChange={(event) => setSelectedStudent(event.target.value)}
+              required
+            >
+              {students.map((student) => (
+                <option key={student.name} value={student.name}>
+                  {student.option}
+                </option>
+              ))}
+            </select>
           </div>
+
+          <div className="club-invitations-field">
+            <label htmlFor="invitation-type">Invitation type *</label>
+            <select
+              id="invitation-type"
+              name="invitationType"
+              defaultValue={invitationTypes[0]}
+              required
+            >
+              {invitationTypes.map((invitationType) => (
+                <option key={invitationType} value={invitationType}>
+                  {invitationType}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div
+            className="club-invitations-eligibility"
+            aria-live="polite"
+            aria-label="Eligibility checked"
+          >
+            <span
+              className="club-invitations-eligibility-check"
+              aria-hidden="true"
+            >
+              ✓
+            </span>
+            <div>
+              <strong>Eligibility checked</strong>
+              <p>
+                {selectedFirstName} is verified and is not currently a club
+                member. Cancelled and past activities are excluded.
+              </p>
+            </div>
+          </div>
+
+          <footer className="club-invitations-footer">
+            <p>Duplicate pending invitations are blocked.</p>
+            <button type="button">Send invitation</button>
+          </footer>
         </div>
 
-        <footer className="club-invitations-footer">
-          <p>Duplicate pending invitations are blocked.</p>
-          <button type="button">Send invitation</button>
-        </footer>
+        <section
+          className="club-invitations-recent"
+          aria-labelledby="club-invitations-recent-title"
+        >
+          <h2 id="club-invitations-recent-title">Recent invitations</h2>
+        </section>
       </div>
     </section>
   );
