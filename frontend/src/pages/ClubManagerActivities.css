@@ -6,6 +6,23 @@
   margin-bottom: 32px;
 }
 
+.manager-activities-list {
+  width: min(100%, 362px);
+  min-height: 220px;
+  overflow: hidden;
+  border: 1px solid #dce1dd;
+  border-radius: 11px;
+  background: white;
+}
+
+.manager-activities-list h2 {
+  margin: 0;
+  padding: 24px 22px;
+  color: #28312c;
+  font-size: 16px;
+  font-weight: normal;
+}
+
 .manager-activities-heading h1 {
   margin: 0;
   color: #242a27;
