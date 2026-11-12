@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ClubAnnouncements from "./ClubAnnouncements";
 import ClubManagerActivities from "./ClubManagerActivities";
+import ClubMembers from "./ClubMembers";
 import "./ProfileSetup.css";
 import "./Home.css";
 import "./ClubManagerHome.css";
@@ -167,7 +168,8 @@ export default function ClubManagerHome({ onSignOut }) {
                     if (
                       viewKey === "overview" ||
                       viewKey === "announcements" ||
-                      viewKey === "activities"
+                      viewKey === "activities" ||
+                      viewKey === "members"
                     ) {
                       setActiveView(viewKey);
                     }
@@ -175,7 +177,8 @@ export default function ClubManagerHome({ onSignOut }) {
                   disabled={
                     viewKey !== "overview" &&
                     viewKey !== "announcements" &&
-                    viewKey !== "activities"
+                    viewKey !== "activities" &&
+                    viewKey !== "members"
                   }
                 >
                   <Icon name={item.icon} />
@@ -216,9 +219,11 @@ export default function ClubManagerHome({ onSignOut }) {
               <span>Game Dev Club</span>
               {" / "}
               <strong>
-                {activeView === "announcements"
-                  ? "Announcements"
-                  : "Manage Club Information"}
+                {activeView === "members"
+                  ? "Membership Requests and Members"
+                  : activeView === "announcements"
+                    ? "Announcements"
+                    : "Manage Club Information"}
               </strong>
             </div>
 
@@ -236,7 +241,9 @@ export default function ClubManagerHome({ onSignOut }) {
           </header>
 
           <div className="home-content">
-            {activeView === "activities" ? (
+            {activeView === "members" ? (
+              <ClubMembers />
+            ) : activeView === "activities" ? (
               <ClubManagerActivities />
             ) : activeView === "announcements" ? (
               <ClubAnnouncements />
