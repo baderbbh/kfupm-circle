@@ -163,11 +163,19 @@ export default function ClubManagerHome({ onSignOut }) {
                   className={isActive ? "home-nav-active" : ""}
                   aria-current={isActive ? "page" : undefined}
                   onClick={() => {
-                    if (viewKey === "overview" || viewKey === "announcements") {
+                    if (
+                      viewKey === "overview" ||
+                      viewKey === "announcements" ||
+                      viewKey === "activities"
+                    ) {
                       setActiveView(viewKey);
                     }
                   }}
-                  disabled={viewKey !== "overview" && viewKey !== "announcements"}
+                  disabled={
+                    viewKey !== "overview" &&
+                    viewKey !== "announcements" &&
+                    viewKey !== "activities"
+                  }
                 >
                   <Icon name={item.icon} />
                   {item.label}
@@ -227,7 +235,7 @@ export default function ClubManagerHome({ onSignOut }) {
           </header>
 
           <div className="home-content">
-            {activeView === "announcements" ? (
+            {activeView === "activities" ? null : activeView === "announcements" ? (
               <ClubAnnouncements />
             ) : (
               <>
