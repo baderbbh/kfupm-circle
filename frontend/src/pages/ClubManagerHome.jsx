@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ClubAnnouncements from "./ClubAnnouncements";
+import ClubManagerActivities from "./ClubManagerActivities";
 import "./ProfileSetup.css";
 import "./Home.css";
 import "./ClubManagerHome.css";
@@ -235,7 +236,9 @@ export default function ClubManagerHome({ onSignOut }) {
           </header>
 
           <div className="home-content">
-            {activeView === "activities" ? null : activeView === "announcements" ? (
+            {activeView === "activities" ? (
+              <ClubManagerActivities />
+            ) : activeView === "announcements" ? (
               <ClubAnnouncements />
             ) : (
               <>

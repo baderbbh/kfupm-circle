@@ -1,0 +1,73 @@
+.manager-activities-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.manager-activities-heading h1 {
+  margin: 0;
+  color: #242a27;
+  font-size: 28px;
+  font-weight: normal;
+  letter-spacing: -0.7px;
+}
+
+.manager-activities-heading p {
+  margin: 10px 0 0;
+  color: #737d77;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.manager-activities-create {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-shrink: 0;
+  min-height: 46px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 7px;
+  color: white;
+  background: #194538;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.manager-activities-create span {
+  font-size: 20px;
+  font-weight: normal;
+  line-height: 1;
+}
+
+.manager-activities-create:hover {
+  background: #12392e;
+}
+
+.manager-activities-create:focus-visible {
+  outline: 3px solid rgba(82, 125, 104, 0.4);
+  outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+  .manager-activities-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .manager-activities-heading h1 {
+    font-size: 24px;
+  }
+
+  .manager-activities-heading p {
+    font-size: 12px;
+  }
+
+  .manager-activities-create {
+    width: 100%;
+  }
+}
