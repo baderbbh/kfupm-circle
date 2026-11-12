@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ClubAnnouncements from "./ClubAnnouncements";
 import ClubManagerActivities from "./ClubManagerActivities";
 import ClubMembers from "./ClubMembers";
@@ -84,6 +84,15 @@ export default function ClubManagerHome({ onSignOut }) {
   const [newInterest, setNewInterest] = useState("");
   const [error, setError] = useState("");
   const [saved, setSaved] = useState(false);
+
+  useEffect(() => {
+    if (!saved) {
+      return undefined;
+    }
+
+    const timeoutId = window.setTimeout(() => setSaved(false), 1000);
+    return () => window.clearTimeout(timeoutId);
+  }, [saved]);
 
   function addInterest() {
     const value = newInterest.trim();
@@ -392,12 +401,6 @@ export default function ClubManagerHome({ onSignOut }) {
                 </p>
               )}
 
-              {saved && (
-                <p className="profile-success" role="status">
-                  Club information updated for this session.
-                </p>
-              )}
-
               <div className="profile-form-footer">
                 <p>You can modify only your assigned club.</p>
                 <button type="submit">Save changes</button>
@@ -407,6 +410,25 @@ export default function ClubManagerHome({ onSignOut }) {
             )}
           </div>
         </div>
+
+        {saved && (
+          <div className="manager-save-toast" role="status">
+            <span className="manager-save-toast-icon" aria-hidden="true">
+              ✓
+            </span>
+            <span className="manager-save-toast-message">
+              <strong>Club information saved</strong>
+              <small>Students can now see the updated details.</small>
+            </span>
+            <button
+              type="button"
+              aria-label="Dismiss save confirmation"
+              onClick={() => setSaved(false)}
+            >
+              ×
+            </button>
+          </div>
+        )}
       </main>
     </div>
   );
