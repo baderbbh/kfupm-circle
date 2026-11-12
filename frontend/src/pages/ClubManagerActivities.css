@@ -23,6 +23,85 @@
   font-weight: normal;
 }
 
+.manager-activity-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 88px;
+  padding: 14px 20px;
+  border-top: 1px solid #e4e9e5;
+}
+
+.manager-activity-item-selected {
+  border-left: 2px solid #194538;
+  background: #eef3ef;
+}
+
+.manager-activity-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 56px;
+  height: 56px;
+  border: 1px solid #d0d7d2;
+  border-radius: 9px;
+  color: #28312c;
+  background: white;
+}
+
+.manager-activity-date strong {
+  font-size: 18px;
+}
+
+.manager-activity-date span {
+  margin-top: 3px;
+  color: #69776f;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+.manager-activity-information {
+  min-width: 0;
+  flex: 1;
+}
+
+.manager-activity-information h3 {
+  margin: 0;
+  color: #28312c;
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 1.45;
+}
+
+.manager-activity-information p {
+  margin: 3px 0 0;
+  color: #69776f;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.manager-activity-status {
+  flex-shrink: 0;
+  padding: 7px 12px;
+  border: 1px solid;
+  border-radius: 18px;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.manager-activity-status-published {
+  border-color: #c9dfd4;
+  color: #28644e;
+  background: #edf5f0;
+}
+
+.manager-activity-status-draft {
+  border-color: #d7ddda;
+  color: #59645e;
+  background: #f3f5f4;
+}
+
 .manager-activities-heading h1 {
   margin: 0;
   color: #242a27;
