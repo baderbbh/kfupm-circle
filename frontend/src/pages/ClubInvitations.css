@@ -47,6 +47,36 @@
   font-size: 10px;
 }
 
+.club-invitations-eligibility {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 4px -16px -16px;
+  padding: 12px 14px;
+  border: 1px solid #e4e9e5;
+  border-radius: 0 0 9px 9px;
+  background: #f7f9f7;
+}
+
+.club-invitations-eligibility-check {
+  flex-shrink: 0;
+  color: #527d68;
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.club-invitations-eligibility strong {
+  font-size: 10px;
+}
+
+.club-invitations-eligibility p {
+  margin: 4px 0 0;
+  color: #69776f;
+  font-size: 9px;
+  line-height: 1.5;
+}
+
 @media (max-width: 768px) {
   .club-invitations-heading h1 {
     font-size: 22px;

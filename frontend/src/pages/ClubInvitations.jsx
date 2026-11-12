@@ -1,8 +1,15 @@
+import { useState } from "react";
 import "./ClubInvitations.css";
 
 const students = [
-  "Ahmed Al-Dossary · Software Engineering",
-  "Khalid Al-Qahtani · Computer Science",
+  {
+    name: "Ahmed Al-Dossary",
+    option: "Ahmed Al-Dossary · Software Engineering",
+  },
+  {
+    name: "Khalid Al-Qahtani",
+    option: "Khalid Al-Qahtani · Computer Science",
+  },
 ];
 
 const invitationTypes = [
@@ -11,6 +18,9 @@ const invitationTypes = [
 ];
 
 export default function ClubInvitations() {
+  const [selectedStudent, setSelectedStudent] = useState(students[0].name);
+  const selectedFirstName = selectedStudent.split(" ")[0];
+
   return (
     <section className="club-invitations">
       <header className="club-invitations-heading">
@@ -26,12 +36,13 @@ export default function ClubInvitations() {
           <select
             id="invitation-student"
             name="student"
-            defaultValue={students[0]}
+            value={selectedStudent}
+            onChange={(event) => setSelectedStudent(event.target.value)}
             required
           >
             {students.map((student) => (
-              <option key={student} value={student}>
-                {student}
+              <option key={student.name} value={student.name}>
+                {student.option}
               </option>
             ))}
           </select>
@@ -51,6 +62,23 @@ export default function ClubInvitations() {
               </option>
             ))}
           </select>
+        </div>
+
+        <div
+          className="club-invitations-eligibility"
+          aria-live="polite"
+          aria-label="Eligibility checked"
+        >
+          <span className="club-invitations-eligibility-check" aria-hidden="true">
+            ✓
+          </span>
+          <div>
+            <strong>Eligibility checked</strong>
+            <p>
+              {selectedFirstName} is verified and is not currently a club
+              member. Cancelled and past activities are excluded.
+            </p>
+          </div>
         </div>
       </div>
     </section>
