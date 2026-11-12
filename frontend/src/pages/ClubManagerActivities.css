@@ -187,6 +187,49 @@
   outline: 2px solid rgba(82, 125, 104, 0.18);
 }
 
+.activities__form-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 -26px -26px;
+  padding: 18px 26px;
+  border-top: 1px solid #eef0ee;
+  background: #f8faf8;
+}
+
+.activities__form-footer p {
+  margin: 0;
+  color: #68746d;
+  font-size: 11px;
+}
+
+.activities__save-button {
+  min-height: 46px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 7px;
+  color: white;
+  background: #194538;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.activities__save-button:hover {
+  background: #12392e;
+}
+
+.activities__save-button:focus-visible {
+  outline: 3px solid rgba(82, 125, 104, 0.4);
+  outline-offset: 2px;
+}
+
+.activities__saved-message {
+  margin: 16px 0 0;
+  color: #28644e;
+  font-size: 12px;
+}
+
 .activities__title {
   margin: 0;
   color: #242a27;
@@ -258,6 +301,17 @@
 
   .activities__editor {
     padding: 20px;
+  }
+
+  .activities__form-footer {
+    align-items: stretch;
+    flex-direction: column;
+    margin: 0 -20px -20px;
+    padding: 16px 20px;
+  }
+
+  .activities__save-button {
+    width: 100%;
   }
 
   .activities__editor-header {

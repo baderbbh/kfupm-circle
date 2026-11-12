@@ -1,11 +1,16 @@
+import { useState } from "react";
 import "./ClubManagerActivities.css";
 
-const activities = [
+const initialActivities = [
   {
     day: "24",
     month: "MAY",
     dateTime: "2025-05-24",
+    dateTimeLocal: "2025-05-24T16:00",
     title: "Game Development Workshop",
+    description:
+      "Build a playable prototype with Unity in this beginner-friendly workshop.",
+    location: "Innovation Lab",
     details: "4:00 PM · Innovation Lab",
     status: "Published",
   },
@@ -13,13 +18,60 @@ const activities = [
     day: "04",
     month: "JUN",
     dateTime: "2025-06-04",
+    dateTimeLocal: "2025-06-04T19:00",
     title: "Unity Project Showcase",
+    description: "",
+    location: "Building 22",
     details: "7:00 PM · Building 22",
     status: "Draft",
   },
 ];
 
 export default function ClubManagerActivities() {
+  const [activities, setActivities] = useState(initialActivities);
+  const [saved, setSaved] = useState(false);
+
+  function handleSave(event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const title = formData.get("title").trim();
+    const description = formData.get("description").trim();
+    const dateTimeLocal = formData.get("dateTime");
+    const location = formData.get("location").trim();
+    const [year, month] = dateTimeLocal.slice(0, 10).split("-");
+    const date = new Date(dateTimeLocal);
+    const formattedMonth = new Intl.DateTimeFormat("en-US", {
+      month: "short",
+    })
+      .format(new Date(Number(year), Number(month) - 1, 1))
+      .toUpperCase();
+    const formattedDay = dateTimeLocal.slice(8, 10);
+    const formattedTime = new Intl.DateTimeFormat("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+    }).format(date);
+
+    setActivities((currentActivities) =>
+      currentActivities.map((activity, index) =>
+        index === 0
+          ? {
+              ...activity,
+              day: formattedDay,
+              month: formattedMonth,
+              dateTime: dateTimeLocal.slice(0, 10),
+              dateTimeLocal,
+              title,
+              description,
+              location,
+              details: `${formattedTime} · ${location}`,
+            }
+          : activity
+      )
+    );
+    setSaved(true);
+  }
+
   return (
     <section className="activities">
       <header className="activities__header">
@@ -87,13 +139,17 @@ export default function ClubManagerActivities() {
             </button>
           </header>
 
-          <form className="activities__form">
+          <form
+            className="activities__form"
+            onSubmit={handleSave}
+            onChange={() => setSaved(false)}
+          >
             <div className="activities__field">
               <label htmlFor="activity-title">Title *</label>
               <input
                 id="activity-title"
                 name="title"
-                defaultValue="Game Development Workshop"
+                defaultValue={activities[0].title}
                 required
               />
             </div>
@@ -103,7 +159,7 @@ export default function ClubManagerActivities() {
               <textarea
                 id="activity-description"
                 name="description"
-                defaultValue="Build a playable prototype with Unity in this beginner-friendly workshop."
+                defaultValue={activities[0].description}
                 required
               />
             </div>
@@ -115,6 +171,7 @@ export default function ClubManagerActivities() {
                   id="activity-date-time"
                   name="dateTime"
                   type="datetime-local"
+                  defaultValue={activities[0].dateTimeLocal}
                   required
                 />
               </div>
@@ -124,11 +181,23 @@ export default function ClubManagerActivities() {
                 <input
                   id="activity-location"
                   name="location"
-                  defaultValue="Building 22, Innovation Lab"
+                  defaultValue={activities[0].location}
                   required
                 />
               </div>
             </div>
+
+            <footer className="activities__form-footer">
+              <p>Changes appear in student views.</p>
+              <button type="submit" className="activities__save-button">
+                Save changes
+              </button>
+            </footer>
+            {saved && (
+              <p className="activities__saved-message" role="status">
+                Activity changes saved for this session.
+              </p>
+            )}
           </form>
         </section>
       </div>
