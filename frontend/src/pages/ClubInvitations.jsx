@@ -80,6 +80,11 @@ export default function ClubInvitations() {
             </p>
           </div>
         </div>
+
+        <footer className="club-invitations-footer">
+          <p>Duplicate pending invitations are blocked.</p>
+          <button type="button">Send invitation</button>
+        </footer>
       </div>
     </section>
   );

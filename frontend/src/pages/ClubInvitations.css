@@ -51,10 +51,10 @@
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  margin: 4px -16px -16px;
+  margin: 4px -16px 0;
   padding: 12px 14px;
   border: 1px solid #e4e9e5;
-  border-radius: 0 0 9px 9px;
+  border-radius: 6px;
   background: #f7f9f7;
 }
 
@@ -77,6 +77,44 @@
   line-height: 1.5;
 }
 
+.club-invitations-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 -16px -16px;
+  padding: 12px 14px 14px;
+  border-top: 1px solid #e4e9e5;
+}
+
+.club-invitations-footer p {
+  margin: 0;
+  color: #69776f;
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.club-invitations-footer button {
+  flex-shrink: 0;
+  min-height: 34px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 6px;
+  color: white;
+  background: #164734;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.club-invitations-footer button:hover {
+  background: #103a2b;
+}
+
+.club-invitations-footer button:focus-visible {
+  outline: 2px solid #527d68;
+  outline-offset: 2px;
+}
+
 @media (max-width: 768px) {
   .club-invitations-heading h1 {
     font-size: 22px;
@@ -84,5 +122,18 @@
 
   .club-invitations-fields {
     padding: 14px;
+  }
+
+  .club-invitations-eligibility {
+    margin-right: -14px;
+    margin-left: -14px;
+  }
+
+  .club-invitations-footer {
+    align-items: flex-end;
+    margin-right: -14px;
+    margin-left: -14px;
+    margin-bottom: -14px;
+    padding: 12px;
   }
 }
