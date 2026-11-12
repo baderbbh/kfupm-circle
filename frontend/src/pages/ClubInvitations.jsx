@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./ClubInvitations.css";
 
 const students = [
@@ -41,6 +41,15 @@ export default function ClubInvitations() {
       invitation.invitation === selectedInvitationType &&
       invitation.status === "Pending"
   );
+
+  useEffect(() => {
+    if (!sentStudent) {
+      return undefined;
+    }
+
+    const timeoutId = window.setTimeout(() => setSentStudent(""), 1000);
+    return () => window.clearTimeout(timeoutId);
+  }, [sentStudent]);
 
   function handleSendInvitation() {
     if (isInvitationPending) {
