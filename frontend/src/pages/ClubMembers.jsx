@@ -1,5 +1,11 @@
 import "./ClubMembers.css";
 
+const members = [
+  { initials: "KQ", name: "Khalid Al-Qahtani", major: "Computer Science" },
+  { initials: "RN", name: "Rana Nadeem", major: "Information Systems" },
+  { initials: "YA", name: "Yousef Al-Mutairi", major: "Software Engineering" },
+];
+
 export default function ClubMembers() {
   return (
     <section className="club-members">
@@ -38,6 +44,33 @@ export default function ClubMembers() {
           <h3>No pending requests</h3>
           <p>New membership requests will appear here.</p>
         </div>
+      </section>
+
+      <section
+        className="current-members"
+        aria-labelledby="current-members-title"
+      >
+        <header className="current-members-heading">
+          <h2 id="current-members-title">Current members</h2>
+          <span>24 members</span>
+        </header>
+
+        <ul className="current-members-list">
+          {members.map((member) => (
+            <li className="current-member" key={member.name}>
+              <span className="current-member-avatar" aria-hidden="true">
+                {member.initials}
+              </span>
+              <span className="current-member-information">
+                <strong>{member.name}</strong>
+                <small>{member.major}</small>
+              </span>
+              <span className="current-member-menu" aria-hidden="true">
+                •••
+              </span>
+            </li>
+          ))}
+        </ul>
       </section>
     </section>
   );
