@@ -1,0 +1,28 @@
+.categories-page {
+  padding: 38px 34px;
+}
+
+.categories-header h1 {
+  margin: 0;
+  color: #252d29;
+  font-size: 28px;
+  font-weight: normal;
+  letter-spacing: -0.7px;
+}
+
+.categories-header p {
+  margin: 8px 0 0;
+  color: #69756e;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .categories-page {
+    padding: 28px 20px;
+  }
+
+  .categories-header h1 {
+    font-size: 25px;
+  }
+}

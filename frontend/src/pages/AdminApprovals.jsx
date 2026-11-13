@@ -40,24 +40,24 @@ export default function AdminApprovals() {
             Published clubs
           </button>
         </div>
+      </section>
 
-        <div className="empty-state" role="status">
-          <span className="empty-state-icon" aria-hidden="true">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <circle cx="10.8" cy="10.8" r="6.8" />
-              <path d="m16 16 4.5 4.5" />
-            </svg>
-          </span>
-          <strong>No proposals awaiting review</strong>
-          <p>All submitted proposals have received a decision.</p>
-        </div>
+      <section className="empty-state" role="status">
+        <span className="empty-state-icon" aria-hidden="true">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="10.8" cy="10.8" r="6.8" />
+            <path d="m16 16 4.5 4.5" />
+          </svg>
+        </span>
+        <strong>No proposals awaiting review</strong>
+        <p>All submitted proposals have received a decision.</p>
       </section>
 
       <section
