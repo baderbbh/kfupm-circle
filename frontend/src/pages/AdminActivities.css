@@ -2,6 +2,10 @@
   padding: 38px 34px;
 }
 
+.activities-header {
+  margin-bottom: 20px;
+}
+
 .activities-header h1 {
   margin: 0;
   color: #252d29;
@@ -17,12 +21,236 @@
   line-height: 1.5;
 }
 
+.activities-table-scroll {
+  overflow-x: auto;
+  border: 1px solid #dce1dd;
+  border-radius: 10px;
+}
+
+.activities-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  color: #252d29;
+  font-family: inherit;
+  text-align: left;
+}
+
+.activities-table th:nth-child(1),
+.activities-table td:nth-child(1) {
+  width: 30%;
+}
+
+.activities-table th:nth-child(2),
+.activities-table td:nth-child(2) {
+  width: 23%;
+}
+
+.activities-table th:nth-child(3),
+.activities-table td:nth-child(3) {
+  width: 20%;
+}
+
+.activities-table th:nth-child(4),
+.activities-table td:nth-child(4) {
+  width: 16%;
+}
+
+.activities-table th:nth-child(5),
+.activities-table td:nth-child(5) {
+  width: 11%;
+}
+
+.activities-table th {
+  height: 44px;
+  padding: 0 12px;
+  border-bottom: 1px solid #dce1dd;
+  color: #69756e;
+  background: #f6f7f6;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+}
+
+.activities-table td {
+  height: 68px;
+  padding: 10px 12px;
+  border-bottom: 1px solid #dce1dd;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.activities-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.activity-name,
+.activity-location {
+  display: block;
+}
+
+.activity-name {
+  margin-bottom: 5px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.activity-location {
+  color: #69756e;
+  font-size: 12px;
+}
+
+.activity-status {
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  padding: 0 9px;
+  border: 1px solid;
+  border-radius: 24px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.activity-status-published {
+  border-color: #c9ded4;
+  color: #315f4e;
+  background: #edf4f0;
+}
+
+.activity-status-cancelled {
+  border-color: #efc9c6;
+  color: #a34039;
+  background: #f9eded;
+}
+
+.activity-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.activity-action-button {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  padding: 4px;
+  border: 0;
+  border-radius: 5px;
+  color: #69756e;
+  background: transparent;
+  cursor: pointer;
+}
+
+.activity-action-button:hover {
+  color: #315f4e;
+  background: #edf4f0;
+}
+
+.activity-action-button:focus-visible {
+  outline: 2px solid #638b77;
+  outline-offset: 2px;
+}
+
+.activity-action-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+.activities-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.activities-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 14px 16px;
+  border: 1px solid #dce1dd;
+  border-radius: 8px;
+  color: #526159;
+  background: #f6f8f6;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.activities-note svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  color: #526d60;
+}
+
+.activities-note strong {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 12px;
+}
+
+.activities-note p {
+  margin: 0;
+}
+
 @media (max-width: 768px) {
   .activities-page {
-    padding: 28px 20px;
+    padding: 24px 12px;
   }
 
   .activities-header h1 {
     font-size: 25px;
+  }
+
+  .activities-table th {
+    padding: 0 6px;
+    font-size: 9px;
+    letter-spacing: 0.4px;
+  }
+
+  .activities-table td {
+    padding: 8px 6px;
+    font-size: 11px;
+  }
+
+  .activity-name,
+  .activity-location {
+    overflow-wrap: anywhere;
+  }
+
+  .activity-location {
+    font-size: 10px;
+  }
+
+  .activity-status {
+    min-height: 24px;
+    padding: 0 6px;
+    font-size: 10px;
+  }
+
+  .activity-actions {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .activities-note {
+    padding: 12px;
+    font-size: 11px;
+  }
+
+  .activity-action-button {
+    width: 24px;
+    height: 24px;
+  }
+
+  .activity-action-button svg {
+    width: 16px;
+    height: 16px;
   }
 }
