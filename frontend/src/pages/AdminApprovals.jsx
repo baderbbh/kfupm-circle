@@ -28,7 +28,17 @@ export default function AdminApprovals() {
           <h2 className="proposals-tab" id="pending-proposals">
             Pending proposals <span className="proposal-count">0</span>
           </h2>
-          <span className="proposals-tab-inactive">Published clubs</span>
+          <button
+            type="button"
+            className="proposals-tab-inactive"
+            onClick={() =>
+              document
+                .getElementById("published-clubs")
+                ?.scrollIntoView({ behavior: "smooth", block: "start" })
+            }
+          >
+            Published clubs
+          </button>
         </div>
 
         <div className="empty-state" role="status">
@@ -50,7 +60,11 @@ export default function AdminApprovals() {
         </div>
       </section>
 
-      <section className="published-clubs" aria-labelledby="published-clubs-title">
+      <section
+        className="published-clubs"
+        id="published-clubs"
+        aria-labelledby="published-clubs-title"
+      >
         <header className="published-clubs-header">
           <h2 id="published-clubs-title">Published clubs</h2>
           <p>Corrections require a recorded reason.</p>

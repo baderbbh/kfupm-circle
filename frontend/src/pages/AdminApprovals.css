@@ -43,8 +43,21 @@
   display: flex;
   align-items: center;
   padding: 0 16px 10px;
+  border: 0;
   color: #69756e;
+  background: transparent;
+  font: inherit;
   font-size: 12px;
+  cursor: pointer;
+}
+
+.proposals-tab-inactive:hover {
+  color: #283731;
+}
+
+.proposals-tab-inactive:focus-visible {
+  outline: 2px solid #638b77;
+  outline-offset: -2px;
 }
 
 .proposal-count {
@@ -105,6 +118,7 @@
   overflow: hidden;
   border: 1px solid #dce1dd;
   border-radius: 10px;
+  scroll-margin-top: 16px;
 }
 
 .published-clubs-header {
