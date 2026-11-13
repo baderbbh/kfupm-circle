@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./AdminReports.css";
 
-const startingReports = [
+export const startingReports = [
   {
     id: 1,
     reporter: "Khalid Al-Qahtani",
@@ -28,8 +28,7 @@ const startingReports = [
 
 const reportTabs = ["Open", "Resolved", "Dismissed"];
 
-export default function AdminReports() {
-  const [reports, setReports] = useState(startingReports);
+export default function AdminReports({ reports, setReports }) {
   const [activeTab, setActiveTab] = useState("Open");
   const [selectedReportId, setSelectedReportId] = useState(1);
   const [decisionNote, setDecisionNote] = useState("");

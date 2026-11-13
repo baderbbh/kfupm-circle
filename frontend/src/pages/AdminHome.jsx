@@ -5,7 +5,7 @@ import "./AdminHome.css";
 import AdminApprovals from "./AdminApprovals";
 import AdminCategories from "./AdminCategories";
 import AdminActivities from "./AdminActivities";
-import AdminReports from "./AdminReports";
+import AdminReports, { startingReports } from "./AdminReports";
 
 const students = [
   {
@@ -56,7 +56,7 @@ const navigation = [
   { label: "Club Approvals", icon: "club" },
   { label: "Categories", icon: "dots" },
   { label: "Activities", icon: "calendar" },
-  { label: "Reports", icon: "flag", count: 1 },
+  { label: "Reports", icon: "flag" },
 ];
 
 function Icon({ name }) {
@@ -98,6 +98,7 @@ export default function AdminHome({ onSignOut }) {
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("all");
   const [activeSection, setActiveSection] = useState("accounts");
+  const [reports, setReports] = useState(startingReports);
   const [studentToDelete, setStudentToDelete] = useState(null);
   const [notification, setNotification] = useState(null);
   const deleteTriggerRef = useRef(null);
@@ -114,6 +115,9 @@ export default function AdminHome({ onSignOut }) {
 
     return matchesSearch && matchesStatus;
   });
+  const openReportCount = reports.filter(
+    (report) => report.status === "Open",
+  ).length;
 
   const closeDeleteDialog = useCallback(() => {
     setStudentToDelete(null);
@@ -236,10 +240,8 @@ export default function AdminHome({ onSignOut }) {
               >
                 <Icon name={item.icon} />
                 {item.label}
-                {item.count && (
-                  <span className="admin-report-count">
-                    {item.count}
-                  </span>
+                {item.label === "Reports" && openReportCount > 0 && (
+                  <span className="admin-report-count">{openReportCount}</span>
                 )}
               </button>
             ))}
@@ -448,7 +450,7 @@ export default function AdminHome({ onSignOut }) {
           ) : activeSection === "activities" ? (
             <AdminActivities />
           ) : (
-            <AdminReports />
+            <AdminReports reports={reports} setReports={setReports} />
           )}
         </div>
       </main>
