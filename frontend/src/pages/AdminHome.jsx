@@ -5,6 +5,7 @@ import "./AdminHome.css";
 import AdminApprovals from "./AdminApprovals";
 import AdminCategories from "./AdminCategories";
 import AdminActivities from "./AdminActivities";
+import AdminReports from "./AdminReports";
 
 const students = [
   {
@@ -204,7 +205,8 @@ export default function AdminHome({ onSignOut }) {
                   (index === 0 && activeSection === "accounts") ||
                   (index === 1 && activeSection === "approvals") ||
                   (index === 2 && activeSection === "categories") ||
-                  (index === 3 && activeSection === "activities")
+                  (index === 3 && activeSection === "activities") ||
+                  (index === 4 && activeSection === "reports")
                     ? "home-nav-active"
                     : ""
                 }
@@ -212,11 +214,12 @@ export default function AdminHome({ onSignOut }) {
                   (index === 0 && activeSection === "accounts") ||
                   (index === 1 && activeSection === "approvals") ||
                   (index === 2 && activeSection === "categories") ||
-                  (index === 3 && activeSection === "activities")
+                  (index === 3 && activeSection === "activities") ||
+                  (index === 4 && activeSection === "reports")
                     ? "page"
                     : undefined
                 }
-                disabled={index > 3}
+                disabled={index > 4}
                 onClick={
                   index === 0
                     ? () => setActiveSection("accounts")
@@ -226,7 +229,9 @@ export default function AdminHome({ onSignOut }) {
                         ? openCategories
                         : index === 3
                           ? openActivities
-                          : undefined
+                          : index === 4
+                            ? () => setActiveSection("reports")
+                            : undefined
                 }
               >
                 <Icon name={item.icon} />
@@ -269,7 +274,9 @@ export default function AdminHome({ onSignOut }) {
                     ? "Club Proposals and Corrections"
                     : activeSection === "categories"
                       ? "Category Management"
-                      : "Platform Activities"}
+                      : activeSection === "activities"
+                        ? "Platform Activities"
+                        : "Reports and Moderation"}
               </strong>
             </div>
 
@@ -438,8 +445,10 @@ export default function AdminHome({ onSignOut }) {
             <AdminApprovals />
           ) : activeSection === "categories" ? (
             <AdminCategories />
-          ) : (
+          ) : activeSection === "activities" ? (
             <AdminActivities />
+          ) : (
+            <AdminReports />
           )}
         </div>
       </main>
