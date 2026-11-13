@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./AdminActivities.css";
 
-const activities = [
+const startingActivities = [
   {
     name: "Game Development Workshop",
     location: "Building 22 · Innovation Lab",
@@ -48,7 +48,11 @@ function Icon({ name }) {
 }
 
 export default function AdminActivities() {
+  const [activities, setActivities] = useState(startingActivities);
   const [showCorrectionMessage, setShowCorrectionMessage] = useState(false);
+  const [showRemovalDialog, setShowRemovalDialog] = useState(false);
+  const [activityToRemove, setActivityToRemove] = useState(null);
+  const [showRemovalMessage, setShowRemovalMessage] = useState(false);
 
   useEffect(() => {
     if (!showCorrectionMessage) return undefined;
@@ -59,6 +63,40 @@ export default function AdminActivities() {
     );
     return () => window.clearTimeout(timeoutId);
   }, [showCorrectionMessage]);
+
+  useEffect(() => {
+    if (!showRemovalMessage) return undefined;
+
+    const timeoutId = window.setTimeout(
+      () => setShowRemovalMessage(false),
+      1000,
+    );
+    return () => window.clearTimeout(timeoutId);
+  }, [showRemovalMessage]);
+
+  useEffect(() => {
+    if (!showRemovalDialog) return undefined;
+
+    function handleEscape(event) {
+      if (event.key === "Escape") setShowRemovalDialog(false);
+    }
+
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [showRemovalDialog]);
+
+  function confirmRemoval() {
+    if (!activityToRemove) return;
+
+    setActivities((currentActivities) =>
+      currentActivities.filter(
+        (activity) => activity.name !== activityToRemove.name,
+      ),
+    );
+    setShowRemovalDialog(false);
+    setActivityToRemove(null);
+    setShowRemovalMessage(true);
+  }
 
   return (
     <main className="activities-page">
@@ -115,6 +153,10 @@ export default function AdminActivities() {
                         type="button"
                         aria-label={`Delete ${activity.name}`}
                         className="activity-action-button"
+                        onClick={() => {
+                          setActivityToRemove(activity);
+                          setShowRemovalDialog(true);
+                        }}
                       >
                         <Icon name="delete" />
                       </button>
@@ -138,6 +180,59 @@ export default function AdminActivities() {
         </div>
       </aside>
 
+      {showRemovalDialog && (
+        <div
+          className="activity-dialog-backdrop"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) {
+              setShowRemovalDialog(false);
+              setActivityToRemove(null);
+            }
+          }}
+        >
+          <section
+            className="activity-removal-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="activity-removal-title"
+          >
+            <span className="activity-removal-icon" aria-hidden="true">
+              <Icon name="calendar" />
+            </span>
+            <h2 id="activity-removal-title">Remove this activity?</h2>
+            <p>
+              Students will no longer be able to participate or send new
+              invitations for it.
+            </p>
+            <label htmlFor="activity-removal-reason">Required reason</label>
+            <input
+              id="activity-removal-reason"
+              type="text"
+              defaultValue="Schedule conflict with venue availability"
+            />
+            <div className="activity-removal-actions">
+              <button
+                type="button"
+                className="activity-removal-cancel"
+                onClick={() => {
+                  setShowRemovalDialog(false);
+                  setActivityToRemove(null);
+                }}
+              >
+                Keep activity
+              </button>
+              <button
+                type="button"
+                className="activity-removal-confirm"
+                onClick={confirmRemoval}
+              >
+                Confirm removal
+              </button>
+            </div>
+          </section>
+        </div>
+      )}
+
       {showCorrectionMessage && (
         <div className="activity-correction-toast" role="status" aria-live="polite">
           <span className="activity-correction-check" aria-hidden="true">
@@ -152,6 +247,26 @@ export default function AdminActivities() {
             className="activity-correction-close"
             aria-label="Dismiss notification"
             onClick={() => setShowCorrectionMessage(false)}
+          >
+            ×
+          </button>
+        </div>
+      )}
+
+      {showRemovalMessage && (
+        <div className="activity-correction-toast" role="status" aria-live="polite">
+          <span className="activity-correction-check" aria-hidden="true">
+            ✓
+          </span>
+          <div className="activity-correction-message">
+            <strong>Activity unavailable</strong>
+            <p>The activity has been removed from active student views.</p>
+          </div>
+          <button
+            type="button"
+            className="activity-correction-close"
+            aria-label="Dismiss notification"
+            onClick={() => setShowRemovalMessage(false)}
           >
             ×
           </button>
