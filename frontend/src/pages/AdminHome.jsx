@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import "./ProfileSetup.css";
 import "./Home.css";
 import "./AdminHome.css";
+import AdminApprovals from "./AdminApprovals";
 
 const students = [
   {
@@ -93,6 +94,7 @@ export default function AdminHome({ onSignOut }) {
   const [accounts, setAccounts] = useState(students);
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("all");
+  const [activeSection, setActiveSection] = useState("accounts");
   const [studentToDelete, setStudentToDelete] = useState(null);
   const [notification, setNotification] = useState(null);
   const deleteTriggerRef = useRef(null);
@@ -142,6 +144,12 @@ export default function AdminHome({ onSignOut }) {
     });
   }
 
+  function openApprovals() {
+    setActiveSection("approvals");
+    setStudentToDelete(null);
+    setNotification(null);
+  }
+
   useEffect(() => {
     if (!studentToDelete) return undefined;
 
@@ -178,9 +186,26 @@ export default function AdminHome({ onSignOut }) {
               <button
                 key={item.label}
                 type="button"
-                className={index === 0 ? "home-nav-active" : ""}
-                aria-current={index === 0 ? "page" : undefined}
-                disabled={index !== 0}
+                className={
+                  (index === 0 && activeSection === "accounts") ||
+                  (index === 1 && activeSection === "approvals")
+                    ? "home-nav-active"
+                    : ""
+                }
+                aria-current={
+                  (index === 0 && activeSection === "accounts") ||
+                  (index === 1 && activeSection === "approvals")
+                    ? "page"
+                    : undefined
+                }
+                disabled={index > 1}
+                onClick={
+                  index === 0
+                    ? () => setActiveSection("accounts")
+                    : index === 1
+                      ? openApprovals
+                      : undefined
+                }
               >
                 <Icon name={item.icon} />
                 {item.label}
@@ -215,7 +240,11 @@ export default function AdminHome({ onSignOut }) {
             <div>
               <span>Administration</span>
               {" / "}
-              <strong>Student Accounts</strong>
+              <strong>
+                {activeSection === "accounts"
+                  ? "Student Accounts"
+                  : "Club Proposals and Corrections"}
+              </strong>
             </div>
 
             <div className="home-account-status">
@@ -233,16 +262,17 @@ export default function AdminHome({ onSignOut }) {
             </div>
           </header>
 
-          <div className="home-content">
-            <div className="home-welcome">
-              <div>
-                <h1>Student accounts</h1>
-                <p className="home-description">
-                  View and correct permitted account information.
-                  Private credentials and conversations are never shown.
-                </p>
+          {activeSection === "accounts" ? (
+            <div className="home-content">
+              <div className="home-welcome">
+                <div>
+                  <h1>Student accounts</h1>
+                  <p className="home-description">
+                    View and correct permitted account information.
+                    Private credentials and conversations are never shown.
+                  </p>
+                </div>
               </div>
-            </div>
 
             <div className="admin-filters">
               <div className="admin-search">
@@ -377,7 +407,10 @@ export default function AdminHome({ onSignOut }) {
                 </tbody>
               </table>
             </div>
-          </div>
+            </div>
+          ) : (
+            <AdminApprovals />
+          )}
         </div>
       </main>
       {studentToDelete && (
