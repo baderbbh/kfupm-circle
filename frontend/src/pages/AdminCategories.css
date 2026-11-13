@@ -1,3 +1,4 @@
+/* Page heading and add-value action. */
 .categories-page {
   padding: 38px 34px;
 }
@@ -46,6 +47,7 @@
   height: 18px;
 }
 
+/* Explain why a referenced value cannot be removed. */
 .removal-warning {
   position: relative;
   display: flex;
@@ -81,6 +83,7 @@
   outline-offset: 2px;
 }
 
+/* Category cards and the values listed inside each one. */
 .category-cards {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -88,6 +91,7 @@
   margin-top: 40px;
 }
 
+/* Each category stays in its own card as the grid adapts to smaller screens. */
 .category-card {
   overflow: hidden;
   border: 1px solid #dce1dd;
@@ -175,6 +179,7 @@
   height: 18px;
 }
 
+/* Keep action feedback visible without taking space in the grid. */
 .category-notification {
   position: fixed;
   z-index: 10;
@@ -224,6 +229,7 @@
   cursor: pointer;
 }
 
+/* Reduce the card columns as the available space gets smaller. */
 @media (max-width: 1100px) {
   .category-cards {
     grid-template-columns: repeat(2, minmax(0, 1fr));

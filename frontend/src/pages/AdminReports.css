@@ -1,3 +1,4 @@
+/* Report heading and status filters. */
 .reports-page {
   padding: 18px 34px 28px;
 }
@@ -54,6 +55,7 @@
   font-size: 9px;
 }
 
+/* Keep the report queue and selected report in separate panes. */
 .reports-layout {
   display: grid;
   grid-template-columns: minmax(240px, 0.9fr) minmax(0, 1.4fr);
@@ -63,6 +65,7 @@
   margin-top: 16px;
 }
 
+/* Let the list and review panel scroll independently when reports are long. */
 .reports-list,
 .report-review {
   min-width: 0;
@@ -72,6 +75,7 @@
   background: white;
 }
 
+/* Compact rows make it easy to scan the current report queue. */
 .report-list-item {
   display: flex;
   width: 100%;
@@ -137,6 +141,7 @@
   font-size: 12px;
 }
 
+/* Review details and the decision form for the selected report. */
 .report-review {
   padding: 18px;
 }
@@ -293,6 +298,7 @@
   font-size: 11px;
 }
 
+/* Short-lived confirmation after a report decision. */
 .reports-toast {
   position: fixed;
   z-index: 20;
@@ -340,6 +346,7 @@
   font-size: 18px;
 }
 
+/* Stack the queue above the review panel on phones. */
 @media (max-width: 768px) {
   .reports-page {
     padding: 24px 12px;

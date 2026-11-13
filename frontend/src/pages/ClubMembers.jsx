@@ -1,5 +1,6 @@
 import "./ClubMembers.css";
 
+// Sample current members shown below the pending-request queue.
 const members = [
   { initials: "KQ", name: "Khalid Al-Qahtani", major: "Computer Science" },
   { initials: "RN", name: "Rana Nadeem", major: "Information Systems" },
@@ -16,10 +17,12 @@ export default function ClubMembers() {
         </p>
       </header>
 
+      {/* Keep the empty request state visible even when the roster has members. */}
       <section
         className="membership-requests"
         aria-labelledby="membership-requests-title"
       >
+        {/* Keep the queue visible so incoming requests have a clear destination. */}
         <header className="membership-requests-heading">
           <div>
             <h2 id="membership-requests-title">Pending requests</h2>
@@ -50,6 +53,7 @@ export default function ClubMembers() {
         className="current-members"
         aria-labelledby="current-members-title"
       >
+        {/* The roster is rendered from a list to keep each member row consistent. */}
         <header className="current-members-heading">
           <h2 id="current-members-title">Current members</h2>
           <span>24 members</span>

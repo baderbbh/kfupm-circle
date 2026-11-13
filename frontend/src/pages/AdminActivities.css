@@ -1,3 +1,4 @@
+/* Page heading and horizontally scrollable activity table. */
 .activities-page {
   padding: 38px 34px;
 }
@@ -36,6 +37,7 @@
   text-align: left;
 }
 
+/* Give the activity name room while keeping the action column compact. */
 .activities-table th:nth-child(1),
 .activities-table td:nth-child(1) {
   width: 30%;
@@ -101,6 +103,7 @@
   font-size: 12px;
 }
 
+/* Status chips distinguish published rows from cancelled ones. */
 .activity-status {
   display: inline-flex;
   min-height: 28px;
@@ -168,6 +171,7 @@
   clip-path: inset(50%);
 }
 
+/* Keep the policy note visually separate from the table actions. */
 .activities-note {
   display: flex;
   align-items: flex-start;
@@ -199,6 +203,7 @@
   margin: 0;
 }
 
+/* Confirmation dialog and its reason field. */
 .activity-dialog-backdrop {
   position: fixed;
   z-index: 20;
@@ -301,6 +306,7 @@
   background: #a7443f;
 }
 
+/* Lightweight confirmation messages for admin actions. */
 .activity-correction-toast {
   position: fixed;
   z-index: 10;
@@ -348,6 +354,7 @@
   font-size: 20px;
 }
 
+/* Tighten spacing and stack dialog actions on small screens. */
 @media (max-width: 768px) {
   .activities-page {
     padding: 24px 12px;

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./AdminActivities.css";
 
+// Sample rows shown in the platform-wide activity list.
 const startingActivities = [
   {
     name: "Game Development Workshop",
@@ -25,6 +26,7 @@ const startingActivities = [
   },
 ];
 
+// Keep the small action icons consistent across the table and dialog.
 function Icon({ name }) {
   const paths = {
     edit: "m16 3 5 5-12 12-6 1 1-6ZM14 5l5 5",
@@ -48,6 +50,7 @@ function Icon({ name }) {
 }
 
 export default function AdminActivities() {
+  // Dialog selection and confirmation messages are kept separate from the rows.
   const [activities, setActivities] = useState(startingActivities);
   const [showCorrectionMessage, setShowCorrectionMessage] = useState(false);
   const [showRemovalDialog, setShowRemovalDialog] = useState(false);
@@ -57,6 +60,7 @@ export default function AdminActivities() {
   useEffect(() => {
     if (!showCorrectionMessage) return undefined;
 
+    // Let the correction confirmation disappear without another click.
     const timeoutId = window.setTimeout(
       () => setShowCorrectionMessage(false),
       1000,
@@ -67,6 +71,7 @@ export default function AdminActivities() {
   useEffect(() => {
     if (!showRemovalMessage) return undefined;
 
+    // Clear the removal confirmation after it has been noticed.
     const timeoutId = window.setTimeout(
       () => setShowRemovalMessage(false),
       1000,
@@ -77,6 +82,7 @@ export default function AdminActivities() {
   useEffect(() => {
     if (!showRemovalDialog) return undefined;
 
+    // Let admins dismiss the confirmation with Escape, but only while it is open.
     function handleEscape(event) {
       if (event.key === "Escape") setShowRemovalDialog(false);
     }
@@ -88,6 +94,7 @@ export default function AdminActivities() {
   function confirmRemoval() {
     if (!activityToRemove) return;
 
+    // Keep the list unchanged until the administrator confirms the removal.
     setActivities((currentActivities) =>
       currentActivities.filter(
         (activity) => activity.name !== activityToRemove.name,
@@ -105,6 +112,7 @@ export default function AdminActivities() {
         <p>Correct published activities or remove them from student access.</p>
       </header>
 
+      {/* Keep activity details in a table so admins can scan rows quickly. */}
       <div className="activities-table-scroll">
         <table className="activities-table">
           <thead>
@@ -180,10 +188,12 @@ export default function AdminActivities() {
         </div>
       </aside>
 
+      {/* Ask for confirmation before removing a published activity. */}
       {showRemovalDialog && (
         <div
           className="activity-dialog-backdrop"
           onMouseDown={(event) => {
+            // Clicking inside the dialog should not be mistaken for a cancel.
             if (event.target === event.currentTarget) {
               setShowRemovalDialog(false);
               setActivityToRemove(null);
@@ -233,6 +243,7 @@ export default function AdminActivities() {
         </div>
       )}
 
+      {/* Announce administrative actions accessibly without interrupting the page. */}
       {showCorrectionMessage && (
         <div className="activity-correction-toast" role="status" aria-live="polite">
           <span className="activity-correction-check" aria-hidden="true">

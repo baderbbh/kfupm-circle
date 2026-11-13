@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./ClubManagerActivities.css";
 
+// The list and editor start with the same published workshop.
 const initialActivities = [
   {
     day: "24",
@@ -28,9 +29,11 @@ const initialActivities = [
 ];
 
 export default function ClubManagerActivities() {
+  // The selected activity is edited here; the second sample remains a draft.
   const [activities, setActivities] = useState(initialActivities);
   const [saved, setSaved] = useState(false);
 
+  // Auto-dismiss the save confirmation and avoid leaving a timer behind.
   useEffect(() => {
     if (!saved) {
       return undefined;
@@ -48,6 +51,7 @@ export default function ClubManagerActivities() {
     const description = formData.get("description").trim();
     const dateTimeLocal = formData.get("dateTime");
     const location = formData.get("location").trim();
+    // Build the display labels from the same local date value saved by the form.
     const [year, month] = dateTimeLocal.slice(0, 10).split("-");
     const date = new Date(dateTimeLocal);
     const formattedMonth = new Intl.DateTimeFormat("en-US", {
@@ -61,6 +65,7 @@ export default function ClubManagerActivities() {
       minute: "2-digit",
     }).format(date);
 
+    // Update the selected row while preserving any other listed activities.
     setActivities((currentActivities) =>
       currentActivities.map((activity, index) =>
         index === 0
@@ -97,6 +102,7 @@ export default function ClubManagerActivities() {
       </header>
 
       <div className="activities__layout">
+        {/* The list reflects edits made in the panel beside it. */}
         <section
           className="activities__panel"
           aria-labelledby="activities-list-title"
@@ -135,6 +141,7 @@ export default function ClubManagerActivities() {
           </div>
         </section>
 
+        {/* Keep the editor tied to the selected activity in the list. */}
         <section
           className="activities__panel activities__editor"
           aria-labelledby="activity-editor-title"
@@ -206,6 +213,7 @@ export default function ClubManagerActivities() {
         </section>
       </div>
 
+      {/* Confirm saved changes in a live region that can also be dismissed. */}
       {saved && (
         <div className="activities__toast" role="status" aria-live="polite">
           <span className="activities__toast-icon" aria-hidden="true">

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./ClubInvitations.css";
 
+// Only verified students and eligible club activities are offered here.
 const students = [
   {
     name: "Ahmed Al-Dossary",
@@ -12,11 +13,13 @@ const students = [
   },
 ];
 
+// These are the invitation types currently available to the manager.
 const invitationTypes = [
   "Club membership",
   "Game Development Workshop · 24 May",
 ];
 
+// Start the recent list with the latest invitation activity.
 const recentInvitations = [
   {
     initials: "FA",
@@ -28,6 +31,7 @@ const recentInvitations = [
 ];
 
 export default function ClubInvitations() {
+  // Keep the form selection and recent invitation history in sync.
   const [selectedStudent, setSelectedStudent] = useState(students[0].name);
   const [selectedInvitationType, setSelectedInvitationType] = useState(
     invitationTypes[0]
@@ -35,6 +39,7 @@ export default function ClubInvitations() {
   const [invitations, setInvitations] = useState(recentInvitations);
   const [sentStudent, setSentStudent] = useState("");
   const selectedFirstName = selectedStudent.split(" ")[0];
+  // A matching pending invite should not be sent twice.
   const isInvitationPending = invitations.some(
     (invitation) =>
       invitation.name === selectedStudent &&
@@ -42,6 +47,7 @@ export default function ClubInvitations() {
       invitation.status === "Pending"
   );
 
+  // The sent confirmation is temporary and should not outlive this screen.
   useEffect(() => {
     if (!sentStudent) {
       return undefined;
@@ -61,6 +67,7 @@ export default function ClubInvitations() {
       .map((part) => part[0])
       .join("");
 
+    // Put the newest invitation first so it appears at the top of the history.
     setInvitations((currentInvitations) => [
       {
         initials,
@@ -84,6 +91,7 @@ export default function ClubInvitations() {
       </header>
 
       <div className="club-invitations-layout">
+        {/* The selected student and invitation type determine eligibility. */}
         <div className="club-invitations-fields">
           <div className="club-invitations-field">
             <label htmlFor="invitation-student">Verified student *</label>
@@ -157,6 +165,7 @@ export default function ClubInvitations() {
           className="club-invitations-recent"
           aria-labelledby="club-invitations-recent-title"
         >
+          {/* New invitations are added to the top of this recent list. */}
           <h2 id="club-invitations-recent-title">Recent invitations</h2>
           <ul className="club-invitations-recent-list">
             {invitations.map((invitation) => (
@@ -188,6 +197,7 @@ export default function ClubInvitations() {
         </section>
       </div>
 
+      {/* Let the manager know who received the invitation. */}
       {sentStudent && (
         <div className="club-invitations-toast" role="status">
           <span className="club-invitations-toast-check" aria-hidden="true">

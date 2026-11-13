@@ -1,3 +1,4 @@
+/* Page heading and pending-request queue. */
 .club-members-heading {
   margin-bottom: 24px;
 }
@@ -16,6 +17,7 @@
   line-height: 1.5;
 }
 
+/* Request count and empty state stay grouped in one panel. */
 .membership-requests {
   margin-bottom: 12px;
   overflow: hidden;
@@ -56,6 +58,7 @@
   font-weight: bold;
 }
 
+/* Center the queue message so an empty inbox still feels intentional. */
 .membership-empty-state {
   display: flex;
   min-height: 156px;
@@ -94,6 +97,7 @@
   font-size: 10px;
 }
 
+/* Current club roster and consistent member rows. */
 .current-members {
   overflow: hidden;
   border: 1px solid #e4e9e5;
@@ -176,6 +180,7 @@
   letter-spacing: 1px;
 }
 
+/* Reduce heading size and panel gutters on small screens. */
 @media (max-width: 768px) {
   .club-members-heading h1 {
     font-size: 22px;

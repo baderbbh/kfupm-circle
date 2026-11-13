@@ -1,3 +1,4 @@
+/* Workspace label and administrator navigation details. */
 .admin-workspace {
   display: grid;
   gap: 8px;
@@ -35,6 +36,7 @@
   font-size: 10px;
 }
 
+/* Search and status controls above the account table. */
 .admin-filters {
   display: flex;
   align-items: center;
@@ -93,6 +95,7 @@
   outline-offset: 3px;
 }
 
+/* Fixed column proportions keep the account table easy to scan. */
 .admin-table {
   width: 100%;
   min-width: 0;
@@ -148,6 +151,7 @@
   font-size: 10px;
 }
 
+/* Account identity, status badges, and row actions. */
 .admin-student {
   display: flex;
   align-items: center;
@@ -228,6 +232,7 @@
   white-space: nowrap;
 }
 
+/* Account removal confirmation, including the required reason field. */
 .admin-dialog-backdrop {
   position: fixed;
   z-index: 20;
@@ -330,6 +335,7 @@
   background: #a7443f;
 }
 
+/* Confirmation shown after an account action. */
 .admin-delete-toast {
   position: fixed;
   z-index: 21;
@@ -377,6 +383,7 @@
   font-size: 20px;
 }
 
+/* Hide lower-priority columns and stack controls on narrow screens. */
 @media (max-width: 768px) {
   .admin-workspace {
     margin-top: 20px;
@@ -396,6 +403,7 @@
     font-size: 16px;
   }
 
+  /* Drop secondary columns on phones so account actions remain easy to reach. */
   .admin-table th:nth-child(2),
   .admin-table td:nth-child(2),
   .admin-table th:nth-child(5),

@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import "./AdminApprovals.css";
 
 export default function AdminApprovals() {
+  // Keep the correction confirmation visible only briefly.
   const [showCorrectionMessage, setShowCorrectionMessage] = useState(false);
 
   useEffect(() => {
     if (!showCorrectionMessage) return undefined;
 
+    // Clear the confirmation after a short pause, and cancel it on unmount.
     const timeoutId = window.setTimeout(
       () => setShowCorrectionMessage(false),
       1000,
@@ -24,6 +26,7 @@ export default function AdminApprovals() {
       </header>
 
       <section className="proposals-card" aria-labelledby="pending-proposals">
+        {/* Tabs provide a direct jump to the published-club list below. */}
         <div className="proposals-tab-row">
           <h2 className="proposals-tab" id="pending-proposals">
             Pending proposals <span className="proposal-count">0</span>
@@ -42,6 +45,7 @@ export default function AdminApprovals() {
         </div>
       </section>
 
+      {/* An empty state explains that there is nothing waiting for review. */}
       <section className="empty-state" role="status">
         <span className="empty-state-icon" aria-hidden="true">
           <svg
@@ -65,6 +69,7 @@ export default function AdminApprovals() {
         id="published-clubs"
         aria-labelledby="published-clubs-title"
       >
+        {/* Published clubs can be corrected without entering the proposal queue. */}
         <header className="published-clubs-header">
           <h2 id="published-clubs-title">Published clubs</h2>
           <p>Corrections require a recorded reason.</p>
@@ -99,6 +104,7 @@ export default function AdminApprovals() {
           </button>
         </div>
       </section>
+      {/* Keep the save confirmation dismissible and screen-reader friendly. */}
       {showCorrectionMessage && (
         <div className="correction-toast" role="status" aria-live="polite">
           <span className="correction-toast-check" aria-hidden="true">

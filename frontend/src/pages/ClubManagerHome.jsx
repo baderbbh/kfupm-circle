@@ -7,6 +7,7 @@ import "./ProfileSetup.css";
 import "./Home.css";
 import "./ClubManagerHome.css";
 
+// Sidebar navigation switches between the club manager's available work areas.
 const navigation = [
   { label: "Club Overview", icon: "club" },
   { label: "Announcements", icon: "message" },
@@ -15,6 +16,7 @@ const navigation = [
   { label: "Invitations", icon: "inbox" },
 ];
 
+// Overview cards link to the same views as the sidebar.
 const shortcuts = [
   {
     label: "Announcements",
@@ -39,6 +41,7 @@ const shortcuts = [
 ];
 
 function Icon({ name }) {
+  // Shared icon paths keep the navigation and shortcut buttons consistent.
   const paths = {
     club: "M3 10 12 3l9 7v11h-6v-7H9v7H3Z",
     message: "M4 4h16v12H9l-5 4Z",
@@ -74,6 +77,7 @@ function Icon({ name }) {
 }
 
 export default function ClubManagerHome({ onSignOut }) {
+  // Overview fields and feedback stay mounted while the manager changes views.
   const [activeView, setActiveView] = useState("announcements");
   const [clubName, setClubName] = useState("Game Development Club");
   const [interests, setInterests] = useState([
@@ -90,6 +94,7 @@ export default function ClubManagerHome({ onSignOut }) {
       return undefined;
     }
 
+    // Clear the saved state after the confirmation has been shown.
     const timeoutId = window.setTimeout(() => setSaved(false), 1000);
     return () => window.clearTimeout(timeoutId);
   }, [saved]);
@@ -101,6 +106,7 @@ export default function ClubManagerHome({ onSignOut }) {
       return;
     }
 
+    // Treat capitalization differences as the same interest.
     const alreadyAdded = interests.some(
       (interest) => interest.toLowerCase() === value.toLowerCase()
     );
@@ -119,6 +125,7 @@ export default function ClubManagerHome({ onSignOut }) {
     setSaved(false);
   }
 
+  // Validate the club form before updating its visible name or success state.
   function handleSave(event) {
     event.preventDefault();
 
@@ -126,6 +133,7 @@ export default function ClubManagerHome({ onSignOut }) {
     const name = form.get("clubName").trim();
     const description = form.get("description").trim();
 
+    // Validate the required fields before updating the displayed club name.
     setError("");
     setSaved(false);
 
@@ -164,7 +172,9 @@ export default function ClubManagerHome({ onSignOut }) {
             className="profile-navigation manager-navigation"
             aria-label="Club navigation"
           >
+            {/* Normalize overview separately; other views match their labels. */}
             {navigation.map((item) => {
+              // Overview has a custom key; the other keys come from their labels.
               const isActive = activeView === "overview" ? item.label === "Club Overview" : item.label === activeView[0].toUpperCase() + activeView.slice(1);
               const viewKey = item.label === "Club Overview" ? "overview" : item.label.toLowerCase();
 
@@ -255,6 +265,7 @@ export default function ClubManagerHome({ onSignOut }) {
           </header>
 
           <div className="home-content">
+            {/* Dedicated views replace the overview form while they are active. */}
             {activeView === "members" ? (
               <ClubMembers />
             ) : activeView === "invitations" ? (
@@ -265,6 +276,7 @@ export default function ClubManagerHome({ onSignOut }) {
               <ClubAnnouncements />
             ) : (
               <>
+            {/* Shortcuts give quick access to the same manager sections. */}
             <div className="home-welcome">
               <div>
                 <p className="home-date">ASSIGNED CLUB ONLY</p>
@@ -295,6 +307,7 @@ export default function ClubManagerHome({ onSignOut }) {
               ))}
             </div>
 
+            {/* Only approved club information and interests are editable here. */}
             <form
               className="profile-form"
               onSubmit={handleSave}
@@ -343,6 +356,7 @@ export default function ClubManagerHome({ onSignOut }) {
                   <div className="profile-field">
                     <label htmlFor="club-interest">Interests *</label>
                     <div className="profile-tags">
+                      {/* Removing a tag updates the list used by form validation. */}
                       {interests.map((interest) => (
                         <span className="profile-tag" key={interest}>
                           {interest}
@@ -401,6 +415,7 @@ export default function ClubManagerHome({ onSignOut }) {
           </div>
         </div>
 
+        {/* Keep the save confirmation available while the manager stays in overview. */}
         {saved && (
           <div className="manager-save-toast" role="status">
             <span className="manager-save-toast-icon" aria-hidden="true">

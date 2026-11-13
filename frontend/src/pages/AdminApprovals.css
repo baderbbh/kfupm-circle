@@ -1,3 +1,4 @@
+/* Page title and proposal status tabs. */
 .approvals-page {
   padding: 38px 34px;
 }
@@ -72,6 +73,7 @@
   font-size: 10px;
 }
 
+/* Empty proposal queue and its search illustration. */
 .empty-state {
   display: flex;
   min-height: 310px;
@@ -85,6 +87,7 @@
   text-align: center;
 }
 
+/* Keep the empty queue readable without collapsing the page below it. */
 .empty-state-icon {
   display: grid;
   place-items: center;
@@ -113,6 +116,7 @@
   font-size: 12px;
 }
 
+/* Published club details and the correction action. */
 .published-clubs {
   margin-top: 16px;
   overflow: hidden;
@@ -199,6 +203,7 @@
   height: 16px;
 }
 
+/* Confirmation toast for a saved correction. */
 .correction-toast {
   position: fixed;
   z-index: 10;
@@ -246,6 +251,7 @@
   font-size: 20px;
 }
 
+/* Let club details and actions use the full width on phones. */
 @media (max-width: 768px) {
   .approvals-page {
     padding: 28px 20px;

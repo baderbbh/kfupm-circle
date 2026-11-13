@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./AdminReports.css";
 
+// Example reports used to populate the moderation queue.
 export const startingReports = [
   {
     id: 1,
@@ -26,9 +27,11 @@ export const startingReports = [
   },
 ];
 
+// Tabs group reports by the decision state chosen by an administrator.
 const reportTabs = ["Open", "Resolved", "Dismissed"];
 
 export default function AdminReports({ reports, setReports }) {
+  // The selected report and its decision note reset when moving between items.
   const [activeTab, setActiveTab] = useState("Open");
   const [selectedReportId, setSelectedReportId] = useState(1);
   const [decisionNote, setDecisionNote] = useState("");
@@ -37,6 +40,7 @@ export default function AdminReports({ reports, setReports }) {
   useEffect(() => {
     if (!notification) return undefined;
 
+    // Dismiss the decision confirmation after a short pause.
     const timeoutId = window.setTimeout(() => setNotification(null), 1000);
     return () => window.clearTimeout(timeoutId);
   }, [notification]);
@@ -44,6 +48,7 @@ export default function AdminReports({ reports, setReports }) {
   const selectedReport = reports.find(
     (report) => report.id === selectedReportId,
   );
+  // Keep the selected item in view while the report list is being updated.
   const visibleReports = reports.filter(
     (report) =>
       report.status === activeTab ||
@@ -52,6 +57,7 @@ export default function AdminReports({ reports, setReports }) {
 
   function selectTab(tab) {
     setActiveTab(tab);
+    // A note belongs to one report, so don't carry it into another status view.
     setDecisionNote("");
     const firstReport = reports.find((report) => report.status === tab);
     setSelectedReportId(firstReport?.id ?? null);
@@ -66,6 +72,7 @@ export default function AdminReports({ reports, setReports }) {
       return;
     }
 
+    // A decision is saved only with a note, and only while the report is open.
     setReports((currentReports) =>
       currentReports.map((report) =>
         report.id === selectedReport.id ? { ...report, status } : report,
@@ -88,6 +95,7 @@ export default function AdminReports({ reports, setReports }) {
       </header>
 
       <div className="reports-tabs" role="tablist" aria-label="Report status">
+        {/* Show each status and keep the open queue count visible. */}
         {reportTabs.map((tab) => {
           const count = reports.filter(
             (report) => report.status === tab,
@@ -112,6 +120,7 @@ export default function AdminReports({ reports, setReports }) {
       </div>
 
       <div className="reports-layout">
+        {/* Selecting a row loads its details in the review panel. */}
         <section className="reports-list" aria-label={`${activeTab} reports`}>
           {visibleReports.map((report) => (
             <button
@@ -144,6 +153,7 @@ export default function AdminReports({ reports, setReports }) {
           )}
         </section>
 
+        {/* Only open reports offer actions that can change their status. */}
         <section className="report-review" aria-label="Report review">
           {selectedReport ? (
             <>
@@ -229,6 +239,7 @@ export default function AdminReports({ reports, setReports }) {
           )}
         </section>
       </div>
+      {/* The decision result is announced separately from report details. */}
       {notification && (
         <div className="reports-toast" role="status" aria-live="polite">
           <span className="reports-toast-check" aria-hidden="true">

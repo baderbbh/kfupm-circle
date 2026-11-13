@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./ClubAnnouncements.css";
 
 export default function ClubAnnouncements() {
+  // Keep the newly published items at the top of the club feed.
   const [announcements, setAnnouncements] = useState([
     {
       id: 1,
@@ -15,11 +16,13 @@ export default function ClubAnnouncements() {
   const [isPublishing, setIsPublishing] = useState(false);
   const [showToast, setShowToast] = useState(false);
 
+  // The submit label and confirmation are temporary, so clear their timers on cleanup.
   useEffect(() => {
     if (!isPublishing) {
       return undefined;
     }
 
+    // Reset the button label after its brief published state.
     const timer = setTimeout(() => setIsPublishing(false), 1000);
     return () => clearTimeout(timer);
   }, [isPublishing]);
@@ -29,6 +32,7 @@ export default function ClubAnnouncements() {
       return undefined;
     }
 
+    // Remove the success toast automatically after a couple of seconds.
     const timer = setTimeout(() => setShowToast(false), 2000);
     return () => clearTimeout(timer);
   }, [showToast]);
@@ -36,6 +40,7 @@ export default function ClubAnnouncements() {
   function handlePublish(event) {
     event.preventDefault();
 
+    // Trim both fields so whitespace alone can't become a published update.
     const announcementTitle = title.trim();
     const announcementBody = body.trim();
 
@@ -53,6 +58,7 @@ export default function ClubAnnouncements() {
       },
       ...currentAnnouncements,
     ]);
+    // Start the confirmation only after the announcement is added to the feed.
     setTitle("");
     setBody("");
     setIsPublishing(true);
@@ -70,6 +76,7 @@ export default function ClubAnnouncements() {
       </header>
 
       <div className="announcements-content">
+        {/* Existing posts are listed beside the form used to create the next one. */}
         <section aria-labelledby="published-announcements-heading">
           <h2 id="published-announcements-heading">
             Published announcements
@@ -89,6 +96,7 @@ export default function ClubAnnouncements() {
           ))}
         </section>
 
+        {/* Required fields and length limits are enforced by the form controls. */}
         <section aria-labelledby="create-announcement-heading">
           <h2 id="create-announcement-heading">Create announcement</h2>
           <p>Both fields are required.</p>
@@ -124,6 +132,7 @@ export default function ClubAnnouncements() {
         </section>
       </div>
 
+      {/* Confirm publication without clearing the new post from view. */}
       {showToast && (
         <div className="announcement-toast" role="status" aria-live="polite">
           <span className="announcement-toast-icon" aria-hidden="true">

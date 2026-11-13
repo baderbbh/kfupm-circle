@@ -7,6 +7,7 @@ import AdminCategories from "./AdminCategories";
 import AdminActivities from "./AdminActivities";
 import AdminReports, { startingReports } from "./AdminReports";
 
+// Seed the account table with representative student and admin records.
 const students = [
   {
     id: 1,
@@ -51,6 +52,7 @@ const students = [
   },
 ];
 
+// Labels and icons drive the administrator's primary section navigation.
 const navigation = [
   { label: "Student Accounts", icon: "people" },
   { label: "Club Approvals", icon: "club" },
@@ -60,6 +62,7 @@ const navigation = [
 ];
 
 function Icon({ name }) {
+  // Centralize the path data so buttons can share the same SVG treatment.
   const paths = {
     people:
       "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75",
@@ -94,6 +97,7 @@ function Icon({ name }) {
 }
 
 export default function AdminHome({ onSignOut }) {
+  // Keep the account list and section-specific UI state at the page level.
   const [accounts, setAccounts] = useState(students);
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("all");
@@ -105,6 +109,7 @@ export default function AdminHome({ onSignOut }) {
 
   const searchText = search.trim().toLowerCase();
 
+  // Apply both filters to the same list so they can be combined naturally.
   const filteredStudents = accounts.filter((student) => {
     const matchesSearch =
       student.name.toLowerCase().includes(searchText) ||
@@ -119,14 +124,17 @@ export default function AdminHome({ onSignOut }) {
     (report) => report.status === "Open",
   ).length;
 
+  // Restore focus to the delete button after the dialog closes.
   const closeDeleteDialog = useCallback(() => {
     setStudentToDelete(null);
+    // Return focus to the row action that opened the dialog.
     deleteTriggerRef.current?.focus();
   }, []);
 
   useEffect(() => {
     if (!notification) return undefined;
 
+    // Success messages are temporary; clear their timer if the view changes.
     const timeoutId = window.setTimeout(() => setNotification(null), 1000);
     return () => window.clearTimeout(timeoutId);
   }, [notification]);
@@ -151,8 +159,10 @@ export default function AdminHome({ onSignOut }) {
     });
   }
 
+  // Reset account dialogs and messages when switching to another admin area.
   function openApprovals() {
     setActiveSection("approvals");
+    // Clear dialog and toast state when leaving the account list.
     setStudentToDelete(null);
     setNotification(null);
   }
@@ -172,6 +182,7 @@ export default function AdminHome({ onSignOut }) {
   useEffect(() => {
     if (!studentToDelete) return undefined;
 
+    // Keep Escape handling scoped to the lifetime of the delete dialog.
     function handleEscape(event) {
       if (event.key === "Escape") closeDeleteDialog();
     }
@@ -201,6 +212,7 @@ export default function AdminHome({ onSignOut }) {
             className="profile-navigation admin-navigation"
             aria-label="Administrator navigation"
           >
+            {/* Mark only the current section and show its open-report count. */}
             {navigation.map((item, index) => (
               <button
                 key={item.label}
@@ -309,6 +321,7 @@ export default function AdminHome({ onSignOut }) {
                 </div>
               </div>
 
+            {/* Search and status filters can be used together. */}
             <div className="admin-filters">
               <div className="admin-search">
                 <Icon name="search" />
@@ -332,6 +345,7 @@ export default function AdminHome({ onSignOut }) {
               </select>
             </div>
 
+            {/* A focusable region lets keyboard users scroll the table if needed. */}
             <div
               className="admin-table-wrapper"
               role="region"
@@ -400,6 +414,7 @@ export default function AdminHome({ onSignOut }) {
                       <td>{student.lastActive}</td>
 
                       <td>
+                        {/* The signed-in administrator cannot remove their own account here. */}
                         {student.isCurrentUser ? (
                           <span className="admin-self-note">
                             Self-deletion blocked
@@ -454,10 +469,12 @@ export default function AdminHome({ onSignOut }) {
           )}
         </div>
       </main>
+      {/* The delete confirmation stays outside the main content flow. */}
       {studentToDelete && (
         <div
           className="admin-dialog-backdrop"
           onMouseDown={(event) => {
+            // Only a click on the backdrop itself closes the confirmation.
             if (event.target === event.currentTarget) closeDeleteDialog();
           }}
         >
@@ -504,6 +521,7 @@ export default function AdminHome({ onSignOut }) {
           </section>
         </div>
       )}
+      {/* Announce account and correction results without changing sections. */}
       {notification && (
         <div className="admin-delete-toast" role="status" aria-live="polite">
           <span className="admin-delete-toast-check" aria-hidden="true">

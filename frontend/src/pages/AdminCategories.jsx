@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./AdminCategories.css";
 
+// These starter values are the options currently shown to students.
 const categories = [
   {
     name: "Majors",
@@ -27,6 +28,7 @@ const categories = [
 ];
 
 function Icon({ name }) {
+  // Use one small SVG component for the repeated category actions.
   const paths = {
     add: "M12 5v14M5 12h14",
     edit: "m16 3 5 5-12 12-6 1 1-6ZM14 5l5 5",
@@ -49,6 +51,7 @@ function Icon({ name }) {
 }
 
 export default function AdminCategories() {
+  // Notifications and blocked-removal warnings have independent lifetimes.
   const [notification, setNotification] = useState(null);
   const [removalWarning, setRemovalWarning] = useState("");
 
@@ -70,6 +73,7 @@ export default function AdminCategories() {
           type="button"
           className="add-category-button"
           onClick={() => {
+            // This prototype adds a sample value and reports the result.
             setRemovalWarning("");
             setNotification({
               title: "Category added",
@@ -82,6 +86,7 @@ export default function AdminCategories() {
         </button>
       </header>
 
+      {/* Explain when an existing reference prevents a category from being removed. */}
       {removalWarning && (
         <div className="removal-warning" role="alert">
           <strong>Cannot remove “SWE 363”</strong>
@@ -99,6 +104,7 @@ export default function AdminCategories() {
         </div>
       )}
 
+      {/* Each category card keeps its values and actions together. */}
       <div className="category-cards">
         {categories.map((category) => (
           <section
@@ -134,6 +140,7 @@ export default function AdminCategories() {
                       aria-label={`Delete ${value}`}
                       title={`Delete ${value}`}
                       onClick={() => {
+                        // This course is still referenced, so show why removal is blocked.
                         if (value === "SWE 363") {
                           setNotification(null);
                           setRemovalWarning("SWE 363");
@@ -156,6 +163,7 @@ export default function AdminCategories() {
           </section>
         ))}
       </div>
+      {/* Use a live status message for add, edit, and removal feedback. */}
       {notification && (
         <div className="category-notification" role="status" aria-live="polite">
           <span className="category-notification-check" aria-hidden="true">

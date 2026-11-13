@@ -1,3 +1,4 @@
+/* Club announcement heading and published-count badge. */
 .announcements-heading {
   display: flex;
   align-items: flex-end;
@@ -31,6 +32,7 @@
   font-weight: bold;
 }
 
+/* Keep the announcement feed and editor side by side while space allows. */
 .announcements-content {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(320px, 1fr);
@@ -38,6 +40,7 @@
   gap: 16px;
 }
 
+/* Feed and editor panels share the available content width. */
 .announcements-content > section {
   min-width: 0;
   padding: 26px;
@@ -59,6 +62,7 @@
   font-size: 11px;
 }
 
+/* Each announcement groups its title, message, and publish date. */
 .announcements-content article {
   margin-top: 28px;
 }
@@ -114,6 +118,7 @@
   font-size: 10px;
 }
 
+/* Form fields and submit action for new announcements. */
 .announcements-content form {
   display: grid;
   gap: 20px;
@@ -190,6 +195,7 @@
   outline-offset: 2px;
 }
 
+/* Confirmation appears after a new announcement is added. */
 .announcement-toast {
   position: fixed;
   right: 24px;
@@ -234,6 +240,7 @@
   line-height: 1.5;
 }
 
+/* Stack the feed and editor when two columns no longer fit. */
 @media (max-width: 900px) {
   .announcements-content {
     grid-template-columns: 1fr;

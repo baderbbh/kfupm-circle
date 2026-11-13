@@ -1,3 +1,4 @@
+/* Heading and two-column activity list/editor. */
 .activities__header {
   display: flex;
   align-items: center;
@@ -14,6 +15,7 @@
   background: white;
 }
 
+/* Keep the selected activity beside its editor on desktop. */
 .activities__layout {
   display: grid;
   grid-template-columns: minmax(280px, 0.78fr) minmax(0, 1.22fr);
@@ -29,6 +31,7 @@
   font-weight: normal;
 }
 
+/* Each list row pairs its date and details with a status chip. */
 .activity-card {
   display: flex;
   align-items: center;
@@ -108,6 +111,7 @@
   background: #f3f5f4;
 }
 
+/* Editor fields and footer actions. */
 .activities__editor {
   padding: 26px;
 }
@@ -224,6 +228,7 @@
   outline-offset: 2px;
 }
 
+/* Confirmation after the selected activity is saved. */
 .activities__toast {
   position: fixed;
   right: 24px;
@@ -284,6 +289,7 @@
   outline-offset: 4px;
 }
 
+/* Header action styles shared by the activity page. */
 .activities__title {
   margin: 0;
   color: #242a27;
@@ -330,6 +336,7 @@
   outline-offset: 2px;
 }
 
+/* Stack the editor below the activity list on narrow screens. */
 @media (max-width: 600px) {
   .activities__layout {
     grid-template-columns: 1fr;
