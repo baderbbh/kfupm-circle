@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import "./ProfileSetup.css";
 import "./Home.css";
 import "./AdminHome.css";
+import AdminApprovals from "./AdminApprovals";
+import AdminCategories from "./AdminCategories";
+import AdminActivities from "./AdminActivities";
+import AdminReports, { startingReports } from "./AdminReports";
 
 const students = [
   {
@@ -52,7 +56,7 @@ const navigation = [
   { label: "Club Approvals", icon: "club" },
   { label: "Categories", icon: "dots" },
   { label: "Activities", icon: "calendar" },
-  { label: "Reports", icon: "flag", count: 1 },
+  { label: "Reports", icon: "flag" },
 ];
 
 function Icon({ name }) {
@@ -90,12 +94,18 @@ function Icon({ name }) {
 }
 
 export default function AdminHome({ onSignOut }) {
+  const [accounts, setAccounts] = useState(students);
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("all");
+  const [activeSection, setActiveSection] = useState("accounts");
+  const [reports, setReports] = useState(startingReports);
+  const [studentToDelete, setStudentToDelete] = useState(null);
+  const [notification, setNotification] = useState(null);
+  const deleteTriggerRef = useRef(null);
 
   const searchText = search.trim().toLowerCase();
 
-  const filteredStudents = students.filter((student) => {
+  const filteredStudents = accounts.filter((student) => {
     const matchesSearch =
       student.name.toLowerCase().includes(searchText) ||
       student.email.toLowerCase().includes(searchText);
@@ -105,6 +115,70 @@ export default function AdminHome({ onSignOut }) {
 
     return matchesSearch && matchesStatus;
   });
+  const openReportCount = reports.filter(
+    (report) => report.status === "Open",
+  ).length;
+
+  const closeDeleteDialog = useCallback(() => {
+    setStudentToDelete(null);
+    deleteTriggerRef.current?.focus();
+  }, []);
+
+  useEffect(() => {
+    if (!notification) return undefined;
+
+    const timeoutId = window.setTimeout(() => setNotification(null), 1000);
+    return () => window.clearTimeout(timeoutId);
+  }, [notification]);
+
+  function confirmDeletion() {
+    if (!studentToDelete) return;
+
+    setAccounts((currentAccounts) =>
+      currentAccounts.filter((student) => student.id !== studentToDelete.id),
+    );
+    setNotification({
+      title: "Account removed",
+      message: `${studentToDelete.name} no longer appears in active accounts.`,
+    });
+    setStudentToDelete(null);
+  }
+
+  function showCorrectionSaved() {
+    setNotification({
+      title: "Correction saved",
+      message: "A reason was recorded in the administrative audit log.",
+    });
+  }
+
+  function openApprovals() {
+    setActiveSection("approvals");
+    setStudentToDelete(null);
+    setNotification(null);
+  }
+
+  function openCategories() {
+    setActiveSection("categories");
+    setStudentToDelete(null);
+    setNotification(null);
+  }
+
+  function openActivities() {
+    setActiveSection("activities");
+    setStudentToDelete(null);
+    setNotification(null);
+  }
+
+  useEffect(() => {
+    if (!studentToDelete) return undefined;
+
+    function handleEscape(event) {
+      if (event.key === "Escape") closeDeleteDialog();
+    }
+
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [studentToDelete, closeDeleteDialog]);
 
   return (
     <div className="home-wrapper">
@@ -131,16 +205,43 @@ export default function AdminHome({ onSignOut }) {
               <button
                 key={item.label}
                 type="button"
-                className={index === 0 ? "home-nav-active" : ""}
-                aria-current={index === 0 ? "page" : undefined}
-                disabled={index !== 0}
+                className={
+                  (index === 0 && activeSection === "accounts") ||
+                  (index === 1 && activeSection === "approvals") ||
+                  (index === 2 && activeSection === "categories") ||
+                  (index === 3 && activeSection === "activities") ||
+                  (index === 4 && activeSection === "reports")
+                    ? "home-nav-active"
+                    : ""
+                }
+                aria-current={
+                  (index === 0 && activeSection === "accounts") ||
+                  (index === 1 && activeSection === "approvals") ||
+                  (index === 2 && activeSection === "categories") ||
+                  (index === 3 && activeSection === "activities") ||
+                  (index === 4 && activeSection === "reports")
+                    ? "page"
+                    : undefined
+                }
+                disabled={index > 4}
+                onClick={
+                  index === 0
+                    ? () => setActiveSection("accounts")
+                    : index === 1
+                      ? openApprovals
+                      : index === 2
+                        ? openCategories
+                        : index === 3
+                          ? openActivities
+                          : index === 4
+                            ? () => setActiveSection("reports")
+                            : undefined
+                }
               >
                 <Icon name={item.icon} />
                 {item.label}
-                {item.count && (
-                  <span className="admin-report-count">
-                    {item.count}
-                  </span>
+                {item.label === "Reports" && openReportCount > 0 && (
+                  <span className="admin-report-count">{openReportCount}</span>
                 )}
               </button>
             ))}
@@ -168,7 +269,17 @@ export default function AdminHome({ onSignOut }) {
             <div>
               <span>Administration</span>
               {" / "}
-              <strong>Student Accounts</strong>
+              <strong>
+                {activeSection === "accounts"
+                  ? "Student Accounts"
+                  : activeSection === "approvals"
+                    ? "Club Proposals and Corrections"
+                    : activeSection === "categories"
+                      ? "Category Management"
+                      : activeSection === "activities"
+                        ? "Platform Activities"
+                        : "Reports and Moderation"}
+              </strong>
             </div>
 
             <div className="home-account-status">
@@ -186,16 +297,17 @@ export default function AdminHome({ onSignOut }) {
             </div>
           </header>
 
-          <div className="home-content">
-            <div className="home-welcome">
-              <div>
-                <h1>Student accounts</h1>
-                <p className="home-description">
-                  View and correct permitted account information.
-                  Private credentials and conversations are never shown.
-                </p>
+          {activeSection === "accounts" ? (
+            <div className="home-content">
+              <div className="home-welcome">
+                <div>
+                  <h1>Student accounts</h1>
+                  <p className="home-description">
+                    View and correct permitted account information.
+                    Private credentials and conversations are never shown.
+                  </p>
+                </div>
               </div>
-            </div>
 
             <div className="admin-filters">
               <div className="admin-search">
@@ -298,7 +410,7 @@ export default function AdminHome({ onSignOut }) {
                               type="button"
                               className="home-icon-button"
                               aria-label={`Edit ${student.name}`}
-                              disabled
+                              onClick={showCorrectionSaved}
                             >
                               <Icon name="edit" />
                             </button>
@@ -306,7 +418,11 @@ export default function AdminHome({ onSignOut }) {
                               type="button"
                               className="home-icon-button"
                               aria-label={`Delete ${student.name}`}
-                              disabled
+                              onClick={(event) => {
+                                deleteTriggerRef.current = event.currentTarget;
+                                setNotification(null);
+                                setStudentToDelete(student);
+                              }}
                             >
                               <Icon name="delete" />
                             </button>
@@ -326,9 +442,87 @@ export default function AdminHome({ onSignOut }) {
                 </tbody>
               </table>
             </div>
-          </div>
+            </div>
+          ) : activeSection === "approvals" ? (
+            <AdminApprovals />
+          ) : activeSection === "categories" ? (
+            <AdminCategories />
+          ) : activeSection === "activities" ? (
+            <AdminActivities />
+          ) : (
+            <AdminReports reports={reports} setReports={setReports} />
+          )}
         </div>
       </main>
+      {studentToDelete && (
+        <div
+          className="admin-dialog-backdrop"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) closeDeleteDialog();
+          }}
+        >
+          <section
+            className="admin-delete-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="admin-delete-title"
+            aria-describedby="admin-delete-description"
+          >
+            <span className="admin-delete-icon">
+              <Icon name="delete" />
+            </span>
+            <h2 id="admin-delete-title">
+              Delete {studentToDelete.name}&rsquo;s account?
+            </h2>
+            <p id="admin-delete-description">
+              This removes the account from active listings. This action does
+              not expose or retain private conversations in this view.
+            </p>
+            <label htmlFor="admin-delete-reason">Reason for deletion</label>
+            <input
+              autoFocus
+              id="admin-delete-reason"
+              type="text"
+              defaultValue="Duplicate account confirmed by student services"
+            />
+            <div className="admin-delete-actions">
+              <button
+                type="button"
+                className="admin-delete-cancel"
+                onClick={closeDeleteDialog}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="admin-delete-confirm"
+                onClick={confirmDeletion}
+              >
+                Confirm deletion
+              </button>
+            </div>
+          </section>
+        </div>
+      )}
+      {notification && (
+        <div className="admin-delete-toast" role="status" aria-live="polite">
+          <span className="admin-delete-toast-check" aria-hidden="true">
+            ✓
+          </span>
+          <div className="admin-delete-toast-message">
+            <strong>{notification.title}</strong>
+            <p>{notification.message}</p>
+          </div>
+          <button
+            type="button"
+            className="admin-delete-toast-close"
+            aria-label="Dismiss notification"
+            onClick={() => setNotification(null)}
+          >
+            ×
+          </button>
+        </div>
+      )}
     </div>
   );
 }
