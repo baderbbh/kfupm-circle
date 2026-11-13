@@ -1,6 +1,19 @@
+import { useEffect, useState } from "react";
 import "./AdminApprovals.css";
 
 export default function AdminApprovals() {
+  const [showCorrectionMessage, setShowCorrectionMessage] = useState(false);
+
+  useEffect(() => {
+    if (!showCorrectionMessage) return undefined;
+
+    const timeoutId = window.setTimeout(
+      () => setShowCorrectionMessage(false),
+      1000,
+    );
+    return () => window.clearTimeout(timeoutId);
+  }, [showCorrectionMessage]);
+
   return (
     <main className="approvals-page">
       <header className="approvals-header">
@@ -52,7 +65,11 @@ export default function AdminApprovals() {
               Manager: Sara Mansour · gamedev@clubs.kfupm.edu.sa
             </p>
           </div>
-          <button type="button" className="correct-club-button">
+          <button
+            type="button"
+            className="correct-club-button"
+            onClick={() => setShowCorrectionMessage(true)}
+          >
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -68,6 +85,25 @@ export default function AdminApprovals() {
           </button>
         </div>
       </section>
+      {showCorrectionMessage && (
+        <div className="correction-toast" role="status" aria-live="polite">
+          <span className="correction-toast-check" aria-hidden="true">
+            ✓
+          </span>
+          <div className="correction-toast-message">
+            <strong>Correction saved</strong>
+            <p>The update and reason were recorded.</p>
+          </div>
+          <button
+            type="button"
+            className="correction-toast-close"
+            aria-label="Dismiss notification"
+            onClick={() => setShowCorrectionMessage(false)}
+          >
+            ×
+          </button>
+        </div>
+      )}
     </main>
   );
 }
