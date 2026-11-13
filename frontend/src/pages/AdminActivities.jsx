@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import "./AdminActivities.css";
 
 const activities = [
@@ -47,6 +48,18 @@ function Icon({ name }) {
 }
 
 export default function AdminActivities() {
+  const [showCorrectionMessage, setShowCorrectionMessage] = useState(false);
+
+  useEffect(() => {
+    if (!showCorrectionMessage) return undefined;
+
+    const timeoutId = window.setTimeout(
+      () => setShowCorrectionMessage(false),
+      1000,
+    );
+    return () => window.clearTimeout(timeoutId);
+  }, [showCorrectionMessage]);
+
   return (
     <main className="activities-page">
       <header className="activities-header">
@@ -93,6 +106,7 @@ export default function AdminActivities() {
                       type="button"
                       aria-label={`Edit ${activity.name}`}
                       className="activity-action-button"
+                      onClick={() => setShowCorrectionMessage(true)}
                     >
                       <Icon name="edit" />
                     </button>
@@ -123,6 +137,26 @@ export default function AdminActivities() {
           </p>
         </div>
       </aside>
+
+      {showCorrectionMessage && (
+        <div className="activity-correction-toast" role="status" aria-live="polite">
+          <span className="activity-correction-check" aria-hidden="true">
+            ✓
+          </span>
+          <div className="activity-correction-message">
+            <strong>Activity corrected</strong>
+            <p>The update and correction reason were recorded.</p>
+          </div>
+          <button
+            type="button"
+            className="activity-correction-close"
+            aria-label="Dismiss notification"
+            onClick={() => setShowCorrectionMessage(false)}
+          >
+            ×
+          </button>
+        </div>
+      )}
     </main>
   );
 }
