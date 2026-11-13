@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import "./ProfileSetup.css";
 import "./Home.css";
 import "./AdminHome.css";
@@ -92,6 +92,8 @@ function Icon({ name }) {
 export default function AdminHome({ onSignOut }) {
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("all");
+  const [studentToDelete, setStudentToDelete] = useState(null);
+  const deleteTriggerRef = useRef(null);
 
   const searchText = search.trim().toLowerCase();
 
@@ -105,6 +107,22 @@ export default function AdminHome({ onSignOut }) {
 
     return matchesSearch && matchesStatus;
   });
+
+  const closeDeleteDialog = useCallback(() => {
+    setStudentToDelete(null);
+    deleteTriggerRef.current?.focus();
+  }, []);
+
+  useEffect(() => {
+    if (!studentToDelete) return undefined;
+
+    function handleEscape(event) {
+      if (event.key === "Escape") closeDeleteDialog();
+    }
+
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [studentToDelete, closeDeleteDialog]);
 
   return (
     <div className="home-wrapper">
@@ -306,7 +324,10 @@ export default function AdminHome({ onSignOut }) {
                               type="button"
                               className="home-icon-button"
                               aria-label={`Delete ${student.name}`}
-                              disabled
+                              onClick={(event) => {
+                                deleteTriggerRef.current = event.currentTarget;
+                                setStudentToDelete(student);
+                              }}
                             >
                               <Icon name="delete" />
                             </button>
@@ -329,6 +350,52 @@ export default function AdminHome({ onSignOut }) {
           </div>
         </div>
       </main>
+      {studentToDelete && (
+        <div
+          className="admin-dialog-backdrop"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) closeDeleteDialog();
+          }}
+        >
+          <section
+            className="admin-delete-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="admin-delete-title"
+            aria-describedby="admin-delete-description"
+          >
+            <span className="admin-delete-icon">
+              <Icon name="delete" />
+            </span>
+            <h2 id="admin-delete-title">
+              Delete {studentToDelete.name}&rsquo;s account?
+            </h2>
+            <p id="admin-delete-description">
+              This removes the account from active listings. This action does
+              not expose or retain private conversations in this view.
+            </p>
+            <label htmlFor="admin-delete-reason">Reason for deletion</label>
+            <input
+              autoFocus
+              id="admin-delete-reason"
+              type="text"
+              defaultValue="Duplicate account confirmed by student services"
+            />
+            <div className="admin-delete-actions">
+              <button
+                type="button"
+                className="admin-delete-cancel"
+                onClick={closeDeleteDialog}
+              >
+                Cancel
+              </button>
+              <button type="button" className="admin-delete-confirm">
+                Confirm deletion
+              </button>
+            </div>
+          </section>
+        </div>
+      )}
     </div>
   );
 }

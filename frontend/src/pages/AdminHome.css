@@ -191,6 +191,108 @@
   white-space: nowrap;
 }
 
+.admin-dialog-backdrop {
+  position: fixed;
+  z-index: 20;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgb(25 34 29 / 48%);
+}
+
+.admin-delete-dialog {
+  width: min(920px, 100%);
+  padding: 40px;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 20px 60px rgb(25 34 29 / 20%);
+}
+
+.admin-delete-icon {
+  display: grid;
+  place-items: center;
+  width: 68px;
+  height: 68px;
+  margin-bottom: 32px;
+  border-radius: 50%;
+  color: #a7443f;
+  background: #faeeee;
+}
+
+.admin-delete-icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.admin-delete-dialog h2 {
+  margin: 0;
+  color: #252d29;
+  font-size: 30px;
+  font-weight: normal;
+  letter-spacing: -0.5px;
+}
+
+.admin-delete-dialog > p {
+  margin: 16px 0 28px;
+  color: #69756e;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.admin-delete-dialog label {
+  display: block;
+  margin-bottom: 10px;
+  color: #414a45;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.admin-delete-dialog input {
+  width: 100%;
+  min-height: 58px;
+  padding: 12px 16px;
+  border: 1px solid #d5dcd7;
+  border-radius: 8px;
+  color: #283731;
+  background: white;
+  font: inherit;
+  font-size: 15px;
+}
+
+.admin-delete-dialog input:focus-visible {
+  outline: 2px solid #638b77;
+  outline-offset: 2px;
+}
+
+.admin-delete-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.admin-delete-actions button {
+  min-height: 54px;
+  padding: 12px 22px;
+  border: 1px solid #d5dcd7;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.admin-delete-cancel {
+  color: #252d29;
+  background: white;
+}
+
+.admin-delete-confirm {
+  border-color: #a7443f !important;
+  color: white;
+  background: #a7443f;
+}
+
 @media (max-width: 768px) {
   .admin-workspace {
     margin-top: 20px;
@@ -208,5 +310,35 @@
   .admin-search input,
   .admin-filters select {
     font-size: 16px;
+  }
+
+  .admin-dialog-backdrop {
+    padding: 16px;
+  }
+
+  .admin-delete-dialog {
+    padding: 28px 22px;
+  }
+
+  .admin-delete-icon {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 24px;
+  }
+
+  .admin-delete-dialog h2 {
+    font-size: 24px;
+  }
+
+  .admin-delete-dialog > p {
+    font-size: 14px;
+  }
+
+  .admin-delete-actions {
+    flex-direction: column-reverse;
+  }
+
+  .admin-delete-actions button {
+    width: 100%;
   }
 }
