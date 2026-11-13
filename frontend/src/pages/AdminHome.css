@@ -293,6 +293,53 @@
   background: #a7443f;
 }
 
+.admin-delete-toast {
+  position: fixed;
+  z-index: 21;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: min(520px, calc(100% - 40px));
+  padding: 14px 18px;
+  border-radius: 10px;
+  color: white;
+  background: #202a24;
+  box-shadow: 0 12px 32px rgb(25 34 29 / 20%);
+}
+
+.admin-delete-toast-check {
+  display: grid;
+  place-items: center;
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: #285744;
+  background: #dceee6;
+  font-size: 19px;
+}
+
+.admin-delete-toast-message strong {
+  font-size: 13px;
+}
+
+.admin-delete-toast-message p {
+  margin: 5px 0 0;
+  color: #c9d0cb;
+  font-size: 11px;
+}
+
+.admin-delete-toast-close {
+  margin-left: auto;
+  padding: 4px;
+  border: 0;
+  color: #c9d0cb;
+  background: transparent;
+  font-size: 20px;
+}
+
 @media (max-width: 768px) {
   .admin-workspace {
     margin-top: 20px;
@@ -340,5 +387,12 @@
 
   .admin-delete-actions button {
     width: 100%;
+  }
+
+  .admin-delete-toast {
+    right: 12px;
+    bottom: 12px;
+    width: calc(100% - 24px);
+    padding: 12px 14px;
   }
 }

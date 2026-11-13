@@ -90,14 +90,16 @@ function Icon({ name }) {
 }
 
 export default function AdminHome({ onSignOut }) {
+  const [accounts, setAccounts] = useState(students);
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("all");
   const [studentToDelete, setStudentToDelete] = useState(null);
+  const [deletedStudent, setDeletedStudent] = useState("");
   const deleteTriggerRef = useRef(null);
 
   const searchText = search.trim().toLowerCase();
 
-  const filteredStudents = students.filter((student) => {
+  const filteredStudents = accounts.filter((student) => {
     const matchesSearch =
       student.name.toLowerCase().includes(searchText) ||
       student.email.toLowerCase().includes(searchText);
@@ -112,6 +114,23 @@ export default function AdminHome({ onSignOut }) {
     setStudentToDelete(null);
     deleteTriggerRef.current?.focus();
   }, []);
+
+  useEffect(() => {
+    if (!deletedStudent) return undefined;
+
+    const timeoutId = window.setTimeout(() => setDeletedStudent(""), 1000);
+    return () => window.clearTimeout(timeoutId);
+  }, [deletedStudent]);
+
+  function confirmDeletion() {
+    if (!studentToDelete) return;
+
+    setAccounts((currentAccounts) =>
+      currentAccounts.filter((student) => student.id !== studentToDelete.id),
+    );
+    setDeletedStudent(studentToDelete.name);
+    setStudentToDelete(null);
+  }
 
   useEffect(() => {
     if (!studentToDelete) return undefined;
@@ -326,6 +345,7 @@ export default function AdminHome({ onSignOut }) {
                               aria-label={`Delete ${student.name}`}
                               onClick={(event) => {
                                 deleteTriggerRef.current = event.currentTarget;
+                                setDeletedStudent("");
                                 setStudentToDelete(student);
                               }}
                             >
@@ -389,11 +409,34 @@ export default function AdminHome({ onSignOut }) {
               >
                 Cancel
               </button>
-              <button type="button" className="admin-delete-confirm">
+              <button
+                type="button"
+                className="admin-delete-confirm"
+                onClick={confirmDeletion}
+              >
                 Confirm deletion
               </button>
             </div>
           </section>
+        </div>
+      )}
+      {deletedStudent && (
+        <div className="admin-delete-toast" role="status" aria-live="polite">
+          <span className="admin-delete-toast-check" aria-hidden="true">
+            ✓
+          </span>
+          <div className="admin-delete-toast-message">
+            <strong>Account removed</strong>
+            <p>{deletedStudent} no longer appears in active accounts.</p>
+          </div>
+          <button
+            type="button"
+            className="admin-delete-toast-close"
+            aria-label="Dismiss notification"
+            onClick={() => setDeletedStudent("")}
+          >
+            ×
+          </button>
         </div>
       )}
     </div>
