@@ -95,13 +95,44 @@
 
 .admin-table {
   width: 100%;
-  min-width: 850px;
+  min-width: 0;
+  table-layout: fixed;
   border-collapse: collapse;
   text-align: left;
 }
 
+.admin-table th:nth-child(1),
+.admin-table td:nth-child(1) {
+  width: 24%;
+}
+
+.admin-table th:nth-child(2),
+.admin-table td:nth-child(2) {
+  width: 18%;
+}
+
+.admin-table th:nth-child(3),
+.admin-table td:nth-child(3) {
+  width: 15%;
+}
+
+.admin-table th:nth-child(4),
+.admin-table td:nth-child(4) {
+  width: 20%;
+}
+
+.admin-table th:nth-child(5),
+.admin-table td:nth-child(5) {
+  width: 13%;
+}
+
+.admin-table th:nth-child(6),
+.admin-table td:nth-child(6) {
+  width: 10%;
+}
+
 .admin-table th {
-  padding: 14px;
+  padding: 10px 12px;
   color: #7b847f;
   background: #f6f8f6;
   font-size: 9px;
@@ -111,7 +142,7 @@
 }
 
 .admin-table td {
-  padding: 16px 14px;
+  padding: 10px 12px;
   border-top: 1px solid #e4e9e5;
   color: #526159;
   font-size: 10px;
@@ -120,7 +151,13 @@
 .admin-student {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+}
+
+.admin-student .profile-avatar {
+  width: 30px;
+  height: 30px;
+  font-size: 10px;
 }
 
 .admin-student strong {
@@ -130,14 +167,14 @@
 
 .admin-student-email {
   display: block;
-  margin-top: 6px;
+  margin-top: 3px;
   color: #7b847f;
   font-size: 9px;
 }
 
 .admin-badge {
   display: inline-block;
-  padding: 5px 8px;
+  padding: 4px 7px;
   border: 1px solid #dfe9e3;
   border-radius: 20px;
   color: #426556;
@@ -357,6 +394,60 @@
   .admin-search input,
   .admin-filters select {
     font-size: 16px;
+  }
+
+  .admin-table th:nth-child(2),
+  .admin-table td:nth-child(2),
+  .admin-table th:nth-child(5),
+  .admin-table td:nth-child(5) {
+    display: none;
+  }
+
+  .admin-table th:nth-child(1),
+  .admin-table td:nth-child(1) {
+    width: 38%;
+  }
+
+  .admin-table th:nth-child(3),
+  .admin-table td:nth-child(3) {
+    width: 20%;
+  }
+
+  .admin-table th:nth-child(4),
+  .admin-table td:nth-child(4) {
+    width: 27%;
+  }
+
+  .admin-table th:nth-child(6),
+  .admin-table td:nth-child(6) {
+    width: 15%;
+  }
+
+  .admin-table th,
+  .admin-table td {
+    padding-right: 7px;
+    padding-left: 7px;
+  }
+
+  .admin-student {
+    gap: 6px;
+  }
+
+  .admin-student .profile-avatar {
+    width: 26px;
+    height: 26px;
+  }
+
+  .admin-student strong,
+  .admin-student-email,
+  .admin-current-user,
+  .admin-self-note {
+    overflow-wrap: anywhere;
+    white-space: normal;
+  }
+
+  .admin-row-actions {
+    gap: 0;
   }
 
   .admin-dialog-backdrop {

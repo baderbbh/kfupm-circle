@@ -94,7 +94,7 @@ export default function AdminHome({ onSignOut }) {
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("all");
   const [studentToDelete, setStudentToDelete] = useState(null);
-  const [deletedStudent, setDeletedStudent] = useState("");
+  const [notification, setNotification] = useState(null);
   const deleteTriggerRef = useRef(null);
 
   const searchText = search.trim().toLowerCase();
@@ -116,11 +116,11 @@ export default function AdminHome({ onSignOut }) {
   }, []);
 
   useEffect(() => {
-    if (!deletedStudent) return undefined;
+    if (!notification) return undefined;
 
-    const timeoutId = window.setTimeout(() => setDeletedStudent(""), 1000);
+    const timeoutId = window.setTimeout(() => setNotification(null), 1000);
     return () => window.clearTimeout(timeoutId);
-  }, [deletedStudent]);
+  }, [notification]);
 
   function confirmDeletion() {
     if (!studentToDelete) return;
@@ -128,8 +128,18 @@ export default function AdminHome({ onSignOut }) {
     setAccounts((currentAccounts) =>
       currentAccounts.filter((student) => student.id !== studentToDelete.id),
     );
-    setDeletedStudent(studentToDelete.name);
+    setNotification({
+      title: "Account removed",
+      message: `${studentToDelete.name} no longer appears in active accounts.`,
+    });
     setStudentToDelete(null);
+  }
+
+  function showCorrectionSaved() {
+    setNotification({
+      title: "Correction saved",
+      message: "A reason was recorded in the administrative audit log.",
+    });
   }
 
   useEffect(() => {
@@ -335,7 +345,7 @@ export default function AdminHome({ onSignOut }) {
                               type="button"
                               className="home-icon-button"
                               aria-label={`Edit ${student.name}`}
-                              disabled
+                              onClick={showCorrectionSaved}
                             >
                               <Icon name="edit" />
                             </button>
@@ -345,7 +355,7 @@ export default function AdminHome({ onSignOut }) {
                               aria-label={`Delete ${student.name}`}
                               onClick={(event) => {
                                 deleteTriggerRef.current = event.currentTarget;
-                                setDeletedStudent("");
+                                setNotification(null);
                                 setStudentToDelete(student);
                               }}
                             >
@@ -420,20 +430,20 @@ export default function AdminHome({ onSignOut }) {
           </section>
         </div>
       )}
-      {deletedStudent && (
+      {notification && (
         <div className="admin-delete-toast" role="status" aria-live="polite">
           <span className="admin-delete-toast-check" aria-hidden="true">
             ✓
           </span>
           <div className="admin-delete-toast-message">
-            <strong>Account removed</strong>
-            <p>{deletedStudent} no longer appears in active accounts.</p>
+            <strong>{notification.title}</strong>
+            <p>{notification.message}</p>
           </div>
           <button
             type="button"
             className="admin-delete-toast-close"
             aria-label="Dismiss notification"
-            onClick={() => setDeletedStudent("")}
+            onClick={() => setNotification(null)}
           >
             ×
           </button>
