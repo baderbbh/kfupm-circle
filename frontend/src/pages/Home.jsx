@@ -19,6 +19,7 @@ import StudentCommunityProposal from "./StudentCommunityProposal";
 import StudentConnections from "./StudentConnections";
 import StudentDashboard from "./StudentDashboard";
 import StudentDiscover from "./StudentDiscover";
+import StudentInvitations from "./StudentInvitations";
 import StudentMessages from "./StudentMessages";
 import StudentProfileView from "./StudentProfileView";
 import "./ProfileSetup.css";
@@ -54,6 +55,7 @@ const titles = {
   proposal: "Community Proposal",
   activities: "Campus Activities",
   activity: "Activity Details and Companion Discovery",
+  invitations: "Invitations",
 };
 
 // Views that are finished. Unfinished sidebar items stay disabled.
@@ -64,6 +66,7 @@ const availableViews = [
   "messages",
   "clubs",
   "activities",
+  "invitations",
 ];
 
 // Increasing number used to order connections and messages by recency.
@@ -241,6 +244,67 @@ export default function Home({ profile, onAccountAccess }) {
     }
   }
 
+  function setInvitationStatus(invitation, status) {
+    setInvitations(
+      invitations.map((item) =>
+        item.id === invitation.id ? { ...item, status } : item
+      )
+    );
+  }
+
+  // Accepting a club or activity invitation also joins it.
+  function respondToInvitation(invitation, accept) {
+    setInvitationStatus(invitation, accept ? "accepted" : "declined");
+
+    if (!accept) {
+      showToast("Invitation declined", "It has been moved to your invitation history.");
+      return;
+    }
+
+    if (invitation.clubId) {
+      setMemberships({ ...memberships, [invitation.clubId]: "member" });
+    }
+
+    if (invitation.activityId && !interested.includes(invitation.activityId)) {
+      setInterested([...interested, invitation.activityId]);
+    }
+
+    showToast("Invitation accepted", "You can find it in your invitation history.");
+  }
+
+  // Demo shortcut for the other student accepting an outgoing invitation.
+  function simulateInvitationResponse(invitation) {
+    const student = students.find((item) => item.id === invitation.personId);
+    const firstName = getFirstName(student.name);
+    const connection = connections[student.id];
+    setInvitationStatus(invitation, "accepted");
+    showToast(
+      `${firstName} accepted`,
+      connection && connection.status === "connected"
+        ? `The invitation is accepted and you may message ${firstName}.`
+        : "The invitation is accepted. Messaging still needs an accepted connection."
+    );
+  }
+
+  function sendStudySession(student, details) {
+    setInvitations([
+      {
+        id: nextStamp(),
+        direction: "outgoing",
+        type: "Study Session",
+        title: details.title,
+        detail: details.detail,
+        personId: student.id,
+        status: "pending",
+      },
+      ...invitations,
+    ]);
+    showToast(
+      "Study invitation sent",
+      `${getFirstName(student.name)} can accept or decline it in Invitations.`
+    );
+  }
+
   function submitReport() {
     setReportSubject(null);
     showToast(
@@ -322,6 +386,7 @@ export default function Home({ profile, onAccountAccess }) {
         <StudentActivities
           interested={interested}
           onOpenActivity={(id) => openView("activity", id)}
+          onArrange={() => openView("invitations")}
         />
       );
     }
@@ -346,6 +411,18 @@ export default function Home({ profile, onAccountAccess }) {
           onMarkInterest={() => markInterest(activity)}
           onInvite={(student) => inviteCompanion(student, activity)}
           onOpenProfile={(id) => openView("profile", id)}
+        />
+      );
+    }
+
+    if (view.name === "invitations") {
+      return (
+        <StudentInvitations
+          invitations={invitations}
+          connections={connections}
+          onRespond={respondToInvitation}
+          onSimulate={simulateInvitationResponse}
+          onSendStudySession={sendStudySession}
         />
       );
     }
@@ -389,6 +466,9 @@ export default function Home({ profile, onAccountAccess }) {
   const counts = {
     connections: Object.values(connections).filter(
       (item) => item.status === "incoming"
+    ).length,
+    invitations: invitations.filter(
+      (item) => item.direction === "incoming" && item.status === "pending"
     ).length,
   };
 

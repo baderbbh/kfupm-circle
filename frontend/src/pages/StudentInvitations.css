@@ -1,0 +1,71 @@
+/* Invitation lists beside the study session form. */
+.invitations-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  align-items: start;
+  gap: 12px;
+}
+
+.invitations-icon {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  place-items: center;
+  border: 1px solid #e4e9e5;
+  border-radius: 7px;
+  color: #527d68;
+  background: #eef3ef;
+}
+
+.invitations-type {
+  justify-self: start;
+  background: #f5f7f5;
+}
+
+/* Study session form. */
+.invitations-form {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+}
+
+.invitations-form h2 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.invitations-form > p {
+  margin: -6px 0 2px;
+  color: #7b847f;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.invitations-form .profile-field input,
+.invitations-form .profile-field select {
+  min-width: 0;
+  font-size: 12px;
+}
+
+.invitations-pair {
+  display: grid;
+  gap: 12px;
+}
+
+.invitations-form .student-button {
+  width: 100%;
+}
+
+.invitations-form > small {
+  color: #7b847f;
+  font-size: 9px;
+  text-align: center;
+}
+
+@media (max-width: 1100px) {
+  .invitations-layout {
+    grid-template-columns: 1fr;
+  }
+}
