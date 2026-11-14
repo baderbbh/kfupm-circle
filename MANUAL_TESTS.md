@@ -251,10 +251,78 @@ Use these valid details:
 | HOME-02 | Open the homepage | The date and greeting match the device's local date and time when the page renders. | Passed |
 | HOME-03 | Inspect the recommendations | Three sample student cards appear with names, majors, reasons, tags, and View profile buttons. | Passed |
 | HOME-04 | Inspect Coming up on campus | The sample Game Development Workshop appears. | Passed |
-| HOME-05 | Try the unfinished navigation, shortcut, profile, and activity buttons | The disabled buttons do not navigate. | Passed |
+| HOME-05 | Select Discover students, each shortcut, View all, View profile, All activities, and View activity | Each button opens its matching student page. | Not run |
 | HOME-06 | Select the sign-out icon | Login opens. | Passed |
 
 Recommendations and the workshop currently use sample data.
+
+## Student Pages
+
+Sign in with ahmed@kfupm.edu.sa and Circle123!. Refresh before starting so the sample data is restored. Run the tables in order without refreshing.
+
+### Discover and Student Profiles
+
+| ID | Action or input | Expected result | Result |
+|----|-----------------|-----------------|--------|
+| STU-01 | Open Discover | SWE 363 and Game development are selected, and Khalid, Reem, and Fahad appear with their shared attributes. | Not run |
+| STU-02 | Select Computer Science and Coding Club, then Apply filters | “No students match these filters” appears and the selections stay in place. | Not run |
+| STU-03 | Select Clear all filters | All six sample students appear. | Not run |
+| STU-04 | Search for lina and Apply filters | Only Lina appears. | Not run |
+| STU-05 | Clear filters and open Khalid's profile | The profile shows Verified Student, 2 shared attributes, and SWE 363 and Game development under Shared with you. | Not run |
+| STU-06 | Select Connect | The button changes to Request pending and the Connection request sent message appears. | Not run |
+| STU-07 | Select Report and submit without details | An error asks for details. | Not run |
+| STU-08 | Enter details and submit the report | The Report submitted confirmation appears. | Not run |
+
+### Connections and Messages
+
+| ID | Action or input | Expected result | Result |
+|----|-----------------|-----------------|--------|
+| STU-09 | Inspect the sidebar | Connections shows 1 and Invitations shows 1. | Not run |
+| STU-10 | Open Connections and accept Lina | Lina moves to Connected, the incoming list shows “You’re all caught up”, and the Connections count disappears. | Not run |
+| STU-11 | Open Outgoing and select Simulate Khalid accepting | Khalid moves to Connected with “Connected today”. | Not run |
+| STU-12 | Select Message for Khalid | Messages opens Khalid's chat with “Hi Ahmed, thanks for connecting.” | Not run |
+| STU-13 | Select Send with an empty message | “Write a message before sending.” appears. | Not run |
+| STU-14 | Type a message and press Enter | The message appears as sent and the counter returns to 0 / 2,000. | Not run |
+| STU-15 | Open Rana's chat from Connections | “No messages yet. Say hello to Rana.” appears. | Not run |
+
+### Clubs and Community Proposals
+
+| ID | Action or input | Expected result | Result |
+|----|-----------------|-----------------|--------|
+| STU-16 | Open Clubs & Communities and search for ctf | Only the Cybersecurity Club appears. | Not run |
+| STU-17 | Open the Game Development Club and select Request membership | The button changes to Request pending and Membership shows Manager review pending. | Not run |
+| STU-18 | Return to the directory | The club card shows Request pending. | Not run |
+| STU-19 | Open Submit community proposal and submit the empty form | A required-field error appears. | Not run |
+| STU-20 | Enter Game Development Club with a gmail.com contact email and submit | A KFUPM contact email error appears. | Not run |
+| STU-21 | Change the email to a clubs.kfupm.edu.sa address and submit | “A community with this name already exists.” appears. | Not run |
+| STU-22 | Change the name to AI & Robotics Community and submit | The Pending Approval card appears and the button shows Awaiting review. | Not run |
+
+### Activities and Invitations
+
+| ID | Action or input | Expected result | Result |
+|----|-----------------|-----------------|--------|
+| STU-23 | Open Activities | Four activities appear, and the Outdoor Photography Walk is Cancelled with an Unavailable button. | Not run |
+| STU-24 | Open the Game Development Workshop | Find a companion is disabled. | Not run |
+| STU-25 | Select Mark interest, then Find a companion | Khalid appears with a Strong Match badge. | Not run |
+| STU-26 | Select Invite companion | The Companion invitation pending message appears. | Not run |
+| STU-27 | Open Invitations and accept the Cybersecurity Club invitation | It moves to History, and the club card shows Member. | Not run |
+| STU-28 | Submit Arrange a study session with empty fields | A required-field error appears. | Not run |
+| STU-29 | Choose Yousef, enter a title and location, and choose a past date | “Choose a future date and time.” appears. | Not run |
+| STU-30 | Choose a future date and send | The invitation appears under Outgoing as Pending. | Not run |
+| STU-31 | Send the same title to Yousef again | “A duplicate pending invitation cannot be created.” appears. | Not run |
+| STU-32 | Select Simulate response | The invitation shows Accepted. | Not run |
+
+### My Profile
+
+| ID | Action or input | Expected result | Result |
+|----|-----------------|-----------------|--------|
+| STU-33 | Open My Profile | Ahmed's details, courses, and interests are filled in. | Not run |
+| STU-34 | Clear the full name and save | A required-profile-details error appears. | Not run |
+| STU-35 | Change the name and major, add ICS 343, and save | Profile saved appears and the sidebar shows the new name and major. | Not run |
+| STU-36 | Edit any field after saving | The Profile saved message disappears. | Not run |
+| STU-37 | Open Discover and clear the filters | Fahad now shows ICS 343 as a shared attribute. | Not run |
+
+Student page changes are temporary. Signing out or refreshing restores the sample data.
 
 ## Club Manager Homepage
 
@@ -335,5 +403,6 @@ npm run build
 - Demo passwords reset when the browser page is refreshed.
 - Remember me is displayed but does not yet keep the user signed in.
 - New registration details are not yet added to the login account list.
-- Navigation for unfinished pages remains disabled.
+- Student pages use sample data. Connections, messages, memberships, invitations, and reports are not shared with the club manager or administrator pages.
+- Simulate buttons stand in for another student's response.
 - Administrator edit and delete actions remain disabled.
