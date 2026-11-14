@@ -7,9 +7,12 @@ import {
   getInitials,
   startingConnections,
   startingConversations,
+  startingInvitations,
   students,
 } from "../data/studentData";
 import ReportDialog from "./ReportDialog";
+import StudentActivities from "./StudentActivities";
+import StudentActivityDetails from "./StudentActivityDetails";
 import StudentClubDetails from "./StudentClubDetails";
 import StudentClubs from "./StudentClubs";
 import StudentCommunityProposal from "./StudentCommunityProposal";
@@ -49,10 +52,19 @@ const titles = {
   clubs: "Clubs and Communities",
   club: "Club Details",
   proposal: "Community Proposal",
+  activities: "Campus Activities",
+  activity: "Activity Details and Companion Discovery",
 };
 
 // Views that are finished. Unfinished sidebar items stay disabled.
-const availableViews = ["home", "discover", "connections", "messages", "clubs"];
+const availableViews = [
+  "home",
+  "discover",
+  "connections",
+  "messages",
+  "clubs",
+  "activities",
+];
 
 // Increasing number used to order connections and messages by recency.
 let lastStamp = 100;
@@ -87,6 +99,8 @@ export default function Home({ profile, onAccountAccess }) {
   const [conversations, setConversations] = useState(startingConversations);
   const [memberships, setMemberships] = useState({});
   const [proposal, setProposal] = useState(null);
+  const [interested, setInterested] = useState([]);
+  const [invitations, setInvitations] = useState(startingInvitations);
 
   // Clubs from the profile plus clubs joined in this session.
   const joinedClubs = [
@@ -192,6 +206,41 @@ export default function Home({ profile, onAccountAccess }) {
     showToast("Proposal submitted", "Administrators will review your community proposal.");
   }
 
+  function markInterest(activity) {
+    setInterested([...interested, activity.id]);
+    showToast("Interest recorded", "You can now discover other interested students.");
+  }
+
+  // Inviting a companion also sends a connection request if needed.
+  function inviteCompanion(student, activity) {
+    const firstName = getFirstName(student.name);
+    const connection = connections[student.id];
+
+    setInvitations([
+      {
+        id: nextStamp(),
+        direction: "outgoing",
+        type: "Event Companion",
+        title: `${activity.title} with ${firstName}`,
+        detail: `${activity.fullDate.replace(/ \d{4}$/, "")} · ${activity.time}`,
+        personId: student.id,
+        activityId: activity.id,
+        status: "pending",
+      },
+      ...invitations,
+    ]);
+
+    if (!connection) {
+      updateConnection(student.id, "outgoing", "Request sent today");
+      showToast(
+        "Invitation and connection request sent",
+        `${firstName} can respond to each request separately.`
+      );
+    } else {
+      showToast("Invitation sent", `${firstName} can respond in Invitations.`);
+    }
+  }
+
   function submitReport() {
     setReportSubject(null);
     showToast(
@@ -263,6 +312,40 @@ export default function Home({ profile, onAccountAccess }) {
           onRequest={() => requestMembership(club)}
           onLeave={() => leaveClub(club)}
           onReport={() => setReportSubject(club.name)}
+          onOpenActivity={(id) => openView("activity", id)}
+        />
+      );
+    }
+
+    if (view.name === "activities") {
+      return (
+        <StudentActivities
+          interested={interested}
+          onOpenActivity={(id) => openView("activity", id)}
+        />
+      );
+    }
+
+    if (view.name === "activity") {
+      const activity = activities.find((item) => item.id === view.id);
+      const invitedIds = invitations
+        .filter(
+          (item) => item.direction === "outgoing" && item.activityId === activity.id
+        )
+        .map((item) => item.personId)
+        .reverse();
+
+      return (
+        <StudentActivityDetails
+          activity={activity}
+          profile={profile}
+          joinedClubs={joinedClubs}
+          isInterested={interested.includes(activity.id)}
+          invitedIds={invitedIds}
+          onBack={() => openView("activities")}
+          onMarkInterest={() => markInterest(activity)}
+          onInvite={(student) => inviteCompanion(student, activity)}
+          onOpenProfile={(id) => openView("profile", id)}
         />
       );
     }
