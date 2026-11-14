@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Icon from "../components/StudentIcon";
 import {
   activities,
+  clubs,
   getFirstName,
   getInitials,
   startingConnections,
@@ -9,6 +10,9 @@ import {
   students,
 } from "../data/studentData";
 import ReportDialog from "./ReportDialog";
+import StudentClubDetails from "./StudentClubDetails";
+import StudentClubs from "./StudentClubs";
+import StudentCommunityProposal from "./StudentCommunityProposal";
 import StudentConnections from "./StudentConnections";
 import StudentDashboard from "./StudentDashboard";
 import StudentDiscover from "./StudentDiscover";
@@ -42,10 +46,13 @@ const titles = {
   profile: "Student Profile",
   connections: "Connections and Requests",
   messages: "Messages",
+  clubs: "Clubs and Communities",
+  club: "Club Details",
+  proposal: "Community Proposal",
 };
 
 // Views that are finished. Unfinished sidebar items stay disabled.
-const availableViews = ["home", "discover", "connections", "messages"];
+const availableViews = ["home", "discover", "connections", "messages", "clubs"];
 
 // Increasing number used to order connections and messages by recency.
 let lastStamp = 100;
@@ -78,8 +85,14 @@ export default function Home({ profile, onAccountAccess }) {
   const [connections, setConnections] = useState(startingConnections);
   const [reportSubject, setReportSubject] = useState(null);
   const [conversations, setConversations] = useState(startingConversations);
+  const [memberships, setMemberships] = useState({});
+  const [proposal, setProposal] = useState(null);
 
-  const joinedClubs = profile.clubs || [];
+  // Clubs from the profile plus clubs joined in this session.
+  const joinedClubs = [
+    ...(profile.clubs || []),
+    ...clubs.filter((club) => memberships[club.id] === "member").map((club) => club.name),
+  ];
 
   useEffect(() => {
     if (!toast) {
@@ -162,6 +175,23 @@ export default function Home({ profile, onAccountAccess }) {
     );
   }
 
+  function requestMembership(club) {
+    setMemberships({ ...memberships, [club.id]: "pending" });
+    showToast("Membership requested", "The club manager will review your request.");
+  }
+
+  function leaveClub(club) {
+    const remaining = { ...memberships };
+    delete remaining[club.id];
+    setMemberships(remaining);
+    showToast(`You left ${club.name}`, "You can request membership again at any time.");
+  }
+
+  function submitProposal(details) {
+    setProposal(details);
+    showToast("Proposal submitted", "Administrators will review your community proposal.");
+  }
+
   function submitReport() {
     setReportSubject(null);
     showToast(
@@ -207,6 +237,42 @@ export default function Home({ profile, onAccountAccess }) {
           onSend={sendMessage}
           onOpenProfile={(id) => openView("profile", id)}
           onViewRequests={() => openView("connections")}
+        />
+      );
+    }
+
+    if (view.name === "clubs") {
+      return (
+        <StudentClubs
+          memberships={memberships}
+          proposal={proposal}
+          onOpenClub={(id) => openView("club", id)}
+          onPropose={() => openView("proposal")}
+        />
+      );
+    }
+
+    if (view.name === "club") {
+      const club = clubs.find((item) => item.id === view.id);
+
+      return (
+        <StudentClubDetails
+          club={club}
+          membership={memberships[club.id]}
+          onBack={() => openView("clubs")}
+          onRequest={() => requestMembership(club)}
+          onLeave={() => leaveClub(club)}
+          onReport={() => setReportSubject(club.name)}
+        />
+      );
+    }
+
+    if (view.name === "proposal") {
+      return (
+        <StudentCommunityProposal
+          proposal={proposal}
+          onSubmit={submitProposal}
+          onBack={() => openView("clubs")}
         />
       );
     }

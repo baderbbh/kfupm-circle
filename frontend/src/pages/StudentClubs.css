@@ -1,0 +1,298 @@
+/* Club directory. */
+.clubs-search {
+  max-width: 420px;
+  margin-bottom: 16px;
+}
+
+.clubs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.clubs-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 17px;
+  border: 1px solid #e4e9e5;
+  border-radius: 9px;
+  background: white;
+}
+
+.clubs-logo {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  place-items: center;
+  border: 1px solid #dce6e0;
+  border-radius: 7px;
+  color: #426556;
+  background: #eef3ef;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.clubs-logo-large {
+  width: 64px;
+  height: 64px;
+  font-size: 16px;
+}
+
+.clubs-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 14px 0 12px;
+}
+
+.clubs-card h2 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.clubs-card p {
+  margin: 10px 0 14px;
+  color: #7b847f;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.clubs-card small {
+  margin-top: auto;
+  color: #7b847f;
+  font-size: 9px;
+}
+
+.clubs-card .student-button-outline {
+  width: 100%;
+  margin-top: 12px;
+}
+
+/* Club details. */
+.club-details-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 18px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e4e9e5;
+}
+
+.club-details-title {
+  flex: 1;
+  min-width: 0;
+}
+
+.club-details-title h1 {
+  margin: 8px 0 0;
+  font-size: 22px;
+  font-weight: normal;
+  letter-spacing: -0.5px;
+}
+
+.club-details-title p {
+  margin: 7px 0 10px;
+  color: #7b847f;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.club-details-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.club-details-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.club-details-grid .student-panel + .student-panel {
+  margin-top: 0;
+}
+
+.club-details-card-title {
+  margin: 0 0 10px;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.club-details-text {
+  margin: 0;
+  color: #7b847f;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.club-details-facts {
+  margin: 14px 0 0;
+}
+
+.club-details-facts div {
+  display: grid;
+  grid-template-columns: 130px minmax(0, 1fr);
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid #e4e9e5;
+  font-size: 10px;
+}
+
+.club-details-facts dt {
+  color: #7b847f;
+}
+
+.club-details-facts dd {
+  margin: 0;
+}
+
+.club-details-activity {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.club-details-activity > div {
+  display: grid;
+  gap: 5px;
+}
+
+.club-details-activity strong {
+  font-size: 11px;
+}
+
+.club-details-activity small {
+  color: #7b847f;
+  font-size: 9px;
+}
+
+.club-details-date {
+  display: grid;
+  width: 46px;
+  flex-shrink: 0;
+  gap: 3px;
+  padding: 8px 4px;
+  border: 1px solid #e4e9e5;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.club-details-date strong {
+  font-size: 16px;
+}
+
+.club-details-link {
+  justify-self: start;
+  padding: 0;
+  border: 0;
+  color: #527d68;
+  background: none;
+  font-size: 10px;
+}
+
+.club-details-announcement {
+  padding: 16px 18px;
+}
+
+.club-details-announcement + .club-details-announcement {
+  border-top: 1px solid #e4e9e5;
+}
+
+.club-details-announcement strong {
+  font-size: 11px;
+}
+
+.club-details-announcement p {
+  margin: 6px 0;
+  color: #7b847f;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.club-details-announcement small {
+  color: #8a938e;
+  font-size: 9px;
+}
+
+/* Community proposal form. */
+.proposal-form {
+  max-width: 760px;
+}
+
+.proposal-form fieldset {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 20px;
+  border: 0;
+}
+
+.proposal-pending {
+  display: grid;
+  gap: 7px;
+  max-width: 760px;
+  margin-bottom: 14px;
+  padding: 14px 16px;
+  border: 1px solid #e4e9e5;
+  border-radius: 9px;
+  background: #fafbfa;
+}
+
+.proposal-pending .student-badge {
+  justify-self: start;
+}
+
+.proposal-pending strong {
+  font-size: 13px;
+  font-weight: normal;
+}
+
+.proposal-pending small {
+  color: #7b847f;
+  font-size: 10px;
+}
+
+@media (max-width: 1100px) {
+  .clubs-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .club-details-header {
+    flex-wrap: wrap;
+  }
+
+  .club-details-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .clubs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .club-details-actions {
+    width: 100%;
+  }
+
+  .club-details-actions button {
+    flex: 1;
+  }
+
+  .proposal-form fieldset {
+    padding: 16px;
+  }
+}
+
+.proposal-form .profile-form-footer button:disabled {
+  background: #8a9d93;
+  cursor: default;
+}
