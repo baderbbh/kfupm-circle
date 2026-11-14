@@ -5,12 +5,14 @@ import {
   getFirstName,
   getInitials,
   startingConnections,
+  startingConversations,
   students,
 } from "../data/studentData";
 import ReportDialog from "./ReportDialog";
 import StudentConnections from "./StudentConnections";
 import StudentDashboard from "./StudentDashboard";
 import StudentDiscover from "./StudentDiscover";
+import StudentMessages from "./StudentMessages";
 import StudentProfileView from "./StudentProfileView";
 import "./ProfileSetup.css";
 import "./Home.css";
@@ -39,10 +41,11 @@ const titles = {
   discover: "Discover Students",
   profile: "Student Profile",
   connections: "Connections and Requests",
+  messages: "Messages",
 };
 
 // Views that are finished. Unfinished sidebar items stay disabled.
-const availableViews = ["home", "discover", "connections"];
+const availableViews = ["home", "discover", "connections", "messages"];
 
 // Increasing number used to order connections and messages by recency.
 let lastStamp = 100;
@@ -52,11 +55,29 @@ function nextStamp() {
   return lastStamp;
 }
 
+// Builds a chat message stamped with the current time.
+function createMessage(from, text) {
+  const time = new Date().toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+  });
+
+  return {
+    id: nextStamp(),
+    from,
+    text,
+    day: "Today",
+    time,
+    listTime: time.replace(/ [AP]M$/, ""),
+  };
+}
+
 export default function Home({ profile, onAccountAccess }) {
   const [view, setView] = useState({ name: "home", id: null });
   const [toast, setToast] = useState(null);
   const [connections, setConnections] = useState(startingConnections);
   const [reportSubject, setReportSubject] = useState(null);
+  const [conversations, setConversations] = useState(startingConversations);
 
   const joinedClubs = profile.clubs || [];
 
@@ -113,9 +134,28 @@ export default function Home({ profile, onAccountAccess }) {
     );
   }
 
+  function addMessage(studentId, message) {
+    setConversations({
+      ...conversations,
+      [studentId]: [...(conversations[studentId] || []), message],
+    });
+  }
+
+  function sendMessage(student, text) {
+    addMessage(student.id, createMessage("me", text));
+    showToast(
+      "Message sent",
+      `Your message was delivered to ${getFirstName(student.name)}.`
+    );
+  }
+
   // Demo shortcut for a student accepting a request the user sent.
   function simulateAcceptance(student) {
     updateConnection(student.id, "connected", "Connected today");
+    addMessage(
+      student.id,
+      createMessage("them", `Hi ${getFirstName(profile.fullName)}, thanks for connecting.`)
+    );
     showToast(
       `Request accepted by ${getFirstName(student.name)}`,
       "You can now message each other."
@@ -152,6 +192,21 @@ export default function Home({ profile, onAccountAccess }) {
           onSimulateAccept={simulateAcceptance}
           onOpenProfile={(id) => openView("profile", id)}
           onFindPeople={() => openView("discover")}
+          onMessage={(id) => openView("messages", id)}
+        />
+      );
+    }
+
+    if (view.name === "messages") {
+      return (
+        <StudentMessages
+          connections={connections}
+          conversations={conversations}
+          activeId={view.id}
+          onSelect={(id) => setView({ name: "messages", id })}
+          onSend={sendMessage}
+          onOpenProfile={(id) => openView("profile", id)}
+          onViewRequests={() => openView("connections")}
         />
       );
     }
@@ -172,6 +227,7 @@ export default function Home({ profile, onAccountAccess }) {
           onBack={() => openView("discover")}
           onConnect={() => sendConnectionRequest(student)}
           onAccept={() => acceptConnection(student)}
+          onMessage={() => openView("messages", student.id)}
           onReport={() => setReportSubject(student.name)}
         />
       );

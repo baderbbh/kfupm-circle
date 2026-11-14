@@ -91,9 +91,9 @@ export const startingConnections = {
 
 export const startingConversations = {
   yousef: [
-    { id: 1, from: "them", text: "Did you finish the SWE 363 lab?", time: "Tue 6:10 PM" },
-    { id: 2, from: "me", text: "Almost, I will push it tonight.", time: "Tue 6:14 PM" },
-    { id: 3, from: "them", text: "See you in class tomorrow.", time: "Tue 6:15 PM" },
+    { id: 1, from: "them", text: "Did you finish the SWE 363 lab?", day: "Tuesday", time: "6:10 PM", listTime: "Tue" },
+    { id: 2, from: "me", text: "Almost, I will push it tonight.", day: "Tuesday", time: "6:14 PM", listTime: "Tue" },
+    { id: 3, from: "them", text: "See you in class tomorrow.", day: "Tuesday", time: "6:15 PM", listTime: "Tue" },
   ],
 };
 
