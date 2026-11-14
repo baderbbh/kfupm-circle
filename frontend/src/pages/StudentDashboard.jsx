@@ -28,7 +28,7 @@ const recommendations = [
   },
 ];
 
-export default function StudentDashboard({ profile }) {
+export default function StudentDashboard({ profile, onOpen }) {
   const today = new Date();
   const hour = today.getHours();
   let greeting = "Good evening";
@@ -58,14 +58,22 @@ export default function StudentDashboard({ profile }) {
           </p>
         </div>
 
-        <button type="button" className="home-primary-button" disabled>
+        <button
+          type="button"
+          className="home-primary-button"
+          onClick={() => onOpen("discover")}
+        >
           <Icon name="search" />
           Discover students
         </button>
       </div>
 
       <div className="home-shortcuts">
-        <button type="button" className="home-shortcut" disabled>
+        <button
+          type="button"
+          className="home-shortcut"
+          onClick={() => onOpen("connections")}
+        >
           <span className="home-shortcut-icon">
             <Icon name="people" />
           </span>
@@ -76,7 +84,11 @@ export default function StudentDashboard({ profile }) {
           <Icon name="arrow" />
         </button>
 
-        <button type="button" className="home-shortcut" disabled>
+        <button
+          type="button"
+          className="home-shortcut"
+          onClick={() => onOpen("messages")}
+        >
           <span className="home-shortcut-icon">
             <Icon name="message" />
           </span>
@@ -87,7 +99,11 @@ export default function StudentDashboard({ profile }) {
           <Icon name="arrow" />
         </button>
 
-        <button type="button" className="home-shortcut" disabled>
+        <button
+          type="button"
+          className="home-shortcut"
+          onClick={() => onOpen("invitations")}
+        >
           <span className="home-shortcut-icon">
             <Icon name="inbox" />
           </span>
@@ -105,7 +121,11 @@ export default function StudentDashboard({ profile }) {
             <h2>Recommended for you</h2>
             <p>Based on your courses, interests, and activities.</p>
           </div>
-          <button type="button" className="home-text-button" disabled>
+          <button
+            type="button"
+            className="home-text-button"
+            onClick={() => onOpen("discover")}
+          >
             View all <Icon name="arrow" />
           </button>
         </div>
@@ -135,7 +155,11 @@ export default function StudentDashboard({ profile }) {
                 ))}
               </div>
 
-              <button type="button" className="home-outline-button" disabled>
+              <button
+                type="button"
+                className="home-outline-button"
+                onClick={() => onOpen("profile", student.id)}
+              >
                 View profile
               </button>
             </article>
@@ -149,7 +173,11 @@ export default function StudentDashboard({ profile }) {
             <h2>Coming up on campus</h2>
             <p>An activity that fits your interests.</p>
           </div>
-          <button type="button" className="home-text-button" disabled>
+          <button
+            type="button"
+            className="home-text-button"
+            onClick={() => onOpen("activities")}
+          >
             All activities <Icon name="arrow" />
           </button>
         </div>
@@ -178,7 +206,11 @@ export default function StudentDashboard({ profile }) {
             </p>
           </div>
 
-          <button type="button" className="home-primary-button" disabled>
+          <button
+            type="button"
+            className="home-primary-button"
+            onClick={() => onOpen("activity", "game-workshop")}
+          >
             View activity
           </button>
         </article>

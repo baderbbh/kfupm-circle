@@ -60,18 +60,6 @@ const titles = {
   "my-profile": "My Profile / Edit Profile",
 };
 
-// Views that are finished. Unfinished sidebar items stay disabled.
-const availableViews = [
-  "home",
-  "discover",
-  "connections",
-  "messages",
-  "clubs",
-  "activities",
-  "invitations",
-  "my-profile",
-];
-
 // Increasing number used to order connections and messages by recency.
 let lastStamp = 100;
 
@@ -471,7 +459,7 @@ export default function Home({ profile, onAccountAccess, onProfileChange }) {
       );
     }
 
-    return <StudentDashboard profile={profile} />;
+    return <StudentDashboard profile={profile} onOpen={openView} />;
   }
 
   // Sidebar counts for items that need the student's attention.
@@ -514,7 +502,6 @@ export default function Home({ profile, onAccountAccess, onProfileChange }) {
                   type="button"
                   className={isActive ? "home-nav-active" : ""}
                   aria-current={isActive ? "page" : undefined}
-                  disabled={!availableViews.includes(item.view)}
                   onClick={() => openView(item.view)}
                 >
                   <Icon name={item.icon} />
