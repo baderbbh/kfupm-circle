@@ -1,0 +1,154 @@
+/* Search and filter panel. */
+.discover-filters {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 22px;
+  padding: 17px;
+  border: 1px solid #e4e9e5;
+  border-radius: 9px;
+  background: #fafbfa;
+}
+
+.discover-filter-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.discover-filter {
+  display: grid;
+  gap: 7px;
+}
+
+.discover-filter span {
+  color: #3f4742;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.discover-filter select {
+  width: 100%;
+  min-height: 37px;
+  padding: 8px 10px;
+  border: 1px solid #d5dad6;
+  border-radius: 6px;
+  color: #283731;
+  background: white;
+  font: inherit;
+  font-size: 11px;
+}
+
+.discover-filter-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 13px;
+  border-top: 1px solid #e4e9e5;
+}
+
+.discover-filter-footer p {
+  margin: 0;
+  color: #7b847f;
+  font-size: 10px;
+}
+
+.discover-filter-footer div {
+  display: flex;
+  gap: 8px;
+}
+
+/* Result list. */
+.discover-count {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0 0 12px;
+  font-size: 11px;
+}
+
+.discover-count span {
+  color: #7b847f;
+  font-size: 10px;
+}
+
+.discover-results {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.discover-result {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 17px;
+  border: 1px solid #e4e9e5;
+  border-radius: 9px;
+  background: white;
+}
+
+.discover-result-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.discover-result-text h2 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: normal;
+}
+
+.discover-result-text p {
+  margin: 6px 0 0;
+  color: #7b847f;
+  font-size: 10px;
+}
+
+.discover-shared {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.discover-shared svg,
+.discover-shared strong {
+  color: #2f5d4b;
+}
+
+.discover-empty {
+  min-height: 220px;
+}
+
+@media (max-width: 1100px) {
+  .discover-filter-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .discover-filter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .discover-filter-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .discover-filter-footer div {
+    justify-content: flex-end;
+  }
+
+  .discover-result {
+    flex-wrap: wrap;
+  }
+
+  .discover-result > .student-button-outline {
+    width: 100%;
+  }
+}

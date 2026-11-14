@@ -1,7 +1,16 @@
 import { useEffect, useState } from "react";
 import Icon from "../components/StudentIcon";
-import { getInitials } from "../data/studentData";
+import {
+  activities,
+  getFirstName,
+  getInitials,
+  startingConnections,
+  students,
+} from "../data/studentData";
+import ReportDialog from "./ReportDialog";
 import StudentDashboard from "./StudentDashboard";
+import StudentDiscover from "./StudentDiscover";
+import StudentProfileView from "./StudentProfileView";
 import "./ProfileSetup.css";
 import "./Home.css";
 import "./StudentShared.css";
@@ -26,14 +35,20 @@ const navigation = [
 // Breadcrumb titles for each view.
 const titles = {
   home: "Home",
+  discover: "Discover Students",
+  profile: "Student Profile",
 };
 
 // Views that are finished. Unfinished sidebar items stay disabled.
-const availableViews = ["home"];
+const availableViews = ["home", "discover"];
 
 export default function Home({ profile, onAccountAccess }) {
   const [view, setView] = useState({ name: "home", id: null });
   const [toast, setToast] = useState(null);
+  const [connections, setConnections] = useState(startingConnections);
+  const [reportSubject, setReportSubject] = useState(null);
+
+  const joinedClubs = profile.clubs || [];
 
   useEffect(() => {
     if (!toast) {
@@ -50,8 +65,78 @@ export default function Home({ profile, onAccountAccess }) {
     window.scrollTo(0, 0);
   }
 
+  function showToast(title, message) {
+    setToast({ title, message });
+  }
+
+  function updateConnection(studentId, status, note) {
+    setConnections({ ...connections, [studentId]: { status, note } });
+  }
+
+  function sendConnectionRequest(student) {
+    updateConnection(student.id, "outgoing", "Request sent today");
+    showToast(
+      "Connection request sent",
+      `${getFirstName(student.name)} can accept or reject your request.`
+    );
+  }
+
+  function acceptConnection(student) {
+    updateConnection(student.id, "connected", "Connected today");
+    showToast(
+      "Connection accepted",
+      `${getFirstName(student.name)} is now in your connections.`
+    );
+  }
+
+  function submitReport() {
+    setReportSubject(null);
+    showToast(
+      "Report submitted",
+      "An administrator will review it. No content was automatically removed."
+    );
+  }
+
   function renderView() {
+    if (view.name === "discover") {
+      return (
+        <StudentDiscover
+          profile={profile}
+          joinedClubs={joinedClubs}
+          onOpenProfile={(id) => openView("profile", id)}
+        />
+      );
+    }
+
+    if (view.name === "profile") {
+      const student = students.find((item) => item.id === view.id);
+      const activity = activities.find(
+        (item) => item.id === student.interestedActivities[0]
+      );
+
+      return (
+        <StudentProfileView
+          student={student}
+          profile={profile}
+          joinedClubs={joinedClubs}
+          connection={connections[student.id]}
+          interestedIn={activity ? activity.title : null}
+          onBack={() => openView("discover")}
+          onConnect={() => sendConnectionRequest(student)}
+          onAccept={() => acceptConnection(student)}
+          onReport={() => setReportSubject(student.name)}
+        />
+      );
+    }
+
     return <StudentDashboard profile={profile} />;
+  }
+
+  // The profile breadcrumb includes the student's name.
+  let title = titles[view.name];
+  if (view.name === "profile") {
+    const student = students.find((item) => item.id === view.id);
+    title = `${title} — ${student.name}`;
   }
 
   return (
@@ -109,7 +194,7 @@ export default function Home({ profile, onAccountAccess }) {
             <div>
               <span>Student portal</span>
               <span> / </span>
-              <strong>{titles[view.name]}</strong>
+              <strong>{title}</strong>
             </div>
 
             <div className="home-account-status">
@@ -128,6 +213,14 @@ export default function Home({ profile, onAccountAccess }) {
           <div className="home-content">{renderView()}</div>
         </div>
       </main>
+
+      {reportSubject && (
+        <ReportDialog
+          subject={reportSubject}
+          onCancel={() => setReportSubject(null)}
+          onSubmit={submitReport}
+        />
+      )}
 
       {toast && (
         <div className="student-toast" role="status">

@@ -5,6 +5,7 @@ export const students = [
   {
     id: "khalid",
     name: "Khalid Al-Qahtani",
+    initials: "KQ",
     major: "Computer Science",
     bio: "I’m a third-year computer science student interested in gameplay systems and interactive experiences. Looking for collaborators and workshop companions.",
     courses: ["SWE 363", "ICS 343", "ICS 381"],
@@ -17,6 +18,7 @@ export const students = [
   {
     id: "reem",
     name: "Reem Al-Anazi",
+    initials: "RA",
     major: "Software Engineering",
     bio: "Software engineering student who enjoys game design jams and helping teammates ship small projects.",
     courses: ["SWE 363", "SWE 387"],
@@ -29,6 +31,7 @@ export const students = [
   {
     id: "fahad",
     name: "Fahad Al-Shehri",
+    initials: "FA",
     major: "Software Engineering",
     bio: "I build small games in C# and like pairing on course projects.",
     courses: ["SWE 363", "ICS 343"],
@@ -41,6 +44,7 @@ export const students = [
   {
     id: "lina",
     name: "Lina Nasser",
+    initials: "LN",
     major: "Information Systems",
     bio: "Information systems student curious about how people use technology. I enjoy usability studies and weekend hikes.",
     courses: ["ISE 291", "SWE 387"],
@@ -53,6 +57,7 @@ export const students = [
   {
     id: "yousef",
     name: "Yousef Al-Mutairi",
+    initials: "YA",
     major: "Software Engineering",
     bio: "Web developer in the making. Usually found in the library before exams.",
     courses: ["SWE 363", "ICS 343"],
@@ -65,6 +70,7 @@ export const students = [
   {
     id: "rana",
     name: "Rana Nadeem",
+    initials: "RN",
     major: "Information Systems",
     bio: "Interested in data, dashboards, and design systems.",
     courses: ["ISE 291"],
@@ -230,6 +236,21 @@ export const startingInvitations = [
     clubId: "cybersecurity",
     status: "pending",
   },
+];
+
+// Full course names shown on student profiles.
+export const courseTitles = {
+  "SWE 363": "Web Engineering",
+  "SWE 387": "Software Project Management",
+  "ICS 343": "Computer Networks",
+  "ICS 381": "Artificial Intelligence",
+  "ISE 291": "Data Science",
+};
+
+export const reportReasons = [
+  "Misleading or inappropriate content",
+  "Harassment",
+  "Spam",
 ];
 
 export function getInitials(name) {

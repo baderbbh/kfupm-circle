@@ -28,6 +28,7 @@ export default function App() {
       interests: ["Game development", "UX research"],
       hobbies: "Football, board games, hiking",
       activities: "Workshops, study sessions, hackathons",
+      clubs: ["Coding Club"],
     },
     {
       email: "clubmanager@kfupm.edu.sa",
@@ -62,6 +63,7 @@ export default function App() {
         interests: account.interests,
         hobbies: account.hobbies,
         activities: account.activities,
+        clubs: account.clubs,
       });
       setPage("home");
     } else {

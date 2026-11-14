@@ -1,0 +1,152 @@
+/* Profile header with identity, shared summary, and actions. */
+.profile-view-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 18px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e4e9e5;
+}
+
+.profile-view-title {
+  flex: 1;
+  min-width: 0;
+}
+
+.profile-view-name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-view-name h1 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: normal;
+  letter-spacing: -0.5px;
+}
+
+.profile-view-title > p {
+  margin: 7px 0 10px;
+  color: #7b847f;
+  font-size: 11px;
+}
+
+.profile-view-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* About and shared-attribute cards. */
+.profile-view-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.profile-view-grid .student-panel + .student-panel {
+  margin-top: 0;
+}
+
+.profile-view-card-title {
+  margin: 0 0 10px;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.profile-view-bio {
+  margin: 0;
+  color: #7b847f;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.profile-view-facts {
+  margin: 14px 0 0;
+}
+
+.profile-view-facts div {
+  display: grid;
+  grid-template-columns: 130px minmax(0, 1fr);
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid #e4e9e5;
+  font-size: 10px;
+}
+
+.profile-view-facts dt {
+  color: #7b847f;
+}
+
+.profile-view-facts dd {
+  margin: 0;
+}
+
+.profile-view-shared {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.profile-view-shared li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  color: #2f5d4b;
+  background: #eef4f0;
+}
+
+.profile-view-shared span {
+  display: grid;
+  gap: 4px;
+}
+
+.profile-view-shared strong {
+  font-size: 10px;
+}
+
+.profile-view-shared small {
+  color: #7b847f;
+  font-size: 9px;
+}
+
+/* Courses, interests, and hobbies columns. */
+.profile-view-columns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.profile-view-columns h3 {
+  margin: 0 0 8px;
+  color: #7b847f;
+  font-size: 9px;
+  font-weight: normal;
+}
+
+@media (max-width: 1100px) {
+  .profile-view-header {
+    flex-wrap: wrap;
+  }
+
+  .profile-view-grid,
+  .profile-view-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-view-actions {
+    width: 100%;
+  }
+
+  .profile-view-actions button {
+    flex: 1;
+  }
+}
