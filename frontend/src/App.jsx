@@ -22,6 +22,12 @@ export default function App() {
       role: "student",
       fullName: "Ahmed Al-Dossary",
       major: "Software Engineering",
+      biography:
+        "Software engineering student interested in game development, user experience, and meeting people for campus activities.",
+      courses: ["SWE 363", "SWE 387"],
+      interests: ["Game development", "UX research"],
+      hobbies: "Football, board games, hiking",
+      activities: "Workshops, study sessions, hackathons",
     },
     {
       email: "clubmanager@kfupm.edu.sa",
@@ -51,6 +57,11 @@ export default function App() {
       setProfile({
         fullName: account.fullName,
         major: account.major,
+        biography: account.biography,
+        courses: account.courses,
+        interests: account.interests,
+        hobbies: account.hobbies,
+        activities: account.activities,
       });
       setPage("home");
     } else {
