@@ -1,0 +1,15 @@
+/* Student names open their profile. */
+.connections-name {
+  justify-self: start;
+  padding: 0;
+  border: 0;
+  color: #283731;
+  background: none;
+  font-size: 12px;
+  text-align: left;
+}
+
+.connections-name:hover {
+  color: #527d68;
+  text-decoration: underline;
+}

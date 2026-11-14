@@ -8,6 +8,7 @@ import {
   students,
 } from "../data/studentData";
 import ReportDialog from "./ReportDialog";
+import StudentConnections from "./StudentConnections";
 import StudentDashboard from "./StudentDashboard";
 import StudentDiscover from "./StudentDiscover";
 import StudentProfileView from "./StudentProfileView";
@@ -37,10 +38,19 @@ const titles = {
   home: "Home",
   discover: "Discover Students",
   profile: "Student Profile",
+  connections: "Connections and Requests",
 };
 
 // Views that are finished. Unfinished sidebar items stay disabled.
-const availableViews = ["home", "discover"];
+const availableViews = ["home", "discover", "connections"];
+
+// Increasing number used to order connections and messages by recency.
+let lastStamp = 100;
+
+function nextStamp() {
+  lastStamp += 1;
+  return lastStamp;
+}
 
 export default function Home({ profile, onAccountAccess }) {
   const [view, setView] = useState({ name: "home", id: null });
@@ -70,7 +80,11 @@ export default function Home({ profile, onAccountAccess }) {
   }
 
   function updateConnection(studentId, status, note) {
-    setConnections({ ...connections, [studentId]: { status, note } });
+    // The time stamp keeps the newest connections at the top of each list.
+    setConnections({
+      ...connections,
+      [studentId]: { status, note, updatedAt: nextStamp() },
+    });
   }
 
   function sendConnectionRequest(student) {
@@ -89,6 +103,25 @@ export default function Home({ profile, onAccountAccess }) {
     );
   }
 
+  function rejectConnection(student) {
+    const remaining = { ...connections };
+    delete remaining[student.id];
+    setConnections(remaining);
+    showToast(
+      "Request rejected",
+      `${getFirstName(student.name)} will not be added to your connections.`
+    );
+  }
+
+  // Demo shortcut for a student accepting a request the user sent.
+  function simulateAcceptance(student) {
+    updateConnection(student.id, "connected", "Connected today");
+    showToast(
+      `Request accepted by ${getFirstName(student.name)}`,
+      "You can now message each other."
+    );
+  }
+
   function submitReport() {
     setReportSubject(null);
     showToast(
@@ -104,6 +137,21 @@ export default function Home({ profile, onAccountAccess }) {
           profile={profile}
           joinedClubs={joinedClubs}
           onOpenProfile={(id) => openView("profile", id)}
+        />
+      );
+    }
+
+    if (view.name === "connections") {
+      return (
+        <StudentConnections
+          profile={profile}
+          joinedClubs={joinedClubs}
+          connections={connections}
+          onAccept={acceptConnection}
+          onReject={rejectConnection}
+          onSimulateAccept={simulateAcceptance}
+          onOpenProfile={(id) => openView("profile", id)}
+          onFindPeople={() => openView("discover")}
         />
       );
     }
@@ -131,6 +179,13 @@ export default function Home({ profile, onAccountAccess }) {
 
     return <StudentDashboard profile={profile} />;
   }
+
+  // Sidebar counts for items that need the student's attention.
+  const counts = {
+    connections: Object.values(connections).filter(
+      (item) => item.status === "incoming"
+    ).length,
+  };
 
   // The profile breadcrumb includes the student's name.
   let title = titles[view.name];
@@ -167,6 +222,9 @@ export default function Home({ profile, onAccountAccess }) {
                 >
                   <Icon name={item.icon} />
                   {item.label}
+                  {counts[item.view] > 0 && (
+                    <span className="student-nav-count">{counts[item.view]}</span>
+                  )}
                 </button>
               );
             })}
