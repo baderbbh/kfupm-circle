@@ -139,6 +139,9 @@ export default function App() {
       <Home
         profile={profile}
         onAccountAccess={handleSignOut}
+        onProfileChange={(details) =>
+          setProfile((currentProfile) => ({ ...currentProfile, ...details }))
+        }
       />
     );
   }

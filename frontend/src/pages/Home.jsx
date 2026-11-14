@@ -21,6 +21,7 @@ import StudentDashboard from "./StudentDashboard";
 import StudentDiscover from "./StudentDiscover";
 import StudentInvitations from "./StudentInvitations";
 import StudentMessages from "./StudentMessages";
+import StudentMyProfile from "./StudentMyProfile";
 import StudentProfileView from "./StudentProfileView";
 import "./ProfileSetup.css";
 import "./Home.css";
@@ -56,6 +57,7 @@ const titles = {
   activities: "Campus Activities",
   activity: "Activity Details and Companion Discovery",
   invitations: "Invitations",
+  "my-profile": "My Profile / Edit Profile",
 };
 
 // Views that are finished. Unfinished sidebar items stay disabled.
@@ -67,6 +69,7 @@ const availableViews = [
   "clubs",
   "activities",
   "invitations",
+  "my-profile",
 ];
 
 // Increasing number used to order connections and messages by recency.
@@ -94,7 +97,7 @@ function createMessage(from, text) {
   };
 }
 
-export default function Home({ profile, onAccountAccess }) {
+export default function Home({ profile, onAccountAccess, onProfileChange }) {
   const [view, setView] = useState({ name: "home", id: null });
   const [toast, setToast] = useState(null);
   const [connections, setConnections] = useState(startingConnections);
@@ -305,6 +308,11 @@ export default function Home({ profile, onAccountAccess }) {
     );
   }
 
+  function saveProfile(details) {
+    onProfileChange(details);
+    showToast("Profile saved", "Your profile information is up to date.");
+  }
+
   function submitReport() {
     setReportSubject(null);
     showToast(
@@ -425,6 +433,10 @@ export default function Home({ profile, onAccountAccess }) {
           onSendStudySession={sendStudySession}
         />
       );
+    }
+
+    if (view.name === "my-profile") {
+      return <StudentMyProfile profile={profile} onSave={saveProfile} />;
     }
 
     if (view.name === "proposal") {
